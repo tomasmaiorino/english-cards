@@ -1,0 +1,201 @@
+{
+    "metadata": {
+        "provider": "Oxford University Press"
+    },
+    "results": [{
+        "id": "home",
+        "language": "en",
+        "lexicalEntries": [{
+                "entries": [{
+                    "homographNumber": "000",
+                    "senses": [{
+                            "definitions": [
+                                "the place where one lives permanently, especially as a member of a family or household"
+                            ],
+                            "id": "m_en_gbus0474570.006",
+                            "subsenses": [{
+                                    "definitions": [
+                                        "the family or social unit occupying a permanent residence"
+                                    ],
+                                    "id": "m_en_gbus0474570.009"
+                                },
+                                {
+                                    "definitions": [
+                                        "a house or flat considered as a commercial property"
+                                    ],
+                                    "id": "m_en_gbus0474570.010"
+                                },
+                                {
+                                    "definitions": [
+                                        "the district or country where one was born or has settled on a long-term basis"
+                                    ],
+                                    "id": "m_en_gbus0474570.011"
+                                },
+                                {
+                                    "definitions": [
+                                        "a place where something flourishes, is most typically found, or from which it originates"
+                                    ],
+                                    "id": "m_en_gbus0474570.012"
+                                },
+                                {
+                                    "definitions": [
+                                        "a place where an object is kept."
+                                    ],
+                                    "id": "m_en_gbus0474570.013"
+                                }
+                            ]
+                        },
+                        {
+                            "definitions": [
+                                "an institution for people needing professional care or supervision"
+                            ],
+                            "id": "m_en_gbus0474570.015"
+                        },
+                        {
+                            "definitions": [
+                                "the finishing point in a race"
+                            ],
+                            "id": "m_en_gbus0474570.017",
+                            "subsenses": [{
+                                    "definitions": [
+                                        "(in games) the place where a player is free from attack."
+                                    ],
+                                    "id": "m_en_gbus0474570.018"
+                                },
+                                {
+                                    "definitions": [
+                                        "(in lacrosse) each of the three players stationed nearest their opponents' goal."
+                                    ],
+                                    "id": "m_en_gbus0474570.019"
+                                },
+                                {
+                                    "definitions": [
+                                        "a match played or won by a team on their own ground."
+                                    ],
+                                    "id": "m_en_gbus0474570.021"
+                                }
+                            ]
+                        }
+                    ]
+                }],
+                "language": "en",
+                "lexicalCategory": "Noun",
+                "text": "home"
+            },
+            {
+                "entries": [{
+                    "homographNumber": "001",
+                    "senses": [{
+                            "definitions": [
+                                "relating to the place where one lives"
+                            ],
+                            "id": "m_en_gbus0474570.024",
+                            "subsenses": [{
+                                    "definitions": [
+                                        "made, done, or intended for use in the home"
+                                    ],
+                                    "id": "m_en_gbus0474570.026"
+                                },
+                                {
+                                    "definitions": [
+                                        "relating to one's own country"
+                                    ],
+                                    "id": "m_en_gbus0474570.027"
+                                }
+                            ]
+                        },
+                        {
+                            "definitions": [
+                                "(of a sports fixture) played at the team's own ground"
+                            ],
+                            "id": "m_en_gbus0474570.029",
+                            "subsenses": [{
+                                "definitions": [
+                                    "relating to or denoting a sports team that is playing at its own ground"
+                                ],
+                                "id": "m_en_gbus0474570.030"
+                            }]
+                        },
+                        {
+                            "definitions": [
+                                "denoting the administrative centre of an organization"
+                            ],
+                            "id": "m_en_gbus0474570.032"
+                        }
+                    ]
+                }],
+                "language": "en",
+                "lexicalCategory": "Adjective",
+                "text": "home"
+            },
+            {
+                "entries": [{
+                    "homographNumber": "002",
+                    "senses": [{
+                        "definitions": [
+                            "to or at the place where one lives"
+                        ],
+                        "id": "m_en_gbus0474570.034",
+                        "subsenses": [{
+                                "definitions": [
+                                    "to the end or conclusion of a race or something difficult"
+                                ],
+                                "id": "m_en_gbus0474570.037"
+                            },
+                            {
+                                "definitions": [
+                                    "to the intended or correct position"
+                                ],
+                                "id": "m_en_gbus0474570.039"
+                            }
+                        ]
+                    }]
+                }],
+                "language": "en",
+                "lexicalCategory": "Adverb",
+                "text": "home"
+            },
+            {
+                "entries": [{
+                    "homographNumber": "003",
+                    "senses": [{
+                            "definitions": [
+                                "(of an animal) return by instinct to its territory after leaving it"
+                            ],
+                            "id": "m_en_gbus0474570.042",
+                            "subsenses": [{
+                                "definitions": [
+                                    "(of a pigeon bred for long-distance racing) fly back to or arrive at its loft after being released at a distant point"
+                                ],
+                                "id": "m_en_gbus0474570.048"
+                            }]
+                        },
+                        {
+                            "definitions": [
+                                "move or be aimed towards (a target or destination) with great accuracy"
+                            ],
+                            "id": "m_en_gbus0474570.050",
+                            "subsenses": [{
+                                "definitions": [
+                                    "focus attention on"
+                                ],
+                                "id": "m_en_gbus0474570.051"
+                            }]
+                        },
+                        {
+                            "definitions": [
+                                "provide (an animal) with a home as a pet"
+                            ],
+                            "id": "m_en_gbus0474570.053"
+                        }
+                    ]
+                }],
+                "language": "en",
+                "lexicalCategory": "Verb",
+                "text": "home"
+            }
+        ],
+        "type": "headword",
+        "word": "home"
+    }]
+}

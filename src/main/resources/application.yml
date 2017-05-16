@@ -1,0 +1,10 @@
+oxford:
+  service:
+    api.id: 
+    app.key: 
+    definitions.service.endpoint: https://od-api.oxforddictionaries.com:443/api/v1/entries/en/X/definitions
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/admin
+      database: test
