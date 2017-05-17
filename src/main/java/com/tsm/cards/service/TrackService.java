@@ -46,20 +46,23 @@ public class TrackService {
 
 	public Track incrementTrack(Track track) {
 		Assert.notNull(track, "The Track must not be null.");
-		log.info("Saving track [{}] .", track);
+		log.info("incrementing track [{}] .", track);
 
 		Track trackTemp = null;
 
 		try {
 			trackTemp = findTrackById(track.getId());
 			trackTemp.setCallCount(trackTemp.getCallCount() + 1);
+
 		} catch (ResourceNotFoundException e) {
-			trackTemp.setCallCount(1l);
+			track.setCallCount(1l);
+			trackTemp = track;
+
 		}
 
 		save(trackTemp);
 
-		log.info("Saved originalCall [{}].", trackTemp);
+		log.info("Incremented originalCall [{}].", trackTemp);
 		return trackTemp;
 	}
 
