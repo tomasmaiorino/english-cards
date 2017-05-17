@@ -1,7 +1,7 @@
 oxford:
   service:
-    api.id: 
-    app.key: 
+    api.id: ${OXFORD_API_ID}
+    app.key: ${OXFORD_API_KEY}
     definitions.service.endpoint: https://od-api.oxforddictionaries.com:443/api/v1/entries/en/X/definitions
 spring:
   data:

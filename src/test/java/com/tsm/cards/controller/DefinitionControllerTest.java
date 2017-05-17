@@ -3,13 +3,21 @@ package com.tsm.cards.controller;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,8 +26,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
+import com.tsm.cards.model.Entries;
+import com.tsm.cards.model.LexicalEntries;
 import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Results;
+import com.tsm.cards.model.Senses;
+import com.tsm.cards.model.Subsenses;
 import com.tsm.cards.resources.DefinitionsResource;
 import com.tsm.cards.service.KnownWordService;
 import com.tsm.cards.service.ManageWordService;
@@ -29,6 +44,8 @@ import com.tsm.cards.service.ProcessWordsService;
 
 @SuppressWarnings("unchecked")
 public class DefinitionControllerTest {
+
+	private static final String OXFORD_SERVICE_SAMPLE_FILE_NAME = "oxford.json";
 
 	@Mock
 	private KnownWordService mockKnowService;
@@ -187,25 +204,29 @@ public class DefinitionControllerTest {
 	public void getDefinitions_CachedWordsGiven_OriginalCall() throws Exception {
 		// Set up
 		String word = "home,car";
-		Set<String> words = new HashSet<>();
-		words.add("home");
-		words.add("car");
-		List<OriginalCall> originalCalls = buildOriginalCalls(words);
+		Set<String> validWords = new HashSet<>();
+		validWords.add("home");
+		validWords.add("car");
+		List<OriginalCall> cachedWords = buildOriginalCalls(validWords);
 		// Expectations
-		when(mockProcessWordsService.splitWords(word)).thenReturn(words);
-		when(mockProcessWordsService.getValidWords(words)).thenReturn(words);
-		when(mockProcessWordsService.getCachedWords(words)).thenReturn(originalCalls);
+		when(mockProcessWordsService.splitWords(word)).thenReturn(validWords);
+		when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
+		when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
 
 		// Do test
 		List<DefinitionsResource> result = controller.getDefinitions(word);
 
 		// Assertions
 		verify(mockProcessWordsService).splitWords(word);
-		verify(mockProcessWordsService).getValidWords(words);
-		verify(mockProcessWordsService).getCachedWords(words);
-		verify(mockProcessWordsService, never()).getNotCachedWords(originalCalls, words);
+		verify(mockProcessWordsService).getValidWords(validWords);
+		verify(mockProcessWordsService).getCachedWords(validWords);
+		verify(mockProcessWordsService, never()).getNotCachedWords(cachedWords, validWords);
 		verifyZeroInteractions(mockManageWordService);
-		assertThat(result, is(originalCalls));
+
+		List<String> resultsWords = result.stream().map(DefinitionsResource::getWord)
+				.filter(s -> validWords.contains(s)).collect(Collectors.toList());
+
+		Assert.assertTrue(resultsWords.containsAll(validWords));
 	}
 
 	@Test
@@ -218,43 +239,94 @@ public class DefinitionControllerTest {
 
 		Set<String> cachedWord = new HashSet<>();
 		cachedWord.add("home");
-		
+
 		String word = "car";
-		
+
 		Set<String> notCached = new HashSet<>();
 		notCached.add(word);
 
-		List<OriginalCall> originalCalls = buildOriginalCalls(cachedWord);
+		List<OriginalCall> cachedWords = buildOriginalCalls(cachedWord);
 		List<OriginalCall> notCachedOriginalCall = buildOriginalCalls(notCached);
 		// Expectations
 		when(mockProcessWordsService.splitWords(words)).thenReturn(validWords);
 		when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
-		when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(originalCalls);
-		when(mockProcessWordsService.getNotCachedWords(originalCalls, validWords)).thenReturn(notCached);
+		when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
+		when(mockProcessWordsService.getNotCachedWords(cachedWords, validWords)).thenReturn(notCached);
 		when(mockManageWordService.createOriginalCall(word)).thenReturn(notCachedOriginalCall.iterator().next());
-		
+
 		// Do test
-		List<DefinitionsResource> result = controller.getDefinitions(word);
+		List<DefinitionsResource> result = controller.getDefinitions(words);
 
 		// Assertions
-		verify(mockProcessWordsService).splitWords(word);
+		verify(mockProcessWordsService).splitWords(words);
 		verify(mockProcessWordsService).getValidWords(validWords);
 		verify(mockProcessWordsService).getCachedWords(validWords);
-		verify(mockProcessWordsService).getNotCachedWords(originalCalls, validWords);
-		verifyZeroInteractions(mockManageWordService);
+		verify(mockProcessWordsService).getNotCachedWords(cachedWords, validWords);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(2, result.size());
-		Assert.assertTrue(result.contains(validWords));
+
+		List<String> resultsWords = result.stream().map(DefinitionsResource::getWord)
+				.filter(s -> validWords.contains(s)).collect(Collectors.toList());
+
+		Assert.assertTrue(resultsWords.containsAll(validWords));
 	}
 
 	private List<OriginalCall> buildOriginalCalls(Set<String> words) {
 		List<OriginalCall> calls = new ArrayList<>();
 		words.forEach(w -> {
 			OriginalCall call = new OriginalCall();
+			Results results = new Results();
+			LexicalEntries lexicalEntries = new LexicalEntries();
+			Entries entries = new Entries();
+
+			Senses senses = new Senses();
+			senses.setDefinitions(Collections.singletonList(w + " " + w));
+			senses.setId(UUID.randomUUID().toString());
+
+			Subsenses subsenses = new Subsenses();
+			subsenses.setDefinitions(Collections.singletonList(w + " " + w));
+			subsenses.setId(UUID.randomUUID().toString());
+			senses.setSubsenses(Collections.singletonList(subsenses));
+
+			entries.setSenses(Collections.singletonList(senses));
+
+			lexicalEntries.setEntries(Collections.singletonList(entries));
+			results.setLexicalEntries(Collections.singletonList(lexicalEntries));
+			results.setId(w);
+			call.setResults(Collections.singletonList(results));
 			call.setId(w);
 			calls.add(call);
 		});
 		return calls;
+	}
+
+	private List<OriginalCall> buidOriginalCallFromFile() {
+		Gson gson = new GsonBuilder().create();
+		OriginalCall originalCall = gson.fromJson(readingTemplateContent(OXFORD_SERVICE_SAMPLE_FILE_NAME),
+				OriginalCall.class);
+		return Collections.singletonList(originalCall);
+	}
+
+	private String readingTemplateContent(String fileName) {
+		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+		File file = new File(classLoader.getResource(fileName).getFile());
+		try {
+			return new String(Files.readAllBytes(file.toPath()));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	private void debugResourceReturn(List<DefinitionsResource> result) {
+		result.forEach(r -> {
+			r.getDefinitions().forEach((k, v) -> {
+				System.out.print(k);
+				System.out.print(" " + v);
+				System.out.println();
+			});
+		});
 	}
 
 }
