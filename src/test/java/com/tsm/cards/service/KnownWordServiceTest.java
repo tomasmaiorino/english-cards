@@ -37,7 +37,7 @@ public class KnownWordServiceTest {
     }
 
     @Test
-    public void findByWord_nullWordGiven_ShouldThrowException() {
+    public void findByWord_NullWordGiven_ShouldThrowException() {
         // Set up
         String word = null;
 
@@ -73,6 +73,7 @@ public class KnownWordServiceTest {
     public void findByWord_validWordGiven_NotWordFound_ShouldThrowException() {
         // Set up
         String word = "word";
+
         // Expectations
         Optional<KnownWord> emptyOptional = Optional.empty();
         when(mockRepository.findByWord(word)).thenReturn(emptyOptional);
@@ -94,6 +95,7 @@ public class KnownWordServiceTest {
     public void findByWord_validWordGiven_KnownWordFound() {
         // Set up
         String word = "word";
+
         // Expectations
         KnownWord knownWord = buildKnownWord();
         Optional<KnownWord> expectedOptional = Optional.of(knownWord);

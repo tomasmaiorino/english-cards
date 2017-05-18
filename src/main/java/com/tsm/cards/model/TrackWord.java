@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
-@Document(collection = "track")
-@TypeAlias("track")
-public class Track {
+@Document(collection = "track_word")
+@TypeAlias("track_word")
+public class TrackWord {
 
 	@Getter
 	@Setter

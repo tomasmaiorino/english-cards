@@ -17,31 +17,43 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class OriginalCallService {
 
-    @Autowired
-    private OriginalCallRepository repository;
+	@Autowired
+	private OriginalCallRepository repository;
 
-    @Transactional
-    public OriginalCall save(OriginalCall originalCall) {
-        Assert.notNull(originalCall, "The originalCall must not be null.");
-        log.info("Saving originalCall [{}] .", originalCall);
+	@Transactional
+	public OriginalCall save(OriginalCall originalCall) {
+		Assert.notNull(originalCall, "The originalCall must not be null.");
+		log.info("Saving originalCall [{}] .", originalCall);
 
-        repository.save(originalCall);
+		repository.save(originalCall);
 
-        log.info("Saved originalCall [{}].", originalCall);
-        return originalCall;
-    }
+		log.info("Saved originalCall [{}].", originalCall);
+		return originalCall;
+	}
 
-    public OriginalCall findOriginalCallById(String word) {
-        Assert.notNull(word, "The id must not be null.");
+	public OriginalCall findByDefinitionId(final String definitionId) {
+		Assert.notNull(definitionId, "The definitionId must not be null.");
+		log.info("Searching for original call by definitions id [{}] .", definitionId);
 
-        log.info("Searching for original call cache [{}] .", word);
+		OriginalCall originalCall = repository.findByDefinitionId(definitionId).orElse(null);
 
-        OriginalCall originalCall = repository.findById(word).orElseThrow(() -> new ResourceNotFoundException("not found"));
+		log.info("Found cache original call? [{}] l.", originalCall);
 
-        log.info("Found cache [{}] originalCall.", originalCall);
+		return originalCall;
+	}
 
-        return originalCall;
+	public OriginalCall findById(final String word) {
+		Assert.notNull(word, "The id must not be null.");
 
-    }
+		log.info("Searching for original call cache [{}] .", word);
+
+		OriginalCall originalCall = repository.findById(word)
+				.orElseThrow(() -> new ResourceNotFoundException("not found"));
+
+		log.info("Found cache [{}] originalCall.", originalCall);
+
+		return originalCall;
+
+	}
 
 }

@@ -52,7 +52,7 @@ public class ProcessWordsService {
 		List<OriginalCall> calls = new ArrayList<>();
 		words.forEach(w -> {
 			try {
-				calls.add(originalCallService.findOriginalCallById(w));
+				calls.add(originalCallService.findById(w));
 			} catch (ResourceNotFoundException e) {
 			}
 		});
