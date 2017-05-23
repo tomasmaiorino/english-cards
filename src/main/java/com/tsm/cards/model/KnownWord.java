@@ -9,13 +9,13 @@ import lombok.Setter;
 
 @Document(collection = "known_words")
 @TypeAlias("known_word")
-//mongoimport --db test --collection known_words --file 20k.txt
+// mongoimport --db test --collection known_words --file 20k.txt
 public class KnownWord extends BaseModel {
 
     @Getter
     @Setter
     private String word;
-    
+
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);

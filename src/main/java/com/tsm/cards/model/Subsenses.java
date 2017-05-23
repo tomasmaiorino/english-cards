@@ -11,16 +11,16 @@ import lombok.Setter;
 @TypeAlias("subsenses")
 public class Subsenses {
 
-	@Getter
-	@Setter
-	private List<String> definitions;
+    @Getter
+    @Setter
+    private List<String> definitions;
 
-	@Getter
-	@Setter
-	private String id;
+    @Getter
+    @Setter
+    private String id;
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 }

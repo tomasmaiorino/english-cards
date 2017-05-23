@@ -9,12 +9,12 @@ import lombok.Setter;
 @TypeAlias("metadata")
 public class Metadata {
 
-	@Getter
-	@Setter
-	private String provider;
+    @Getter
+    @Setter
+    private String provider;
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 }

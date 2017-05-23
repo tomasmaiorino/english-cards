@@ -11,24 +11,24 @@ import lombok.Setter;
 @TypeAlias("lexicalEntries")
 public class LexicalEntries {
 
-	@Getter
-	@Setter
-	private List<Entries> entries;
+    @Getter
+    @Setter
+    private List<Entries> entries;
 
-	@Getter
-	@Setter
-	private String language;
+    @Getter
+    @Setter
+    private String language;
 
-	@Getter
-	@Setter
-	private String lexicalCategory;
+    @Getter
+    @Setter
+    private String lexicalCategory;
 
-	@Getter
-	@Setter
-	private String text;
+    @Getter
+    @Setter
+    private String text;
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 }

@@ -3,7 +3,6 @@ package com.tsm.cards.controller;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,26 +25,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CardsController {
 
-	@Autowired
-	@Getter
-	@Setter
-	private ProcessDefinitionsService processDefinitionsService;
+    @Autowired
+    @Getter
+    @Setter
+    private ProcessDefinitionsService processDefinitionsService;
 
-	@Autowired
-	@Getter
-	@Setter
-	private BuildDefinitionsResourceService buildDefinitionsResourceService;
+    @Autowired
+    @Getter
+    @Setter
+    private BuildDefinitionsResourceService buildDefinitionsResourceService;
 
-	@RequestMapping(method = POST)
-	@ResponseStatus(OK)
-	public List<DefinitionsResource> getCards(final String word, final String definitionsIds) throws Exception {
-		log.debug("Recieved a request to process these words [{}] and definitions [{}].", word, definitionsIds);
+    @RequestMapping(method = POST)
+    @ResponseStatus(OK)
+    public List<DefinitionsResource> getCards(final String word, final String definitionsIds) throws Exception {
+        log.debug("Recieved a request to process these words [{}] and definitions [{}].", word, definitionsIds);
 
-		Set<String> ids = processDefinitionsService.splitDefinitionsIds(definitionsIds);
+        Set<String> ids = processDefinitionsService.splitDefinitionsIds(definitionsIds);
 
-		List<OriginalCall> cachedWords = processDefinitionsService.getOriginalCallByDefinitionsIds(ids);
+        List<OriginalCall> foundWords = processDefinitionsService.getOriginalCallByDefinitionsIds(ids);
 
-		return null;
-	}
+        return null;
+    }
 
 }

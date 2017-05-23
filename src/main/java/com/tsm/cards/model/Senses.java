@@ -13,21 +13,21 @@ import lombok.Setter;
 @TypeAlias("senses")
 public class Senses {
 
-	@Getter
-	@Setter
-	private List<String> definitions;
+    @Getter
+    @Setter
+    private List<String> definitions;
 
-	@Getter
-	@Setter
-	@JsonIgnore
-	private String id;
+    @Getter
+    @Setter
+    @JsonIgnore
+    private String id;
 
-	@Getter
-	@Setter
-	private List<Subsenses> subsenses;
+    @Getter
+    @Setter
+    private List<Subsenses> subsenses;
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 }

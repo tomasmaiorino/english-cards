@@ -9,11 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tsm.cards.model.KnownWord;
 
-
 @Transactional(propagation = Propagation.MANDATORY)
 public interface KnownWordRepository extends MongoRepository<KnownWord, Long> {
 
     @Query("{ 'word': ?0 }")
     Optional<KnownWord> findByWord(String word);
-    
+
 }

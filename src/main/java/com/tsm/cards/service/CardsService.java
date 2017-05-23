@@ -18,29 +18,29 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class CardsService {
 
-	@Autowired
-	private CardsRepository repository;
+    @Autowired
+    private CardsRepository repository;
 
-	@Transactional
-	public Cards save(Cards cards) {
-		Assert.notNull(cards, "The cards must not be null.");
-		log.info("Saving cards [{}] .", cards);
+    @Transactional
+    public Cards save(Cards cards) {
+        Assert.notNull(cards, "The cards must not be null.");
+        log.info("Saving cards [{}] .", cards);
 
-		repository.save(cards);
+        repository.save(cards);
 
-		log.info("Saved cards [{}].", cards);
-		return cards;
-	}
+        log.info("Saved cards [{}].", cards);
+        return cards;
+    }
 
-	public List<Cards> findByWord(final String word) {
-		Assert.hasText(word, "The word must not be empty or null.");
-		log.debug("Searching for cards with word [{}] .", word);
+    public List<Cards> findByWord(final String word) {
+        Assert.hasText(word, "The word must not be empty or null.");
+        log.debug("Searching for cards with word [{}] .", word);
 
-		List<Cards> cards = repository.findByWord(word);
+        List<Cards> cards = repository.findByWord(word);
 
-		log.debug("Found [{}] cards.", cards);
+        log.debug("Found [{}] cards.", cards);
 
-		return cards;
-	}
+        return cards;
+    }
 
 }

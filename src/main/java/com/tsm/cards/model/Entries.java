@@ -12,21 +12,26 @@ import lombok.Setter;
 
 @TypeAlias("entries")
 public class Entries {
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     @JsonIgnore
     private String homographNumber;
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String language;
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String lexicalCategory;
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String text;
-    
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private List<Senses> senses;
 
     @Override

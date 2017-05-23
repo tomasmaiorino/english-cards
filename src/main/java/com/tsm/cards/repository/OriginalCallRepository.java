@@ -12,9 +12,9 @@ import com.tsm.cards.model.OriginalCall;
 @Transactional(propagation = Propagation.MANDATORY)
 public interface OriginalCallRepository extends MongoRepository<OriginalCall, Long> {
 
-	@Query("{ 'id': ?0 }")
-	Optional<OriginalCall> findById(final String id);
+    @Query("{ 'id': ?0 }")
+    Optional<OriginalCall> findById(final String id);
 
-	@Query("{$or:[{'results.lexicalEntries.entries.senses.subsenses._id':?0},{'results.lexicalEntries.entries.senses._id':?0}]}")
-	Optional<OriginalCall> findByDefinitionId(final String definitionId);
+    @Query("{$or:[{'results.lexicalEntries.entries.senses.subsenses._id':?0},{'results.lexicalEntries.entries.senses._id':?0}]}")
+    Optional<OriginalCall> findByDefinitionId(final String definitionId);
 }

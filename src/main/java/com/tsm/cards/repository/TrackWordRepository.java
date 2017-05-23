@@ -11,7 +11,7 @@ import com.tsm.cards.model.TrackWord;
 
 @Transactional(propagation = Propagation.MANDATORY)
 public interface TrackWordRepository extends MongoRepository<TrackWord, Long> {
-	
+
     @Query("{ 'id': ?0 }")
     Optional<TrackWord> findById(final String id);
 

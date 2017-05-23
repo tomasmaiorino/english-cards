@@ -65,9 +65,7 @@ public class BuildDefinitionsResourceServiceTest {
 
         // Assertions
         Assert.assertNotNull(result);
-        ;
         Assert.assertTrue(!result.isEmpty());
-        ;
     }
 
     private List<OriginalCall> buildOriginalCalls(Set<String> words) {

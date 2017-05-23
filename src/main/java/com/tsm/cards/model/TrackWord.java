@@ -11,16 +11,24 @@ import lombok.Setter;
 @TypeAlias("track_word")
 public class TrackWord {
 
-	@Getter
-	@Setter
-	private String id;
-	
-	@Getter
-	@Setter
-	private Long callCount;
-	
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Getter
+    @Setter
+    private String id;
+
+    @Getter
+    @Setter
+    private Long callCount;
+
+    @Getter
+    @Setter
+    private Long createdDate;
+
+    @Getter
+    @Setter
+    private Long updatedDate;
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 }

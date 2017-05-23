@@ -13,22 +13,22 @@ import lombok.Setter;
 @TypeAlias("user")
 public class User extends BaseModel {
 
-	@Getter
-	@Setter
-	@Id
-	private Long id;
+    @Getter
+    @Setter
+    @Id
+    private Long id;
 
-	@Getter
-	@Setter
-	private String email;
+    @Getter
+    @Setter
+    private String email;
 
-	@Getter
-	@Setter
-	private String name;
+    @Getter
+    @Setter
+    private String name;
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 
 }

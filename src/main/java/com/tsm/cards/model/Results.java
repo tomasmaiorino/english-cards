@@ -13,25 +13,25 @@ import lombok.Setter;
 @TypeAlias("results")
 public class Results {
 
-	@Getter
-	@Setter
-	private String id;
+    @Getter
+    @Setter
+    private String id;
 
-	@Getter
-	@Setter
-	private String language;
+    @Getter
+    @Setter
+    private String language;
 
-	@Getter
-	@Setter
-	@JsonIgnore
-	private String type;
+    @Getter
+    @Setter
+    @JsonIgnore
+    private String type;
 
-	@Getter
-	@Setter
-	private List<LexicalEntries> lexicalEntries;
+    @Getter
+    @Setter
+    private List<LexicalEntries> lexicalEntries;
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 }
