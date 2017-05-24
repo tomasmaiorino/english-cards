@@ -10,7 +10,9 @@ import static org.mockito.Mockito.when;
 import java.util.Optional;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -19,6 +21,7 @@ import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.TrackWord;
 import com.tsm.cards.repository.TrackWordRepository;
 
+@FixMethodOrder(MethodSorters.JVM)
 public class TrackWordsServiceTest {
 
     @InjectMocks

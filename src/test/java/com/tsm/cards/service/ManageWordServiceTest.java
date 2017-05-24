@@ -8,7 +8,9 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -17,6 +19,7 @@ import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.OriginalCall;
 
 @SuppressWarnings("unchecked")
+@FixMethodOrder(MethodSorters.JVM)
 public class ManageWordServiceTest {
 
 	@Mock

@@ -11,7 +11,9 @@ import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -20,162 +22,216 @@ import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.OriginalCall;
 import com.tsm.cards.repository.OriginalCallRepository;
 
+@FixMethodOrder(MethodSorters.JVM)
 public class OriginalCallServiceTest {
 
-	@InjectMocks
-	private OriginalCallService service;
+    @InjectMocks
+    private OriginalCallService service;
 
-	@Mock
-	private OriginalCallRepository mockRepository;
+    @Mock
+    private OriginalCallRepository mockRepository;
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-	}
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void save_NullOriginalGiven_ShouldThrowException() {
-		// Set up
-		OriginalCall originalCall = null;
+    @Test
+    public void save_NullOriginalGiven_ShouldThrowException() {
+        // Set up
+        OriginalCall originalCall = null;
 
-		// Do test
-		try {
-			service.save(originalCall);
-			fail();
-		} catch (IllegalArgumentException e) {
-		}
+        // Do test
+        try {
+            service.save(originalCall);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
 
-		// Assertions
-		verifyZeroInteractions(mockRepository);
-	}
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
 
-	@Test
-	public void save_ValidOriginalGiven_ShouldSave() {
-		// Set up
-		OriginalCall originalCall = buildOriginalCall("home");
+    @Test
+    public void save_ValidOriginalGiven_ShouldSave() {
+        // Set up
+        OriginalCall originalCall = buildOriginalCall("home");
 
-		// Expectations
-		when(mockRepository.save(originalCall)).thenReturn(originalCall);
+        // Expectations
+        when(mockRepository.save(originalCall)).thenReturn(originalCall);
 
-		// Do test
-		OriginalCall returns = service.save(originalCall);
+        // Do test
+        OriginalCall returns = service.save(originalCall);
 
-		// Assertions
-		verify(mockRepository).save(originalCall);
+        // Assertions
+        verify(mockRepository).save(originalCall);
 
-		assertThat(returns, is(originalCall));
-	}
+        assertThat(returns, is(originalCall));
+    }
 
-	@Test
-	public void findById_NullWordId_ShouldThrowException() {
-		// Set up
-		String word = null;
+    @Test
+    public void findById_NullWordId_ShouldThrowException() {
+        // Set up
+        String word = null;
 
-		// Do test
-		try {
-			service.findById(word);
-			fail();
-		} catch (IllegalArgumentException e) {
-		}
+        // Do test
+        try {
+            service.findById(word);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
 
-		// Assertions
-		verifyZeroInteractions(mockRepository);
-	}
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
 
-	@Test
-	public void findById_ValidWordId_ShouldReturnOriginalCallNotFound() {
-		// Set up
-		String word = "home";
+    @Test
+    public void findById_ValidWordId_ShouldReturnOriginalCallNotFound() {
+        // Set up
+        String word = "home";
 
-		// Expectations
-		Optional<OriginalCall> emptyOptional = Optional.empty();
-		when(mockRepository.findById(word)).thenReturn(emptyOptional);
+        // Expectations
+        Optional<OriginalCall> emptyOptional = Optional.empty();
+        when(mockRepository.findById(word)).thenReturn(emptyOptional);
 
-		// Do test
-		try {
-			service.findById(word);
-			fail();
-		} catch (ResourceNotFoundException e) {
-		}
+        // Do test
+        try {
+            service.findById(word);
+            fail();
+        } catch (ResourceNotFoundException e) {
+        }
 
-		// Assertions
-		verify(mockRepository).findById(word);
-	}
+        // Assertions
+        verify(mockRepository).findById(word);
+    }
 
-	@Test
-	public void findById_ValidWordIdGiven_OriginalCallFound() {
-		// Set up
-		String word = "word";
+    @Test
+    public void findById_ValidWordIdGiven_OriginalCallFound() {
+        // Set up
+        String word = "word";
 
-		// Expectations
-		OriginalCall originalCall = buildOriginalCall(word);
-		Optional<OriginalCall> expectedOptional = Optional.of(originalCall);
-		when(mockRepository.findById(word)).thenReturn(expectedOptional);
+        // Expectations
+        OriginalCall originalCall = buildOriginalCall(word);
+        Optional<OriginalCall> expectedOptional = Optional.of(originalCall);
+        when(mockRepository.findById(word)).thenReturn(expectedOptional);
 
-		// Do test
-		OriginalCall result = service.findById(word);
+        // Do test
+        OriginalCall result = service.findById(word);
 
-		// Assertions
-		verify(mockRepository).findById(word);
-		assertThat(result, is(originalCall));
-	}
+        // Assertions
+        verify(mockRepository).findById(word);
+        assertThat(result, is(originalCall));
+    }
 
-	@Test
-	public void findByDefinitionId_NullDefinitionIdGiven_ShouldThrowException() {
-		// Set up
-		String definitionId = null;
+    @Test
+    public void findByDefinitionId_NullDefinitionIdGiven_ShouldThrowException() {
+        // Set up
+        String definitionId = null;
 
-		// Do test
-		try {
-			service.findByDefinitionId(definitionId);
-			fail();
-		} catch (IllegalArgumentException e) {
-		}
+        // Do test
+        try {
+            service.findByDefinitionId(definitionId);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
 
-		// Assertions
-		verifyZeroInteractions(mockRepository);
-	}
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
 
-	@Test
-	public void findByDefinitionId_ValidDefinitionIdGiven_NotResultFound() {
-		// Set up
-		String definitionId = "123";
+    @Test
+    public void findByDefinitionId_ValidDefinitionIdGiven_NotResultFound() {
+        // Set up
+        String definitionId = "123";
 
-		// Expectations
-		Optional<OriginalCall> emptyOptional = Optional.empty();
-		when(mockRepository.findByDefinitionId(definitionId)).thenReturn(emptyOptional);
+        // Expectations
+        Optional<OriginalCall> emptyOptional = Optional.empty();
+        when(mockRepository.findByDefinitionId(definitionId)).thenReturn(emptyOptional);
 
-		// Do test
-		OriginalCall result = service.findByDefinitionId(definitionId);
+        // Do test
+        OriginalCall result = service.findByDefinitionId(definitionId);
 
-		// Assertions
-		verify(mockRepository).findByDefinitionId(definitionId);
-		Assert.assertNull(result);
-	}
+        // Assertions
+        verify(mockRepository).findByDefinitionId(definitionId);
+        Assert.assertNull(result);
+    }
 
-	@Test
-	public void findByDefinitionId_ValidDefinitionIdGiven_ShouldReturnOriginalCall() {
-		// Set up
-		String definitionId = "123";
-		String word = "home";
-		OriginalCall originalCall = buildOriginalCall(word);
+    @Test
+    public void findByDefinitionId_ValidDefinitionIdGiven_ShouldReturnOriginalCall() {
+        // Set up
+        String definitionId = "123";
+        String word = "home";
+        OriginalCall originalCall = buildOriginalCall(word);
 
-		// Expectations
-		Optional<OriginalCall> optional = Optional.of(originalCall);
-		when(mockRepository.findByDefinitionId(definitionId)).thenReturn(optional);
+        // Expectations
+        Optional<OriginalCall> optional = Optional.of(originalCall);
+        when(mockRepository.findByDefinitionId(definitionId)).thenReturn(optional);
 
-		// Do test
-		OriginalCall result = service.findByDefinitionId(definitionId);
+        // Do test
+        OriginalCall result = service.findByDefinitionId(definitionId);
 
-		// Assertions
-		verify(mockRepository).findByDefinitionId(definitionId);
-		Assert.assertNotNull(result);
-		assertThat(result, is(originalCall));
-	}
+        // Assertions
+        verify(mockRepository).findByDefinitionId(definitionId);
+        Assert.assertNotNull(result);
+        assertThat(result, is(originalCall));
+    }
 
-	private OriginalCall buildOriginalCall(String id) {
-		OriginalCall call = new OriginalCall();
-		call.setId(id);
-		return call;
-	}
+    @Test
+    public void findOptionalOriginalCallById_NullIdGiven_ShouldThrowException() {
+        // Set up
+        String word = null;
+
+        // Do test
+        try {
+            service.findOptionalOriginalCallById(word);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
+
+    @Test
+    public void findOptionalOriginalCallById_OriginalCallNotFound() {
+        // Set up
+        String word = "word";
+
+        // Expectations
+        when(mockRepository.findById(word)).thenReturn(Optional.empty());
+
+        // Do test
+        Optional<OriginalCall> result = service.findOptionalOriginalCallById(word);
+
+        // Assertions
+        verify(mockRepository).findById(word);
+        Assert.assertNotNull(result);
+        Assert.assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void findOptionalOriginalCallById_OriginalCallFound() {
+        // Set up
+        String word = "word";
+        OriginalCall call = buildOriginalCall(word);
+        Optional<OriginalCall> optional = Optional.of(call);
+
+        // Expectations
+        when(mockRepository.findById(word)).thenReturn(optional);
+
+        // Do test
+        Optional<OriginalCall> result = service.findOptionalOriginalCallById(word);
+
+        // Assertions
+        verify(mockRepository).findById(word);
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isPresent());
+        assertThat(result.get(), is(call));
+    }
+
+    private OriginalCall buildOriginalCall(String id) {
+        OriginalCall call = new OriginalCall();
+        call.setId(id);
+        return call;
+    }
 }

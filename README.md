@@ -41,10 +41,10 @@ Maven for build and dependecies.
 $ mvn clean install
 
 ###### To only test the application execute the maven command:
-$ mvn clean test -Doxford.service.api.id=OXFORD_SERVICE_API_ID -Doxford.service.app.key=OXFORD_SERVICE_APP_KEY
+$ mvn clean test
 
 ###### To run the integrations tests excute the maven command:
-mvn test -Doxford.service.api.id=OXFORD_SERVICE_API_ID -Doxford.service.app.key=OXFORD_SERVICE_APP_KEY  -DargLine="-Dspring.profiles.active=it" -Dtest=DefinitionControllerIntegrationTest
+$ mvn integration-test -P it -Doxford.service.api.id=OXFORD_SERVICE_API_ID -Doxford.service.app.key=OXFORD_SERVICE_APP_KEY
 
 ###### To run the application the maven command:
 $ mvn spring-boot:run

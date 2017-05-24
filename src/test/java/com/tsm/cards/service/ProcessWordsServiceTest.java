@@ -16,7 +16,9 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -26,6 +28,7 @@ import com.tsm.cards.model.KnownWord;
 import com.tsm.cards.model.OriginalCall;
 
 @SuppressWarnings("unchecked")
+@FixMethodOrder(MethodSorters.JVM)
 public class ProcessWordsServiceTest {
 
     @Mock

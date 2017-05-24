@@ -21,7 +21,9 @@ import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -44,6 +46,7 @@ import com.tsm.cards.service.OxfordService;
 import com.tsm.cards.service.ProcessWordsService;
 
 @SuppressWarnings("unchecked")
+@FixMethodOrder(MethodSorters.JVM)
 public class DefinitionControllerTest {
 
     private static final String OXFORD_SERVICE_SAMPLE_FILE_NAME = "oxford.json";

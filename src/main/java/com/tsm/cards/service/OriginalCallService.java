@@ -1,5 +1,7 @@
 package com.tsm.cards.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,43 +19,50 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class OriginalCallService {
 
-	@Autowired
-	private OriginalCallRepository repository;
+    @Autowired
+    private OriginalCallRepository repository;
 
-	@Transactional
-	public OriginalCall save(OriginalCall originalCall) {
-		Assert.notNull(originalCall, "The originalCall must not be null.");
-		log.info("Saving originalCall [{}] .", originalCall);
+    @Transactional
+    public OriginalCall save(OriginalCall originalCall) {
+        Assert.notNull(originalCall, "The originalCall must not be null.");
+        log.info("Saving originalCall [{}] .", originalCall);
 
-		repository.save(originalCall);
+        repository.save(originalCall);
 
-		log.info("Saved originalCall [{}].", originalCall);
-		return originalCall;
-	}
+        log.info("Saved originalCall [{}].", originalCall);
+        return originalCall;
+    }
 
-	public OriginalCall findByDefinitionId(final String definitionId) {
-		Assert.notNull(definitionId, "The definitionId must not be null.");
-		log.info("Searching for original call by definitions id [{}] .", definitionId);
+    public OriginalCall findByDefinitionId(final String definitionId) {
+        Assert.notNull(definitionId, "The definitionId must not be null.");
+        log.info("Searching for original call by definitions id [{}] .", definitionId);
 
-		OriginalCall originalCall = repository.findByDefinitionId(definitionId).orElse(null);
+        OriginalCall originalCall = repository.findByDefinitionId(definitionId).orElse(null);
 
-		log.info("Found cache original call? [{}] l.", originalCall);
+        log.info("Found cache original call? [{}] l.", originalCall);
 
-		return originalCall;
-	}
+        return originalCall;
+    }
 
-	public OriginalCall findById(final String word) {
-		Assert.notNull(word, "The id must not be null.");
+    public OriginalCall findById(final String word) {
+        Assert.notNull(word, "The id must not be null.");
 
-		log.info("Searching for original call cache [{}] .", word);
+        log.info("Searching for original call cache [{}] .", word);
 
-		OriginalCall originalCall = repository.findById(word)
-				.orElseThrow(() -> new ResourceNotFoundException("not found"));
+        OriginalCall originalCall = findOptionalOriginalCallById(word)
+            .orElseThrow(() -> new ResourceNotFoundException("not found"));
 
-		log.info("Found cache [{}] originalCall.", originalCall);
+        log.info("Found cache [{}] originalCall.", originalCall);
 
-		return originalCall;
+        return originalCall;
 
-	}
+    }
+
+    public Optional<OriginalCall> findOptionalOriginalCallById(final String word) {
+        Assert.notNull(word, "The id must not be null.");
+        log.info("Searching for original call cache [{}] .", word);
+
+        return repository.findById(word);
+    }
 
 }
