@@ -30,7 +30,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping(value = "/definition")
+@RequestMapping(value = "/definitions")
 @Slf4j
 public class DefinitionController extends BaseController {
 
@@ -82,20 +82,15 @@ public class DefinitionController extends BaseController {
         return originalCall;
     }
 
-    private Set<String> getValidWords(String words) {
-        Set<String> receivedWords = processWordsService.splitWords(words);
-        return processWordsService.getValidWords(receivedWords);
-    }
-
     @RequestMapping(method = POST, produces = "application/json; charset=UTF-8")
     @ResponseStatus(CREATED)
-    public List<DefinitionsResource> getDefinitions(final String words) throws Exception {
-        log.debug("Recieved a request to process these words [{}].", words);
+    public List<DefinitionsResource> getDefinitions(final DefinitionsResource resource) throws Exception {
+        log.debug("Recieved a request to process these words [{}].", resource);
 
-        Set<String> validWords = getValidWords(words);
+        Set<String> validWords = processWordsService.getValidWords(resource.getWords());
 
         if (validWords == null || validWords.isEmpty()) {
-            throw new BadRequestException(String.format("None valid words was given: %s", words));
+            throw new BadRequestException(String.format("None valid words was given: %s", resource));
         }
 
         List<OriginalCall> cachedWords = processWordsService.getCachedWords(validWords);
@@ -108,14 +103,14 @@ public class DefinitionController extends BaseController {
 
         processNotCachedWords(cachedWords, notCachedWords);
 
-        List<DefinitionsResource> resource = new ArrayList<>();
+        List<DefinitionsResource> resourceRet = new ArrayList<>();
         if (!cachedWords.isEmpty()) {
-            resource = buildDefinitionsResourceService.loadResource(cachedWords);
+        	resourceRet = buildDefinitionsResourceService.loadResource(cachedWords);
         }
 
-        log.debug("Sending response with definition original call results: [{}].", resource);
+        log.debug("Sending response with definition original call results: [{}].", resourceRet);
 
-        return resource;
+        return resourceRet;
     }
 
     private void processNotCachedWords(List<OriginalCall> cachedWords, Set<String> notCachedWords) {

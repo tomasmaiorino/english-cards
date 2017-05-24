@@ -30,6 +30,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tsm.builders.DefinitionResourceBuilder;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.Entries;
 import com.tsm.cards.model.LexicalEntries;
@@ -166,46 +167,24 @@ public class DefinitionControllerTest {
     }
 
     @Test
-    public void getDefinitions_NullWordsGiven_ShouldReturnNotFoundError() throws Exception {
-        // Set up
-        String words = null;
-
-        // Expectations
-        when(mockProcessWordsService.splitWords(words)).thenThrow(IllegalArgumentException.class);
-
-        // Do test
-        try {
-            controller.getDefinitions(words);
-            fail();
-        } catch (IllegalArgumentException e) {
-        }
-
-        // Assertions
-        verifyZeroInteractions(mockManageWordService);
-        verify(mockProcessWordsService).splitWords(words);
-    }
-
-    @Test
     public void getDefinitions_InvalidWordsGiven_ShouldReturnNotFoundError() throws Exception {
         // Set up
-        String word = "home,car";
         Set<String> words = new HashSet<>();
         words.add("home");
         words.add("car");
-
+        DefinitionsResource resource = new DefinitionResourceBuilder().words(words).build();
+        
         // Expectations
-        when(mockProcessWordsService.splitWords(word)).thenReturn(words);
-        when(mockProcessWordsService.getValidWords(words)).thenThrow(IllegalArgumentException.class);
+        when(mockProcessWordsService.getValidWords(resource.getWords())).thenThrow(IllegalArgumentException.class);
 
         // Do test
         try {
-            controller.getDefinitions(word);
+            controller.getDefinitions(resource);
             fail();
         } catch (IllegalArgumentException e) {
         }
 
         // Assertions
-        verify(mockProcessWordsService).splitWords(word);
         verify(mockProcessWordsService).getValidWords(words);
         verify(mockProcessWordsService, never()).getCachedWords(words);
         verifyZeroInteractions(mockManageWordService);
@@ -218,6 +197,8 @@ public class DefinitionControllerTest {
         Set<String> validWords = new HashSet<>();
         validWords.add("home");
         validWords.add("car");
+        DefinitionsResource resource = new DefinitionResourceBuilder().words(validWords).build();
+        
         List<OriginalCall> cachedWords = buildOriginalCalls(validWords);
         List<DefinitionsResource> definitionsResources = buildDefinitionsResource(cachedWords, null);
 
@@ -228,7 +209,7 @@ public class DefinitionControllerTest {
         when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
 
         // Do test
-        List<DefinitionsResource> result = controller.getDefinitions(word);
+        List<DefinitionsResource> result = controller.getDefinitions(resource);
 
         // Assertions
         verify(mockProcessWordsService).splitWords(word);
@@ -243,10 +224,11 @@ public class DefinitionControllerTest {
     @Test
     public void getDefinitions_CachedNotCachedWordsGiven_OriginalCall() throws Exception {
         // Set up
-        String words = "home,car";
         Set<String> validWords = new HashSet<>();
         validWords.add("home");
         validWords.add("car");
+        validWords.add("drive");
+        DefinitionsResource resource = new DefinitionResourceBuilder().words(validWords).build();
 
         Set<String> cachedWord = new HashSet<>();
         cachedWord.add("home");
@@ -261,7 +243,6 @@ public class DefinitionControllerTest {
         List<DefinitionsResource> definitionsResources = buildDefinitionsResource(cachedWords, notCachedOriginalCall);
 
         // Expectations
-        when(mockProcessWordsService.splitWords(words)).thenReturn(validWords);
         when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
         when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
         when(mockProcessWordsService.getNotCachedWords(cachedWords, validWords)).thenReturn(notCached);
@@ -269,10 +250,9 @@ public class DefinitionControllerTest {
         when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
 
         // Do test
-        List<DefinitionsResource> result = controller.getDefinitions(words);
+        List<DefinitionsResource> result = controller.getDefinitions(resource);
 
         // Assertions
-        verify(mockProcessWordsService).splitWords(words);
         verify(mockProcessWordsService).getValidWords(validWords);
         verify(mockProcessWordsService).getCachedWords(validWords);
         verify(mockProcessWordsService).getNotCachedWords(cachedWords, validWords);
@@ -284,12 +264,12 @@ public class DefinitionControllerTest {
     @Test
     public void getDefinitions_CachedNotCachedWordsGiven_OriginalCall_ExternalCallError() throws Exception {
         // Set up
-        String words = "home,car,drive";
         Set<String> validWords = new HashSet<>();
         validWords.add("home");
         validWords.add("car");
         validWords.add("drive");
-
+        DefinitionsResource resource = new DefinitionResourceBuilder().words(validWords).build();
+        
         Set<String> cachedWord = new HashSet<>();
         cachedWord.add("home");
 
@@ -308,7 +288,6 @@ public class DefinitionControllerTest {
         List<DefinitionsResource> definitionsResources = buildDefinitionsResource(cachedWords, notCachedOriginalCall);
 
         // Expectations
-        when(mockProcessWordsService.splitWords(words)).thenReturn(validWords);
         when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
         when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
         when(mockProcessWordsService.getNotCachedWords(cachedWords, validWords)).thenReturn(notCached);
@@ -317,10 +296,9 @@ public class DefinitionControllerTest {
         when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
 
         // Do test
-        List<DefinitionsResource> result = controller.getDefinitions(words);
+        List<DefinitionsResource> result = controller.getDefinitions(resource);
 
         // Assertions
-        verify(mockProcessWordsService).splitWords(words);
         verify(mockProcessWordsService).getValidWords(validWords);
         verify(mockProcessWordsService).getCachedWords(validWords);
         verify(mockProcessWordsService).getNotCachedWords(cachedWords, validWords);
