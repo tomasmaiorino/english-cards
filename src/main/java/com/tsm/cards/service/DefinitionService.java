@@ -9,56 +9,56 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.OriginalCall;
-import com.tsm.cards.repository.OriginalCallRepository;
+import com.tsm.cards.model.Definition;
+import com.tsm.cards.repository.DefinitionRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class OriginalCallService {
+public class DefinitionService {
 
     @Autowired
-    private OriginalCallRepository repository;
+    private DefinitionRepository repository;
 
     @Transactional
-    public OriginalCall save(OriginalCall originalCall) {
-        Assert.notNull(originalCall, "The originalCall must not be null.");
-        log.info("Saving originalCall [{}] .", originalCall);
+    public Definition save(Definition definition) {
+        Assert.notNull(definition, "The definition must not be null.");
+        log.info("Saving definition [{}] .", definition);
 
-        repository.save(originalCall);
+        repository.save(definition);
 
-        log.info("Saved originalCall [{}].", originalCall);
-        return originalCall;
+        log.info("Saved definition [{}].", definition);
+        return definition;
     }
 
-    public OriginalCall findByDefinitionId(final String definitionId) {
+    public Definition findByDefinitionId(final String definitionId) {
         Assert.notNull(definitionId, "The definitionId must not be null.");
         log.info("Searching for original call by definitions id [{}] .", definitionId);
 
-        OriginalCall originalCall = repository.findByDefinitionId(definitionId).orElse(null);
+        Definition definition = repository.findByDefinitionId(definitionId).orElse(null);
 
-        log.info("Found cache original call? [{}] l.", originalCall);
+        log.info("Found cache original call? [{}] l.", definition);
 
-        return originalCall;
+        return definition;
     }
 
-    public OriginalCall findById(final String word) {
+    public Definition findById(final String word) {
         Assert.notNull(word, "The id must not be null.");
 
         log.info("Searching for original call cache [{}] .", word);
 
-        OriginalCall originalCall = findOptionalOriginalCallById(word)
+        Definition definition = findOptionalDefinitionById(word)
             .orElseThrow(() -> new ResourceNotFoundException("not found"));
 
-        log.info("Found cache [{}] originalCall.", originalCall);
+        log.info("Found cache [{}] definition.", definition);
 
-        return originalCall;
+        return definition;
 
     }
 
-    public Optional<OriginalCall> findOptionalOriginalCallById(final String word) {
+    public Optional<Definition> findOptionalDefinitionById(final String word) {
         Assert.notNull(word, "The id must not be null.");
         log.info("Searching for original call cache [{}] .", word);
 

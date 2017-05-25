@@ -7,22 +7,23 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tsm.cards.exceptions.BadRequestException;
-import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.OriginalCall;
-import com.tsm.cards.resources.DefinitionsResource;
+import com.tsm.cards.model.Definition;
+import com.tsm.cards.resources.DefinitionResource;
 import com.tsm.cards.service.BuildDefinitionsResourceService;
+import com.tsm.cards.service.DefinitionService;
 import com.tsm.cards.service.KnownWordService;
 import com.tsm.cards.service.ManageWordService;
-import com.tsm.cards.service.OriginalCallService;
 import com.tsm.cards.service.ProcessWordsService;
 
 import lombok.Getter;
@@ -34,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefinitionController extends BaseController {
 
+    private static final String APPLICATION_JSON_UTF_8 = "application/json; charset=UTF-8";
+
     @Autowired
     @Getter
     @Setter
@@ -42,7 +45,7 @@ public class DefinitionController extends BaseController {
     @Autowired
     @Getter
     @Setter
-    private OriginalCallService originalCallService;
+    private DefinitionService definitionService;
 
     @Autowired
     @Getter
@@ -61,39 +64,35 @@ public class DefinitionController extends BaseController {
 
     @RequestMapping(path = "/{word}", method = GET)
     @ResponseStatus(OK)
-    public OriginalCall findByWord(@PathVariable final String word) throws Exception {
+    public Definition findByWord(@PathVariable final String word) throws Exception {
         log.debug("Recieved a request to find a word [{}].", word);
 
         knownWordService.findByWord(word.toLowerCase());
 
-        OriginalCall originalCall = null;
+        String lowerWord = word.toLowerCase();
+        
+        Definition definition = null;
 
-        try {
+        Optional<Definition> optionalDefinition = definitionService.findOptionalDefinitionById(lowerWord);
 
-            originalCall = originalCallService.findById(word.toLowerCase());
-
-        } catch (ResourceNotFoundException e) {
-            log.debug("Word not cached [{}] :(", word);
-            originalCall = manageWordService.createOriginalCall(word.toLowerCase());
+        if (!optionalDefinition.isPresent()) {
+            log.debug("Word not cached [{}] :(", lowerWord);
+            definition = manageWordService.createDefinition(lowerWord);
         }
 
-        log.debug("Sending response with definition resource: [{}].", originalCall);
+        log.debug("Sending response with definition resource: [{}].", definition);
 
-        return originalCall;
+        return definition;
     }
 
-    @RequestMapping(method = POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(method = POST, produces = APPLICATION_JSON_UTF_8, consumes = APPLICATION_JSON_UTF_8)
     @ResponseStatus(CREATED)
-    public List<DefinitionsResource> getDefinitions(final DefinitionsResource resource) throws Exception {
+    public List<DefinitionResource> getDefinitions(@RequestBody final DefinitionResource resource) throws Exception {
         log.debug("Recieved a request to process these words [{}].", resource);
 
-        Set<String> validWords = processWordsService.getValidWords(resource.getWords());
+        Set<String> validWords = getValidWords(resource);
 
-        if (validWords == null || validWords.isEmpty()) {
-            throw new BadRequestException(String.format("None valid words was given: %s", resource));
-        }
-
-        List<OriginalCall> cachedWords = processWordsService.getCachedWords(validWords);
+        List<Definition> cachedWords = processWordsService.getCachedWords(validWords);
 
         Set<String> notCachedWords = null;
 
@@ -103,24 +102,33 @@ public class DefinitionController extends BaseController {
 
         processNotCachedWords(cachedWords, notCachedWords);
 
-        List<DefinitionsResource> resourceRet = new ArrayList<>();
+        List<DefinitionResource> resourceRet = new ArrayList<>();
         if (!cachedWords.isEmpty()) {
-        	resourceRet = buildDefinitionsResourceService.loadResource(cachedWords);
+            resourceRet = buildDefinitionsResourceService.loadResource(cachedWords);
         }
 
-        log.debug("Sending response with definition original call results: [{}].", resourceRet);
+        log.debug("Sending response with definition results: [{}].", resourceRet);
 
         return resourceRet;
     }
 
-    private void processNotCachedWords(List<OriginalCall> cachedWords, Set<String> notCachedWords) {
-        List<OriginalCall> notCached = new ArrayList<>();
+    private Set<String> getValidWords(final DefinitionResource resource) {
+        Set<String> validWords = processWordsService.getValidWords(resource.getWords());
+
+        if (validWords == null || validWords.isEmpty()) {
+            throw new BadRequestException(String.format("None valid words was given: %s", resource.getWords()));
+        }
+        return validWords;
+    }
+
+    private void processNotCachedWords(List<Definition> cachedWords, Set<String> notCachedWords) {
+        List<Definition> notCached = new ArrayList<>();
 
         if (notCachedWords != null && !notCachedWords.isEmpty()) {
 
             notCachedWords.forEach(n -> {
                 try {
-                    notCached.add(manageWordService.createOriginalCall(n));
+                    notCached.add(manageWordService.createDefinition(n));
                 } catch (Exception e) {
                     log.error("Error creating original call from word: [{}].", n);
                 }

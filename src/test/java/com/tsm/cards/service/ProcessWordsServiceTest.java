@@ -25,7 +25,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.KnownWord;
-import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Definition;
 
 @SuppressWarnings("unchecked")
 @FixMethodOrder(MethodSorters.JVM)
@@ -35,7 +35,7 @@ public class ProcessWordsServiceTest {
     private KnownWordService mockKnownWordService;
 
     @Mock
-    private OriginalCallService mockOriginalCallService;
+    private DefinitionService mockDefinitionService;
 
     @InjectMocks
     private ProcessWordsService service;
@@ -50,57 +50,57 @@ public class ProcessWordsServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void getNotCachedWords_NullOriginalCallGiven_ShouldThrowException() {
+    public void getNotCachedWords_NullDefinitionGiven_ShouldThrowException() {
         // Set up
-        List<OriginalCall> originalCalls = null;
+        List<Definition> definitions = null;
         Set<String> words = new HashSet<>();
         words.add(TEST_WORD_WORD);
 
         // Do test
-        service.getNotCachedWords(originalCalls, words);
+        service.getNotCachedWords(definitions, words);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void getNotCached_emptyOriginalCallGiven_ShouldThrowException() {
+    public void getNotCached_emptyDefinitionGiven_ShouldThrowException() {
         // Set up
-        List<OriginalCall> originalCalls = Collections.emptyList();
+        List<Definition> definitions = Collections.emptyList();
         Set<String> words = new HashSet<>();
         words.add(TEST_WORD_WORD);
 
         // Do test
-        service.getNotCachedWords(originalCalls, words);
+        service.getNotCachedWords(definitions, words);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void getNotCachedWords_NullWordsGiven_ShouldThrowException() {
         // Set up
-        List<OriginalCall> originalCalls = buildOriginalCalls();
+        List<Definition> definitions = buildDefinitions();
         Set<String> words = null;
 
         // Do test
-        service.getNotCachedWords(originalCalls, words);
+        service.getNotCachedWords(definitions, words);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void getNotCached_emptyWordsGiven_ShouldThrowException() {
         // Set up
-        List<OriginalCall> originalCalls = buildOriginalCalls();
+        List<Definition> definitions = buildDefinitions();
         Set<String> words = Collections.emptySet();
 
         // Do test
-        service.getNotCachedWords(originalCalls, words);
+        service.getNotCachedWords(definitions, words);
     }
 
     @Test
     public void getNotCached_ValidDataGiven_ShouldReturnValidSet() {
         // Set up
-        List<OriginalCall> originalCalls = buildOriginalCalls();
+        List<Definition> definitions = buildDefinitions();
         Set<String> words = new HashSet<>();
         words.add("java");
         words.add(TEST_WORD_WORD);
 
         // Do test
-        Set<String> result = service.getNotCachedWords(originalCalls, words);
+        Set<String> result = service.getNotCachedWords(definitions, words);
 
         // Assertions
         Assert.assertNotNull(result);
@@ -112,25 +112,25 @@ public class ProcessWordsServiceTest {
     @Test
     public void getNotCached_ValidDataGiven_ShouldReturnEmptySet() {
         // Set up
-        List<OriginalCall> originalCalls = buildOriginalCalls();
+        List<Definition> definitions = buildDefinitions();
         Set<String> words = new HashSet<>();
         words.add(TEST_WORD_WORD);
         words.add(TEST_WORD_HOME);
 
         // Do test
-        Set<String> result = service.getNotCachedWords(originalCalls, words);
+        Set<String> result = service.getNotCachedWords(definitions, words);
 
         // Assertions
         Assert.assertNotNull(result);
         Assert.assertEquals(0, result.size());
     }
 
-    private List<OriginalCall> buildOriginalCalls() {
-        List<OriginalCall> calls = new ArrayList<>();
-        OriginalCall call = new OriginalCall();
+    private List<Definition> buildDefinitions() {
+        List<Definition> calls = new ArrayList<>();
+        Definition call = new Definition();
         call.setId(TEST_WORD_WORD);
         calls.add(call);
-        call = new OriginalCall();
+        call = new Definition();
         call.setId(TEST_WORD_HOME);
         calls.add(call);
         return calls;
@@ -149,7 +149,7 @@ public class ProcessWordsServiceTest {
         }
 
         // Assertions
-        verifyZeroInteractions(mockOriginalCallService);
+        verifyZeroInteractions(mockDefinitionService);
     }
 
     @Test
@@ -165,28 +165,28 @@ public class ProcessWordsServiceTest {
         }
 
         // Assertions
-        verifyZeroInteractions(mockOriginalCallService);
+        verifyZeroInteractions(mockDefinitionService);
     }
 
     @Test
-    public void getCachedWords_ValidlWordsGiven_ShouldReturnOriginalCall() {
+    public void getCachedWords_ValidlWordsGiven_ShouldReturnDefinition() {
         // Set up
         Set<String> words = new HashSet<>();
         words.add(TEST_WORD_HOME);
         words.add(TEST_WORD_WORD);
-        OriginalCall home = buidOriginalCall(TEST_WORD_HOME);
+        Definition home = buidDefinition(TEST_WORD_HOME);
 
         // Expectations
-        when(mockOriginalCallService.findById(TEST_WORD_HOME)).thenReturn(home);
-        when(mockOriginalCallService.findById(TEST_WORD_WORD)).thenThrow(ResourceNotFoundException.class);
+        when(mockDefinitionService.findById(TEST_WORD_HOME)).thenReturn(home);
+        when(mockDefinitionService.findById(TEST_WORD_WORD)).thenThrow(ResourceNotFoundException.class);
 
-        List<OriginalCall> result = null;
+        List<Definition> result = null;
         // Do test
         result = service.getCachedWords(words);
 
         // Assertions
-        verify(mockOriginalCallService).findById(TEST_WORD_HOME);
-        verify(mockOriginalCallService).findById(TEST_WORD_WORD);
+        verify(mockDefinitionService).findById(TEST_WORD_HOME);
+        verify(mockDefinitionService).findById(TEST_WORD_WORD);
         Assert.assertNotNull(result);
         Assert.assertEquals(1, result.size());
         assertThat(result.get(0), is(home));
@@ -200,22 +200,22 @@ public class ProcessWordsServiceTest {
         words.add(TEST_WORD_WORD);
 
         // Expectations
-        when(mockOriginalCallService.findById(TEST_WORD_HOME)).thenThrow(ResourceNotFoundException.class);
-        when(mockOriginalCallService.findById(TEST_WORD_WORD)).thenThrow(ResourceNotFoundException.class);
+        when(mockDefinitionService.findById(TEST_WORD_HOME)).thenThrow(ResourceNotFoundException.class);
+        when(mockDefinitionService.findById(TEST_WORD_WORD)).thenThrow(ResourceNotFoundException.class);
 
-        List<OriginalCall> result = null;
+        List<Definition> result = null;
         // Do test
         result = service.getCachedWords(words);
 
         // Assertions
-        verify(mockOriginalCallService).findById(TEST_WORD_HOME);
-        verify(mockOriginalCallService).findById(TEST_WORD_WORD);
+        verify(mockDefinitionService).findById(TEST_WORD_HOME);
+        verify(mockDefinitionService).findById(TEST_WORD_WORD);
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isEmpty());
     }
 
-    private OriginalCall buidOriginalCall(final String word) {
-        OriginalCall call = new OriginalCall();
+    private Definition buidDefinition(final String word) {
+        Definition call = new Definition();
         call.setId(word);
         return call;
     }
@@ -233,7 +233,7 @@ public class ProcessWordsServiceTest {
         }
 
         // Assertions
-        verifyZeroInteractions(mockOriginalCallService);
+        verifyZeroInteractions(mockDefinitionService);
     }
 
     @Test
@@ -249,7 +249,7 @@ public class ProcessWordsServiceTest {
         }
 
         // Assertions
-        verifyZeroInteractions(mockOriginalCallService);
+        verifyZeroInteractions(mockDefinitionService);
     }
 
     @Test

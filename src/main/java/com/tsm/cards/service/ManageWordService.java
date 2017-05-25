@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Definition;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,21 +17,21 @@ public class ManageWordService {
     @Autowired
     @Getter
     @Setter
-    private OriginalCallService originalCallService;
+    private DefinitionService definitionService;
 
     @Autowired
     @Getter
     @Setter
     private OxfordService oxfordService;
 
-    public OriginalCall createOriginalCall(String word) throws Exception {
+    public Definition createDefinition(String word) throws Exception {
         Assert.hasText(word, "The word must not be empty or null.");
         log.debug("creating original call for known word [{}] .", word);
 
-        OriginalCall originalCall = oxfordService.findWordDefinition(word);
-        originalCall.setId(word);
+        Definition definition = oxfordService.findWordDefinition(word);
+        definition.setId(word);
 
-        return originalCallService.save(originalCall);
+        return definitionService.save(definition);
     }
 
 }

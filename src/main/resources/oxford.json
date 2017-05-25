@@ -1,4 +1,5 @@
-{
+[{
+    "id":"home",
     "metadata": {
         "provider": "Oxford University Press"
     },
@@ -198,4 +199,101 @@
         "type": "headword",
         "word": "home"
     }]
+},
+{"id": "car",
+  "metadata": {
+    "provider": "Oxford University Press"
+  },
+  "results": [
+    {
+      "id": "car",
+      "language": "en",
+      "lexicalEntries": [
+        {
+          "entries": [
+            {
+              "etymologies": [
+                "late Middle English (in the general sense ‘wheeled vehicle’): from Old Northern French carre, based on Latin carrum, carrus, of Celtic origin"
+              ],
+              "grammaticalFeatures": [
+                {
+                  "text": "Singular",
+                  "type": "Number"
+                }
+              ],
+              "homographNumber": "000",
+              "senses": [
+                {
+                  "definitions": [
+                    "a road vehicle, typically with four wheels, powered by an internal combustion engine and able to carry a small number of people"
+                  ],
+                  "examples": [
+                    {
+                      "text": "a car crash"
+                    },
+                    {
+                      "text": "we're going by car"
+                    }
+                  ],
+                  "id": "m_en_gbus0151220.005",
+                  "subsenses": [
+                    {
+                      "definitions": [
+                        "a railway carriage"
+                      ],
+                      "domains": [
+                        "Railways"
+                      ],
+                      "examples": [
+                        {
+                          "text": "the first-class cars"
+                        }
+                      ],
+                      "id": "m_en_gbus0151220.009"
+                    },
+                    {
+                      "definitions": [
+                        "the passenger compartment of a lift, cableway, or balloon"
+                      ],
+                      "examples": [
+                        {
+                          "text": "he was in the lift when the car stuck"
+                        }
+                      ],
+                      "id": "m_en_gbus0151220.010"
+                    },
+                    {
+                      "definitions": [
+                        "a chariot."
+                      ],
+                      "id": "m_en_gbus0151220.011",
+                      "registers": [
+                        "literary"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "lexicalCategory": "Noun",
+          "pronunciations": [
+            {
+              "audioFile": "http://audio.oxforddictionaries.com/en/mp3/car_gb_1.mp3",
+              "dialects": [
+                "British English"
+              ],
+              "phoneticNotation": "IPA",
+              "phoneticSpelling": "kɑː"
+            }
+          ],
+          "text": "car"
+        }
+      ],
+      "type": "headword",
+      "word": "car"
+    }
+  ]
 }
+]

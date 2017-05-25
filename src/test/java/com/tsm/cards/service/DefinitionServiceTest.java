@@ -19,17 +19,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.OriginalCall;
-import com.tsm.cards.repository.OriginalCallRepository;
+import com.tsm.cards.model.Definition;
+import com.tsm.cards.repository.DefinitionRepository;
 
 @FixMethodOrder(MethodSorters.JVM)
-public class OriginalCallServiceTest {
+public class DefinitionServiceTest {
 
     @InjectMocks
-    private OriginalCallService service;
+    private DefinitionService service;
 
     @Mock
-    private OriginalCallRepository mockRepository;
+    private DefinitionRepository mockRepository;
 
     @Before
     public void setUp() {
@@ -39,11 +39,11 @@ public class OriginalCallServiceTest {
     @Test
     public void save_NullOriginalGiven_ShouldThrowException() {
         // Set up
-        OriginalCall originalCall = null;
+        Definition definition = null;
 
         // Do test
         try {
-            service.save(originalCall);
+            service.save(definition);
             fail();
         } catch (IllegalArgumentException e) {
         }
@@ -55,18 +55,18 @@ public class OriginalCallServiceTest {
     @Test
     public void save_ValidOriginalGiven_ShouldSave() {
         // Set up
-        OriginalCall originalCall = buildOriginalCall("home");
+        Definition definition = buildDefinition("home");
 
         // Expectations
-        when(mockRepository.save(originalCall)).thenReturn(originalCall);
+        when(mockRepository.save(definition)).thenReturn(definition);
 
         // Do test
-        OriginalCall returns = service.save(originalCall);
+        Definition returns = service.save(definition);
 
         // Assertions
-        verify(mockRepository).save(originalCall);
+        verify(mockRepository).save(definition);
 
-        assertThat(returns, is(originalCall));
+        assertThat(returns, is(definition));
     }
 
     @Test
@@ -86,12 +86,12 @@ public class OriginalCallServiceTest {
     }
 
     @Test
-    public void findById_ValidWordId_ShouldReturnOriginalCallNotFound() {
+    public void findById_ValidWordId_ShouldReturnDefinitionNotFound() {
         // Set up
         String word = "home";
 
         // Expectations
-        Optional<OriginalCall> emptyOptional = Optional.empty();
+        Optional<Definition> emptyOptional = Optional.empty();
         when(mockRepository.findById(word)).thenReturn(emptyOptional);
 
         // Do test
@@ -106,21 +106,21 @@ public class OriginalCallServiceTest {
     }
 
     @Test
-    public void findById_ValidWordIdGiven_OriginalCallFound() {
+    public void findById_ValidWordIdGiven_DefinitionFound() {
         // Set up
         String word = "word";
 
         // Expectations
-        OriginalCall originalCall = buildOriginalCall(word);
-        Optional<OriginalCall> expectedOptional = Optional.of(originalCall);
+        Definition definition = buildDefinition(word);
+        Optional<Definition> expectedOptional = Optional.of(definition);
         when(mockRepository.findById(word)).thenReturn(expectedOptional);
 
         // Do test
-        OriginalCall result = service.findById(word);
+        Definition result = service.findById(word);
 
         // Assertions
         verify(mockRepository).findById(word);
-        assertThat(result, is(originalCall));
+        assertThat(result, is(definition));
     }
 
     @Test
@@ -145,11 +145,11 @@ public class OriginalCallServiceTest {
         String definitionId = "123";
 
         // Expectations
-        Optional<OriginalCall> emptyOptional = Optional.empty();
+        Optional<Definition> emptyOptional = Optional.empty();
         when(mockRepository.findByDefinitionId(definitionId)).thenReturn(emptyOptional);
 
         // Do test
-        OriginalCall result = service.findByDefinitionId(definitionId);
+        Definition result = service.findByDefinitionId(definitionId);
 
         // Assertions
         verify(mockRepository).findByDefinitionId(definitionId);
@@ -157,33 +157,33 @@ public class OriginalCallServiceTest {
     }
 
     @Test
-    public void findByDefinitionId_ValidDefinitionIdGiven_ShouldReturnOriginalCall() {
+    public void findByDefinitionId_ValidDefinitionIdGiven_ShouldReturnDefinition() {
         // Set up
         String definitionId = "123";
         String word = "home";
-        OriginalCall originalCall = buildOriginalCall(word);
+        Definition definition = buildDefinition(word);
 
         // Expectations
-        Optional<OriginalCall> optional = Optional.of(originalCall);
+        Optional<Definition> optional = Optional.of(definition);
         when(mockRepository.findByDefinitionId(definitionId)).thenReturn(optional);
 
         // Do test
-        OriginalCall result = service.findByDefinitionId(definitionId);
+        Definition result = service.findByDefinitionId(definitionId);
 
         // Assertions
         verify(mockRepository).findByDefinitionId(definitionId);
         Assert.assertNotNull(result);
-        assertThat(result, is(originalCall));
+        assertThat(result, is(definition));
     }
 
     @Test
-    public void findOptionalOriginalCallById_NullIdGiven_ShouldThrowException() {
+    public void findOptionalDefinitionById_NullIdGiven_ShouldThrowException() {
         // Set up
         String word = null;
 
         // Do test
         try {
-            service.findOptionalOriginalCallById(word);
+            service.findOptionalDefinitionById(word);
             fail();
         } catch (IllegalArgumentException e) {
         }
@@ -193,7 +193,7 @@ public class OriginalCallServiceTest {
     }
 
     @Test
-    public void findOptionalOriginalCallById_OriginalCallNotFound() {
+    public void findOptionalDefinitionById_DefinitionNotFound() {
         // Set up
         String word = "word";
 
@@ -201,7 +201,7 @@ public class OriginalCallServiceTest {
         when(mockRepository.findById(word)).thenReturn(Optional.empty());
 
         // Do test
-        Optional<OriginalCall> result = service.findOptionalOriginalCallById(word);
+        Optional<Definition> result = service.findOptionalDefinitionById(word);
 
         // Assertions
         verify(mockRepository).findById(word);
@@ -210,17 +210,17 @@ public class OriginalCallServiceTest {
     }
 
     @Test
-    public void findOptionalOriginalCallById_OriginalCallFound() {
+    public void findOptionalDefinitionById_DefinitionFound() {
         // Set up
         String word = "word";
-        OriginalCall call = buildOriginalCall(word);
-        Optional<OriginalCall> optional = Optional.of(call);
+        Definition call = buildDefinition(word);
+        Optional<Definition> optional = Optional.of(call);
 
         // Expectations
         when(mockRepository.findById(word)).thenReturn(optional);
 
         // Do test
-        Optional<OriginalCall> result = service.findOptionalOriginalCallById(word);
+        Optional<Definition> result = service.findOptionalDefinitionById(word);
 
         // Assertions
         verify(mockRepository).findById(word);
@@ -229,8 +229,8 @@ public class OriginalCallServiceTest {
         assertThat(result.get(), is(call));
     }
 
-    private OriginalCall buildOriginalCall(String id) {
-        OriginalCall call = new OriginalCall();
+    private Definition buildDefinition(String id) {
+        Definition call = new Definition();
         call.setId(id);
         return call;
     }

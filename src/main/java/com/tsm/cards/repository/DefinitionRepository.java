@@ -7,14 +7,14 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Definition;
 
 @Transactional(propagation = Propagation.MANDATORY)
-public interface OriginalCallRepository extends MongoRepository<OriginalCall, Long> {
+public interface DefinitionRepository extends MongoRepository<Definition, Long> {
 
     @Query("{ 'id': ?0 }")
-    Optional<OriginalCall> findById(final String id);
+    Optional<Definition> findById(final String id);
 
     @Query("{$or:[{'results.lexicalEntries.entries.senses.subsenses._id':?0},{'results.lexicalEntries.entries.senses._id':?0}]}")
-    Optional<OriginalCall> findByDefinitionId(final String definitionId);
+    Optional<Definition> findByDefinitionId(final String definitionId);
 }

@@ -27,7 +27,7 @@ public class TrackWordsService {
 
         repository.save(track);
 
-        log.info("Saved originalCall [{}].", track);
+        log.info("Saved definition [{}].", track);
         return track;
     }
 
@@ -62,7 +62,7 @@ public class TrackWordsService {
 
         save(trackTemp);
 
-        log.info("Incremented originalCall [{}].", trackTemp);
+        log.info("Incremented definition [{}].", trackTemp);
         return trackTemp;
     }
 

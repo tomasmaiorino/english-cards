@@ -7,7 +7,7 @@ import javax.persistence.Transient;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.tsm.cards.resources.DefinitionsResource;
+import com.tsm.cards.resources.DefinitionResource;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +31,6 @@ public class Cards {
     @Transient
     @Getter
     @Setter
-    private List<DefinitionsResource> definitionsResource;
+    private List<DefinitionResource> definitionsResource;
 
 }

@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Definition;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -49,7 +49,7 @@ public class OxfordService {
         return getRequest;
     }
 
-    public OriginalCall findWordDefinition(final String word) throws Exception {
+    public Definition findWordDefinition(final String word) throws Exception {
         Assert.notNull(word, "The word must not be null.");
         
         log.info("Looking for the [%s] definition :0 ", word);
@@ -64,7 +64,7 @@ public class OxfordService {
                 treatNotSuccess(response, word);
             }
 
-            return createOriginalCall(response);
+            return createDefinition(response);
 
         } catch (IOException e) {
             log.error("Error trying to recover the definition to the word %s ", word);
@@ -72,11 +72,11 @@ public class OxfordService {
         }
     }
 
-    private OriginalCall createOriginalCall(HttpResponse response) throws IOException {
+    private Definition createDefinition(HttpResponse response) throws IOException {
         HttpEntity entity = response.getEntity();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        return gson.fromJson(new InputStreamReader(entity.getContent()), OriginalCall.class);
+        return gson.fromJson(new InputStreamReader(entity.getContent()), Definition.class);
     }
 
     private void treatNotSuccess(HttpResponse response, String word) throws Exception {

@@ -16,14 +16,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Definition;
 
 @SuppressWarnings("unchecked")
 @FixMethodOrder(MethodSorters.JVM)
 public class ManageWordServiceTest {
 
 	@Mock
-	private OriginalCallService mockOriginalCallService;
+	private DefinitionService mockDefinitionService;
 
 	@Mock
 	private OxfordService mockOxfordService;
@@ -37,24 +37,24 @@ public class ManageWordServiceTest {
 	}
 
 	@Test
-	public void createOriginalCall_NullWorkGiven__ShouldThrowException() throws Exception {
+	public void createDefinition_NullWorkGiven__ShouldThrowException() throws Exception {
 		// Set up
 		String word = null;
 
 		// Do test
 		try {
-			service.createOriginalCall(word);
+			service.createDefinition(word);
 			fail();
 		} catch (IllegalArgumentException e) {
 		}
 
 		// Assertions
 		verifyZeroInteractions(mockOxfordService);
-		verifyZeroInteractions(mockOriginalCallService);
+		verifyZeroInteractions(mockDefinitionService);
 	}
 
 	@Test
-	public void createOriginalCall_ValidWorkGiven_ShouldNotFoundException() throws Exception {
+	public void createDefinition_ValidWorkGiven_ShouldNotFoundException() throws Exception {
 		// Set up
 		String word = "home";
 
@@ -63,34 +63,34 @@ public class ManageWordServiceTest {
 
 		// Do test
 		try {
-			service.createOriginalCall(word);
+			service.createDefinition(word);
 			fail();
 		} catch (ResourceNotFoundException e) {
 		}
 
 		// Assertions
 		verify(mockOxfordService).findWordDefinition(word);
-		verifyZeroInteractions(mockOriginalCallService);
+		verifyZeroInteractions(mockDefinitionService);
 	}
 
 	@Test
-	public void createOriginalCall_ValidWorkGiven() throws Exception {
+	public void createDefinition_ValidWorkGiven() throws Exception {
 		// Set up
 		String word = "home";
-		OriginalCall originalCall = new OriginalCall();
+		Definition definition = new Definition();
 
 		// Expectations
-		when(mockOxfordService.findWordDefinition(word)).thenReturn(originalCall);
-		when(mockOriginalCallService.save(originalCall)).thenReturn(originalCall);
+		when(mockOxfordService.findWordDefinition(word)).thenReturn(definition);
+		when(mockDefinitionService.save(definition)).thenReturn(definition);
 
 		// Do test
-		OriginalCall result = service.createOriginalCall(word);
+		Definition result = service.createDefinition(word);
 
 		// Assertions
 		verify(mockOxfordService).findWordDefinition(word);
-		verify(mockOriginalCallService).save(originalCall);
+		verify(mockDefinitionService).save(definition);
 
-		assertThat(result, is(originalCall));
+		assertThat(result, is(definition));
 		assertThat(word, is(result.getId()));
 	}
 }

@@ -17,11 +17,11 @@ import org.mockito.MockitoAnnotations;
 
 import com.tsm.cards.model.Entries;
 import com.tsm.cards.model.LexicalEntries;
-import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Definition;
 import com.tsm.cards.model.Results;
 import com.tsm.cards.model.Senses;
 import com.tsm.cards.model.Subsenses;
-import com.tsm.cards.resources.DefinitionsResource;
+import com.tsm.cards.resources.DefinitionResource;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class BuildDefinitionsResourceServiceTest {
@@ -35,21 +35,21 @@ public class BuildDefinitionsResourceServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void loadResource_NullOriginalCallGiven_ShouldThrowException() {
+    public void loadResource_NullDefinitionGiven_ShouldThrowException() {
         // Set up
-        List<OriginalCall> originalCall = null;
+        List<Definition> definition = null;
 
         // Do test
-        service.loadResource(originalCall);
+        service.loadResource(definition);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void loadResource_EmptyOriginalCallGiven_ShouldThrowException() {
+    public void loadResource_EmptyDefinitionGiven_ShouldThrowException() {
         // Set up
-        List<OriginalCall> originalCall = Collections.emptyList();
+        List<Definition> definition = Collections.emptyList();
 
         // Do test
-        service.loadResource(originalCall);
+        service.loadResource(definition);
     }
 
     @Test
@@ -58,20 +58,20 @@ public class BuildDefinitionsResourceServiceTest {
         Set<String> validWords = new HashSet<>();
         validWords.add("home");
         validWords.add("car");
-        List<OriginalCall> originalCall = buildOriginalCalls(validWords);
+        List<Definition> definition = buildDefinitions(validWords);
 
         // Do test
-        List<DefinitionsResource> result = service.loadResource(originalCall);
+        List<DefinitionResource> result = service.loadResource(definition);
 
         // Assertions
         Assert.assertNotNull(result);
         Assert.assertTrue(!result.isEmpty());
     }
 
-    private List<OriginalCall> buildOriginalCalls(Set<String> words) {
-        List<OriginalCall> calls = new ArrayList<>();
+    private List<Definition> buildDefinitions(Set<String> words) {
+        List<Definition> calls = new ArrayList<>();
         words.forEach(w -> {
-            OriginalCall call = new OriginalCall();
+            Definition call = new Definition();
             Results results = new Results();
             LexicalEntries lexicalEntries = new LexicalEntries();
             Entries entries = new Entries();

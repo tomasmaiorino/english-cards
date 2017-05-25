@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Definition;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,9 +33,9 @@ public class ProcessWordsService {
 	@Autowired
 	@Getter
 	@Setter
-	private OriginalCallService originalCallService;
+	private DefinitionService definitionService;
 
-	public Set<String> getNotCachedWords(List<OriginalCall> calls, Set<String> words) {
+	public Set<String> getNotCachedWords(List<Definition> calls, Set<String> words) {
 		Assert.notEmpty(calls, "The calls must not be empty.");
 		Assert.notEmpty(words, "The words must not be empty.");
 
@@ -46,13 +46,13 @@ public class ProcessWordsService {
 		return notCachedWords;
 	}
 
-	public List<OriginalCall> getCachedWords(Set<String> words) {
+	public List<Definition> getCachedWords(Set<String> words) {
 		Assert.notEmpty(words, "The words must not be empty.");
 		log.info("get cached words [{}]", words);
-		List<OriginalCall> calls = new ArrayList<>();
+		List<Definition> calls = new ArrayList<>();
 		words.forEach(w -> {
 			try {
-				calls.add(originalCallService.findById(w));
+				calls.add(definitionService.findById(w));
 			} catch (ResourceNotFoundException e) {
 			}
 		});

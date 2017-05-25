@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tsm.cards.model.OriginalCall;
-import com.tsm.cards.resources.DefinitionsResource;
+import com.tsm.cards.model.Definition;
+import com.tsm.cards.resources.DefinitionResource;
 import com.tsm.cards.service.BuildDefinitionsResourceService;
 import com.tsm.cards.service.ProcessDefinitionsService;
 
@@ -37,12 +37,12 @@ public class CardsController {
 
     @RequestMapping(method = POST)
     @ResponseStatus(OK)
-    public List<DefinitionsResource> getCards(final String word, final String definitionsIds) throws Exception {
+    public List<DefinitionResource> getCards(final String word, final String definitionsIds) throws Exception {
         log.debug("Recieved a request to process these words [{}] and definitions [{}].", word, definitionsIds);
 
         Set<String> ids = processDefinitionsService.splitDefinitionsIds(definitionsIds);
 
-        List<OriginalCall> foundWords = processDefinitionsService.getOriginalCallByDefinitionsIds(ids);
+        List<Definition> foundWords = processDefinitionsService.getDefinitionByDefinitionsIds(ids);
 
         return null;
     }

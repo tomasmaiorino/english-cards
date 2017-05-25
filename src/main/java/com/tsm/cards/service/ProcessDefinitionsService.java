@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import com.tsm.cards.model.OriginalCall;
+import com.tsm.cards.model.Definition;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,15 +25,15 @@ public class ProcessDefinitionsService {
 	@Autowired
 	@Getter
 	@Setter
-	private OriginalCallService originalCallService;
+	private DefinitionService definitionService;
 
-	public List<OriginalCall> getOriginalCallByDefinitionsIds(final Set<String> definitionsIds) {
+	public List<Definition> getDefinitionByDefinitionsIds(final Set<String> definitionsIds) {
 		Assert.notEmpty(definitionsIds, "The definitionsIds must not be empty.");
 		log.info("get original call by definitionsIds [{}]", definitionsIds);
 
-		List<OriginalCall> calls = new ArrayList<>();
+		List<Definition> calls = new ArrayList<>();
 		definitionsIds.forEach(w -> {
-			OriginalCall call = originalCallService.findByDefinitionId(w);
+			Definition call = definitionService.findByDefinitionId(w);
 			if (call != null) {
 				calls.add(call);
 			} else {

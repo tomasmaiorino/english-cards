@@ -9,9 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
-@Document(collection = "original_call")
-@TypeAlias("original_call")
-public class OriginalCall {
+@Document(collection = "definition")
+@TypeAlias("definition")
+public class Definition {
 
     @Getter
     @Setter
