@@ -49,18 +49,21 @@ public class ProcessWordsServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getNotCachedWords_NullDefinitionGiven_ShouldThrowException() {
+    @Test
+    public void getNotCachedWords_NullDefinitionGiven_ShouldReturnValidWords() {
         // Set up
         List<Definition> definitions = null;
         Set<String> words = new HashSet<>();
         words.add(TEST_WORD_WORD);
 
         // Do test
-        service.getNotCachedWords(definitions, words);
+        Set<String> result = service.getNotCachedWords(definitions, words);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(words.size(), result.size());
+        assertThat(result, is(words));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getNotCached_emptyDefinitionGiven_ShouldThrowException() {
         // Set up
         List<Definition> definitions = Collections.emptyList();
@@ -68,7 +71,10 @@ public class ProcessWordsServiceTest {
         words.add(TEST_WORD_WORD);
 
         // Do test
-        service.getNotCachedWords(definitions, words);
+        Set<String> result = service.getNotCachedWords(definitions, words);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(words.size(), result.size());
+        assertThat(result, is(words));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -255,24 +261,27 @@ public class ProcessWordsServiceTest {
     @Test
     public void getValidWords_ValidlWordsGiven_ShouldReturnSetWords() {
         // Set up
+        String home = "HomE";
+        String word = "WoRd";
+        String lowerHome = "home";
         Set<String> words = new HashSet<>();
-        words.add(TEST_WORD_HOME);
-        words.add(TEST_WORD_WORD);
+        words.add(home);
+        words.add(word);
 
         // Expectations
-        when(mockKnownWordService.findByWord(TEST_WORD_HOME)).thenReturn(mock(KnownWord.class));
-        when(mockKnownWordService.findByWord(TEST_WORD_WORD)).thenThrow(ResourceNotFoundException.class);
+        when(mockKnownWordService.findByWord(home.toLowerCase())).thenReturn(mock(KnownWord.class));
+        when(mockKnownWordService.findByWord(word.toLowerCase())).thenThrow(ResourceNotFoundException.class);
 
         Set<String> result = null;
         // Do test
         result = service.getValidWords(words);
 
         // Assertions
-        verify(mockKnownWordService).findByWord(TEST_WORD_HOME);
-        verify(mockKnownWordService).findByWord(TEST_WORD_WORD);
+        verify(mockKnownWordService).findByWord(home.toLowerCase());
+        verify(mockKnownWordService).findByWord(word.toLowerCase());
         Assert.assertNotNull(result);
         Assert.assertEquals(1, result.size());
-        Assert.assertEquals(result.iterator().next(), TEST_WORD_HOME);
+        Assert.assertEquals(lowerHome, result.iterator().next());
     }
 
     @Test

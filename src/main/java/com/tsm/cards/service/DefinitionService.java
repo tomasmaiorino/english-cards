@@ -39,7 +39,7 @@ public class DefinitionService {
 
         Definition definition = repository.findByDefinitionId(definitionId).orElse(null);
 
-        log.info("Found cache original call? [{}] l.", definition);
+        log.info("Found cache definition ? [{}] .", definition != null);
 
         return definition;
     }
@@ -47,7 +47,7 @@ public class DefinitionService {
     public Definition findById(final String word) {
         Assert.notNull(word, "The id must not be null.");
 
-        log.info("Searching for original call cache [{}] .", word);
+        log.info("Searching for cached definition [{}] .", word);
 
         Definition definition = findOptionalDefinitionById(word)
             .orElseThrow(() -> new ResourceNotFoundException("not found"));
@@ -60,8 +60,6 @@ public class DefinitionService {
 
     public Optional<Definition> findOptionalDefinitionById(final String word) {
         Assert.notNull(word, "The id must not be null.");
-        log.info("Searching for original call cache [{}] .", word);
-
         return repository.findById(word);
     }
 

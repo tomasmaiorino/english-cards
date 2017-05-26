@@ -70,13 +70,13 @@ public class DefinitionController extends BaseController {
         knownWordService.findByWord(word.toLowerCase());
 
         String lowerWord = word.toLowerCase();
-        
+
         Definition definition = null;
 
         Optional<Definition> optionalDefinition = definitionService.findOptionalDefinitionById(lowerWord);
 
         if (!optionalDefinition.isPresent()) {
-            log.debug("Word not cached [{}] :(", lowerWord);
+            log.info("Word not cached [{}] :(", lowerWord);
             definition = manageWordService.createDefinition(lowerWord);
         }
 
@@ -96,7 +96,7 @@ public class DefinitionController extends BaseController {
 
         Set<String> notCachedWords = null;
 
-        if (!cachedWords.isEmpty() && cachedWords.size() < validWords.size()) {
+        if (cachedWords.size() < validWords.size()) {
             notCachedWords = processWordsService.getNotCachedWords(cachedWords, validWords);
         }
 
