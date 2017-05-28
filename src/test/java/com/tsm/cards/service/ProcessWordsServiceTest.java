@@ -341,4 +341,56 @@ public class ProcessWordsServiceTest {
         Assert.assertEquals(2, result.size());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void getInvalidWords_EmptyReceivedWordsGiven_ShouldThrowException() {
+        // Set up
+        Set<String> receivedWords = Collections.emptySet();
+        Set<String> validWords = new HashSet<>();
+        validWords.add("home");
+
+        // Do test
+        service.getInvalidWords(validWords, receivedWords);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getInvalidWords_EmptyValidWordsGiven_ShouldThrowException() {
+        // Set up
+        Set<String> receivedWords = new HashSet<>();
+        receivedWords.add("home");
+        Set<String> validWords = Collections.emptySet();
+
+        // Do test
+        service.getInvalidWords(validWords, receivedWords);
+    }
+
+    @Test
+    public void getInvalidWords_InvalidWordsGiven_ShouldThrowException() {
+        // Set up
+        String invalidWord = "xpto";
+        Set<String> receivedWords = new HashSet<>();
+        receivedWords.add("home");
+        receivedWords.add(invalidWord);
+        Set<String> validWords = new HashSet<>();
+        validWords.add("home");
+
+        // Do test
+        service.getInvalidWords(validWords, receivedWords);
+        Assert.assertNotNull(receivedWords);
+        Assert.assertEquals(validWords.size(), 1);
+        Assert.assertTrue(receivedWords.contains(invalidWord));
+    }
+
+    @Test
+    public void getInvalidWords_OnlyValidWordsGiven_ShouldThrowException() {
+        // Set up
+        Set<String> receivedWords = new HashSet<>();
+        receivedWords.add("home");
+        Set<String> validWords = new HashSet<>();
+        validWords.add("home");
+
+        // Do test
+        service.getInvalidWords(validWords, receivedWords);
+        Assert.assertNotNull(receivedWords);
+        Assert.assertEquals(receivedWords.size(), 0);
+    }
 }

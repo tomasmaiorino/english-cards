@@ -98,4 +98,10 @@ public class ProcessWordsService {
         });
         return result;
     }
+
+    public void getInvalidWords(Set<String> validWords, Set<String> receivedWords) {
+        Assert.notEmpty(validWords, "The valid words must not be empty.");
+        Assert.notEmpty(receivedWords, "The received words must not be empty.");
+        receivedWords.removeIf(r -> validWords.contains(r));
+    }
 }

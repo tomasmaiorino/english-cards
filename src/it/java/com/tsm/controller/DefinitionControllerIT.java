@@ -18,6 +18,7 @@ import java.util.Set;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -53,10 +54,10 @@ public class DefinitionControllerIT {
     private static final String NONE_VALID_WORDS_GIVEN = "None valid words was given: %s";
 
     private static final String OXFORD_SERVICE_SAMPLE_FILE_NAME = "oxford.json";
-    
+
     public String[] validWords = new String[] { "at", "your", "all", "home", "word", "house", "car" };
-    
-    public String[] validWordsToSort = new String[] { "at", "your", "all", "word", "house"};
+
+    public String[] validWordsToSort = new String[] { "at", "your", "all", "word", "house" };
 
     private List<KnownWord> knownWords;
 
@@ -89,7 +90,6 @@ public class DefinitionControllerIT {
     }
 
     @Test
-    // @Ignore
     public void getDefinitions_NullWordsGiven_ShouldReturnError() {
         // Set Up
         Set<String> words = new HashSet<>();
@@ -101,7 +101,6 @@ public class DefinitionControllerIT {
     }
 
     @Test
-    // @Ignore
     public void getDefinitions_InvalidWordsGiven_ShouldReturnError() throws URISyntaxException {
         // Set Up
         String word = "ikkf";
@@ -117,7 +116,6 @@ public class DefinitionControllerIT {
     }
 
     @Test
-    // @Ignore
     public void getDefinitions_CachedWordAndInvalidWordsGiven_ShouldReturnDefinition() throws URISyntaxException {
         // Set Up
         String word = "home";
@@ -151,6 +149,24 @@ public class DefinitionControllerIT {
             .statusCode(HttpStatus.CREATED.value()).body("size()", is(1))
             .body("[0].word", is(word.toLowerCase()))
             .body("[0].definitions.size()", is(greaterThan(0)));
+    }
+
+    @Test
+    public void getDefinitions_NotCachedAndCachedWordsGiven_ShouldReturnDefinition() throws URISyntaxException {
+        // Set Up
+        String homeWord = "home";
+        String invalidWord = "klkkl";
+        String word = validWordsToSort[RandomUtils.nextInt(0, validWordsToSort.length - 1)];
+        Set<String> words = new HashSet<>();
+        words.add(word);
+        words.add(homeWord);
+        words.add(invalidWord);
+
+        DefinitionResource resource = new DefinitionResourceBuilder().words(words).build();
+
+        // Do Test
+        given().body(resource).contentType(ContentType.JSON).when().post("/definitions").then()
+            .statusCode(HttpStatus.CREATED.value()).body("size()", is(2));
     }
 
     private List<KnownWord> loadWords() {

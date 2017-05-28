@@ -1,5 +1,8 @@
 package com.tsm.cards.service;
 
+import static org.apache.commons.lang3.RandomStringUtils.random;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,6 +20,9 @@ import org.mockito.MockitoAnnotations;
 
 import com.tsm.cards.model.Entries;
 import com.tsm.cards.model.LexicalEntries;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.tsm.cards.model.Definition;
 import com.tsm.cards.model.Results;
 import com.tsm.cards.model.Senses;
@@ -63,6 +69,13 @@ public class BuildDefinitionsResourceServiceTest {
         // Do test
         List<DefinitionResource> result = service.loadResource(definition);
 
+        Gson gson = new GsonBuilder().create();
+
+        Type listType = new TypeToken<ArrayList<DefinitionResource>>() {
+        }.getType();
+
+        System.out.println(gson.toJson(result, listType));
+        
         // Assertions
         Assert.assertNotNull(result);
         Assert.assertTrue(!result.isEmpty());
@@ -77,11 +90,11 @@ public class BuildDefinitionsResourceServiceTest {
             Entries entries = new Entries();
 
             Senses senses = new Senses();
-            senses.setDefinitions(Collections.singletonList(w + " " + w));
+            senses.setDefinitions(Collections.singletonList(w + " " + random(20, true, true)));
             senses.setId(UUID.randomUUID().toString());
 
             Subsenses subsenses = new Subsenses();
-            subsenses.setDefinitions(Collections.singletonList(w + " " + w));
+            subsenses.setDefinitions(Collections.singletonList(w + " " + random(20, true, true)));
             subsenses.setId(UUID.randomUUID().toString());
             senses.setSubsenses(Collections.singletonList(subsenses));
 

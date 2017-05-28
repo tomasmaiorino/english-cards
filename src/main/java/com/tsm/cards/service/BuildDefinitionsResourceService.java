@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BuildDefinitionsResourceService {
 
+    //TODO refactor these methods
     public List<DefinitionResource> loadResource(List<Definition> cachedWords) {
         Assert.notEmpty(cachedWords, "The cachedWords must not be empty.");
         log.info("Loading resource ->");

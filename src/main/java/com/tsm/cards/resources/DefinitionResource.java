@@ -17,6 +17,10 @@ public class DefinitionResource {
     @Getter
     @Setter
     private Set<String> words;
+    
+    @Getter
+    @Setter
+    private Set<String> invalidWords;
 
     @Getter
     @Setter
