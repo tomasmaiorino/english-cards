@@ -24,7 +24,7 @@ public class ManageWordService {
     @Setter
     private OxfordService oxfordService;
 
-    public Definition createDefinition(String word) throws Exception {
+    public Definition createDefinition(final String word) throws Exception {
         Assert.hasText(word, "The word must not be empty or null.");
         log.debug("creating original call for known word [{}] .", word);
 

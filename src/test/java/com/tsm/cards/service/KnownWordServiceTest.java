@@ -110,6 +110,38 @@ public class KnownWordServiceTest {
         assertThat(result, is(knownWord));
     }
 
+    @Test
+    public void save_NullKnownWordGiven_ShouldThrowException() {
+        // Set up
+        KnownWord knownWord = null;
+
+        // Do test
+        try {
+            service.save(knownWord);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
+
+    @Test
+    public void save_ValidKnownWordGiven_ShouldSave() {
+        // Set up
+        KnownWord knownWord = buildKnownWord();
+
+        // Expectations
+        when(mockRepository.save(knownWord)).thenReturn(knownWord);
+
+        // Do test
+        KnownWord result = service.save(knownWord);
+
+        // Assertions
+        verify(mockRepository).save(knownWord);
+        assertThat(result, is(knownWord));
+    }
+
     private KnownWord buildKnownWord() {
         KnownWord knownWord = new KnownWord();
         ReflectionTestUtils.setField(knownWord, "id", "0");

@@ -31,4 +31,16 @@ public class KnownWordService {
         return knownWord;
     }
 
+    @Transactional
+    public KnownWord save(final KnownWord knownWord) {
+        Assert.notNull(knownWord, "The knownWord must not be empty or null.");
+        log.debug("Saving knownWord [{}]", knownWord);
+
+        repository.save(knownWord);
+
+        log.debug("Saved [{}] knownWord.", knownWord);
+
+        return knownWord;
+    }
+
 }

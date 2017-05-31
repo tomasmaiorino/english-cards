@@ -35,7 +35,7 @@ public class ProcessWordsService {
     @Setter
     private DefinitionService definitionService;
 
-    public Set<String> getNotCachedWords(List<Definition> cachedWords, Set<String> words) {
+    public Set<String> getNotCachedWords(final List<Definition> cachedWords, final Set<String> words) {
         Assert.notEmpty(words, "The words must not be empty.");
 
         if (cachedWords == null || cachedWords.isEmpty()) {
@@ -49,7 +49,7 @@ public class ProcessWordsService {
         return notCachedWords;
     }
 
-    public List<Definition> getCachedWords(Set<String> words) {
+    public List<Definition> getCachedWords(final Set<String> words) {
         Assert.notEmpty(words, "The words must not be empty.");
         log.info("get cached words [{}]", words.size());
         List<Definition> calls = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ProcessWordsService {
         return calls;
     }
 
-    public Set<String> splitWords(String words) {
+    public Set<String> splitWords(final String words) {
         Assert.notNull(words, "The words must not be empty.");
         log.info("spliint words [{}]", words);
         if (words.contains(WORDS_SEPARATOR)) {
@@ -74,7 +74,7 @@ public class ProcessWordsService {
         }
     }
 
-    private List<String> createWordsList(String words) {
+    private List<String> createWordsList(final String words) {
         String[] content = words.split(WORDS_SEPARATOR);
         List<String> result = new ArrayList<>();
         for (String s : content) {
@@ -85,7 +85,7 @@ public class ProcessWordsService {
         return result;
     }
 
-    public Set<String> getValidWords(Set<String> words) {
+    public Set<String> getValidWords(final Set<String> words) {
         Assert.notEmpty(words, "The words must not be empty.");
         log.info("get valid words [{}]", words);
         Set<String> result = new HashSet<>();
@@ -99,9 +99,11 @@ public class ProcessWordsService {
         return result;
     }
 
-    public void getInvalidWords(Set<String> validWords, Set<String> receivedWords) {
+    public Set<String> getInvalidWords(final Set<String> validWords, final Set<String> receivedWords) {
         Assert.notEmpty(validWords, "The valid words must not be empty.");
         Assert.notEmpty(receivedWords, "The received words must not be empty.");
-        receivedWords.removeIf(r -> validWords.contains(r));
+        Set<String> invalidWords = new HashSet<>(receivedWords);
+        invalidWords.removeIf(r -> validWords.contains(r));
+        return invalidWords;
     }
 }

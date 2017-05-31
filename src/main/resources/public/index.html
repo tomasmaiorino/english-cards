@@ -222,7 +222,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="create">
+    <section id="create" ng-controller="SendDefinitionCtrl">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -231,40 +231,28 @@
                 </div>
             </div>
             <div class="row" align="center">
-                <form role="form text-center" id="generateCardsForm">
+                <form role="form text-center" id="generateDefinitionForm">
                     <div class="col-lg-12">
                         <div class="form-group ">
                             <label>Words</label>
                             <input class="form-control" id="words" placeholder="Write your words separating them by ',' e.g: car,bol,home">
                             <p class="help-block"></p>
-                            <a href="#how-works" class="page-scroll btn btn-xl">Generate</a>
+                            <a ng-click="sendDefinition();" class="page-scroll btn btn-xl">Generate</a>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4" ng-repeat="def in definitions">
                     <div class="panel panel-default">
                         <div class="panel-heading text-center">
-                            <label>home</label>
+                            <label class="def-word">{{def.word}}</label>
                         </div>
                         <div class="panel-body text-left" id="homeDefinitions">
                             <div class="form-group">
                                 <label>Definitions</label>
-                                <div class="checkbox">
-                                    <label>
-			                                   <input type="checkbox" value="">the family or social unit occupying a permanent residence
-			                               </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-			                                   <input type="checkbox" value="">a place where something flourishes, is most typically found, or from which it originates
-			                               </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-			                                   <input type="checkbox" value="">a place where an object is kept.
-			                               </label>
+                                <div ng:repeat="(key, value) in def.definitions" class="checkbox">
+                                    <label><input type="checkbox" value="{{key}}">{{value}}</label>
                                 </div>
                             </div>
                         </div>
@@ -704,7 +692,8 @@
     <script type="text/javascript" src="/js/angular-resource.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="/js/agency.min.js"></script>
+    <script src="/js/agency.js"></script>
+    <script src="/js/cards.js"></script>
 
 </body>
 

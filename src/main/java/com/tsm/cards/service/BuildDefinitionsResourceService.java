@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BuildDefinitionsResourceService {
 
-    //TODO refactor these methods
+    // TODO refactor these methods
     public List<DefinitionResource> loadResource(List<Definition> cachedWords) {
         Assert.notEmpty(cachedWords, "The cachedWords must not be empty.");
         log.info("Loading resource ->");
@@ -44,7 +44,7 @@ public class BuildDefinitionsResourceService {
             resources.add(resource);
         });
         log.info("Loading resource <-");
-        return resources.stream().sorted((r1, r2) -> r1.getWord().compareTo(r2.getWord())).collect(Collectors.toList());
+        return resources;
     }
 
     private void createDefinitions(Entries e, Map<String, String> definitions) {

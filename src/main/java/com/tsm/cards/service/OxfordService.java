@@ -41,7 +41,7 @@ public class OxfordService {
     @Value("${oxford.service.definitions.service.endpoint}")
     private String oxfordServiceDefinitionsServiceEndpoint;
 
-    private HttpGet initialConfig(String word) {
+    private HttpGet initialConfig(final String word) {
         HttpGet getRequest = new HttpGet(getOxfordServiceDefinitionsServiceEndpoint().replace("X", word));
         getRequest.addHeader("accept", "application/json");
         getRequest.addHeader("app_id", getOxfordServiceApiId());
@@ -51,7 +51,7 @@ public class OxfordService {
 
     public Definition findWordDefinition(final String word) throws Exception {
         Assert.notNull(word, "The word must not be null.");
-        
+
         log.info("Looking for the [%s] definition :0 ", word);
 
         HttpClient httpClient = new DefaultHttpClient();
@@ -72,14 +72,14 @@ public class OxfordService {
         }
     }
 
-    private Definition createDefinition(HttpResponse response) throws IOException {
+    private Definition createDefinition(final HttpResponse response) throws IOException {
         HttpEntity entity = response.getEntity();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         return gson.fromJson(new InputStreamReader(entity.getContent()), Definition.class);
     }
 
-    private void treatNotSuccess(HttpResponse response, String word) throws Exception {
+    private void treatNotSuccess(final HttpResponse response, final String word) throws Exception {
         if (response.getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND) {
             throw new ResourceNotFoundException("Definition not found for the word " + word);
         } else {

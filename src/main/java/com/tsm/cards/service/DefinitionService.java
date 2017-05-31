@@ -23,7 +23,7 @@ public class DefinitionService {
     private DefinitionRepository repository;
 
     @Transactional
-    public Definition save(Definition definition) {
+    public Definition save(final Definition definition) {
         Assert.notNull(definition, "The definition must not be null.");
         log.info("Saving definition [{}] .", definition);
 

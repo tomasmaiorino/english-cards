@@ -374,10 +374,10 @@ public class ProcessWordsServiceTest {
         validWords.add("home");
 
         // Do test
-        service.getInvalidWords(validWords, receivedWords);
+        Set<String> result = service.getInvalidWords(validWords, receivedWords);
         Assert.assertNotNull(receivedWords);
         Assert.assertEquals(validWords.size(), 1);
-        Assert.assertTrue(receivedWords.contains(invalidWord));
+        Assert.assertTrue(result.contains(invalidWord));
     }
 
     @Test
@@ -389,8 +389,8 @@ public class ProcessWordsServiceTest {
         validWords.add("home");
 
         // Do test
-        service.getInvalidWords(validWords, receivedWords);
-        Assert.assertNotNull(receivedWords);
-        Assert.assertEquals(receivedWords.size(), 0);
+        Set<String> result = service.getInvalidWords(validWords, receivedWords);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(result.size(), 0);
     }
 }

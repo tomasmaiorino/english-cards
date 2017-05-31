@@ -1,3 +1,6 @@
+initial:
+  load:
+    word: home
 spring:
   data:
     mongodb:

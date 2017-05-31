@@ -18,7 +18,6 @@ import java.util.Set;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -129,11 +128,12 @@ public class DefinitionControllerIT {
 
         // Do Test
         given().body(resource).contentType(ContentType.JSON).when().post("/definitions").then()
-            .statusCode(HttpStatus.CREATED.value()).body("size()", is(2))
-            .body("[0].word", is(car.toLowerCase()))
-            .body("[0].definitions.size()", is(greaterThan(0)))
-            .body("[1].word", is(word))
-            .body("[1].definitions.size()", is(greaterThan(0)));
+            .statusCode(HttpStatus.CREATED.value()).body("definitions.size()", is(2))
+            .body("definitions[0].word", is(car.toLowerCase()))
+            .body("definitions[0].definitions.size()", is(greaterThan(0)))
+            .body("definitions[1].word", is(word))
+            .body("definitions[1].definitions.size()", is(greaterThan(0)))
+            .body("invalidWords.size()", is(greaterThan(0)));
     }
 
     @Test
@@ -146,9 +146,9 @@ public class DefinitionControllerIT {
 
         // Do Test
         given().body(resource).contentType(ContentType.JSON).when().post("/definitions").then()
-            .statusCode(HttpStatus.CREATED.value()).body("size()", is(1))
-            .body("[0].word", is(word.toLowerCase()))
-            .body("[0].definitions.size()", is(greaterThan(0)));
+            .statusCode(HttpStatus.CREATED.value()).body("definitions.size()", is(1))
+            .body("definitions[0].word", is(word.toLowerCase()))
+            .body("definitions[0].definitions.size()", is(greaterThan(0)));
     }
 
     @Test
@@ -166,7 +166,7 @@ public class DefinitionControllerIT {
 
         // Do Test
         given().body(resource).contentType(ContentType.JSON).when().post("/definitions").then()
-            .statusCode(HttpStatus.CREATED.value()).body("size()", is(2));
+            .statusCode(HttpStatus.CREATED.value()).body("definitions.size()", is(2));
     }
 
     private List<KnownWord> loadWords() {

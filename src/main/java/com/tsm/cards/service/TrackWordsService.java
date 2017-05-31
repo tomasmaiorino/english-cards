@@ -31,7 +31,7 @@ public class TrackWordsService {
         return track;
     }
 
-    public TrackWord findTrackById(String word) {
+    public TrackWord findTrackById(final String word) {
         Assert.notNull(word, "The id must not be null.");
 
         log.info("Searching for track cache [{}] .", word);
@@ -44,7 +44,7 @@ public class TrackWordsService {
 
     }
 
-    public TrackWord incrementTrack(TrackWord track) {
+    public TrackWord incrementTrack(final TrackWord track) {
         Assert.notNull(track, "The Track must not be null.");
         log.info("incrementing track [{}] .", track);
 

@@ -13,6 +13,6 @@ import com.tsm.cards.model.Cards;
 public interface CardsRepository extends MongoRepository<Cards, Long> {
 
     @Query("{ 'word': ?0 }")
-    List<Cards> findByWord(String word);
+    List<Cards> findByWord(final String word);
 
 }

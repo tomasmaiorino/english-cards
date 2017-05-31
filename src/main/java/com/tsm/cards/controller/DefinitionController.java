@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.model.Definition;
 import com.tsm.cards.resources.DefinitionResource;
+import com.tsm.cards.resources.ResultResource;
 import com.tsm.cards.service.BuildDefinitionsResourceService;
 import com.tsm.cards.service.DefinitionService;
 import com.tsm.cards.service.KnownWordService;
@@ -87,14 +89,18 @@ public class DefinitionController extends BaseController {
 
     @RequestMapping(method = POST, produces = APPLICATION_JSON_UTF_8, consumes = APPLICATION_JSON_UTF_8)
     @ResponseStatus(CREATED)
-    public List<DefinitionResource> getDefinitions(@RequestBody final DefinitionResource resource) throws Exception {
+    public ResultResource getDefinitions(@RequestBody final DefinitionResource resource) throws Exception {
         log.debug("Recieved a request to process these words [{}].", resource);
+
+        Set<String> givenWords = resource.getWords();
 
         Set<String> validWords = getValidWords(resource);
 
-        List<Definition> cachedWords = processWordsService.getCachedWords(validWords);
+        Set<String> invalidWords = processWordsService.getInvalidWords(validWords, resource.getWords());
 
         Set<String> notCachedWords = null;
+
+        List<Definition> cachedWords = processWordsService.getCachedWords(validWords);
 
         if (cachedWords.size() < validWords.size()) {
             notCachedWords = processWordsService.getNotCachedWords(cachedWords, validWords);
@@ -109,7 +115,11 @@ public class DefinitionController extends BaseController {
 
         log.debug("Sending response with definition results: [{}].", resourceRet);
 
-        return resourceRet;
+        ResultResource result = new ResultResource();
+        result.setDefinitions(new TreeSet<>(resourceRet));
+        result.setGivenWords(givenWords);
+        result.setInvalidWords(invalidWords);
+        return result;
     }
 
     private Set<String> getValidWords(final DefinitionResource resource) {
@@ -121,7 +131,7 @@ public class DefinitionController extends BaseController {
         return validWords;
     }
 
-    private void processNotCachedWords(List<Definition> cachedWords, Set<String> notCachedWords) {
+    private void processNotCachedWords(final List<Definition> cachedWords, final Set<String> notCachedWords) {
         List<Definition> notCached = new ArrayList<>();
 
         if (notCachedWords != null && !notCachedWords.isEmpty()) {

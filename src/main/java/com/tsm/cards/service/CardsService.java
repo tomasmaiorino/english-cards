@@ -22,7 +22,7 @@ public class CardsService {
     private CardsRepository repository;
 
     @Transactional
-    public Cards save(Cards cards) {
+    public Cards save(final Cards cards) {
         Assert.notNull(cards, "The cards must not be null.");
         log.info("Saving cards [{}] .", cards);
 

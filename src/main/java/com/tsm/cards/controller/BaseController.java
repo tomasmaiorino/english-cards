@@ -14,7 +14,7 @@ public class BaseController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    protected @ResponseBody ResponseEntity<Map<String, String>> handleException(IllegalArgumentException e) {
+    protected @ResponseBody ResponseEntity<Map<String, String>> handleException(final IllegalArgumentException e) {
         Map<String, String> response = new HashMap<>();
         response.put("message", e.getMessage());
         return new ResponseEntity<Map<String, String>>(response, HttpStatus.BAD_REQUEST);
