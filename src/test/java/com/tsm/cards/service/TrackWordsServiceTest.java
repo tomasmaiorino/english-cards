@@ -1,6 +1,8 @@
 package com.tsm.cards.service;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.verify;
@@ -148,7 +150,11 @@ public class TrackWordsServiceTest {
         TrackWord result = service.incrementTrack(track);
 
         verify(mockRepository).findById(word);
-        assertThat(result, is(track));
+
+        // Assertions
+        assertThat(result, allOf(
+            hasProperty("id", is(word)),
+            hasProperty("callCount", is(1l))));
     }
 
     @Test
@@ -170,6 +176,70 @@ public class TrackWordsServiceTest {
         verify(mockRepository).findById(word);
         verify(mockRepository).save(track);
         assertThat(result, is(track));
+    }
+
+    @Test
+    public void incrementTrack_NullWordGiven_ShouldThrowException() throws Exception {
+        // Set up
+        String word = null;
+
+        // Do test
+        try {
+            service.incrementTrack(word);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        verifyZeroInteractions(mockRepository);
+    }
+
+    @Test
+    public void incrementTrack_WordGiven_ShouldReturnNewTrack() throws Exception {
+        // Set up
+        String word = "home";
+
+        TrackWord track = new TrackWord();
+        track.setId(word);
+
+        // Expectations
+        Optional<TrackWord> emptyOptional = Optional.empty();
+        when(mockRepository.findById(word)).thenReturn(emptyOptional);
+        when(mockRepository.save(track)).thenReturn(track);
+
+        // Do test
+        TrackWord result = service.incrementTrack(word);
+
+        verify(mockRepository).findById(word);
+
+        // Assertions
+        assertThat(result, allOf(
+            hasProperty("id", is(word)),
+            hasProperty("callCount", is(1l))));
+    }
+
+    @Test
+    public void incrementTrack_ValidWordGiven() throws Exception {
+        // Set up
+        String word = "home";
+
+        TrackWord track = new TrackWord();
+        track.setCallCount(1l);
+        track.setId(word);
+
+        // Expectations
+        Optional<TrackWord> expectedOptional = Optional.of(track);
+        when(mockRepository.findById(word)).thenReturn(expectedOptional);
+        when(mockRepository.save(track)).thenReturn(track);
+
+        // Do test
+        TrackWord result = service.incrementTrack(word);
+
+        verify(mockRepository).findById(word);
+        verify(mockRepository).save(track);
+        // Assertions
+        assertThat(result, allOf(
+            hasProperty("id", is(word)),
+            hasProperty("callCount", is(2l))));
     }
 
 }

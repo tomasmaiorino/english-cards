@@ -17,7 +17,7 @@ public class TrackWord {
 
     @Getter
     @Setter
-    private Long callCount;
+    private Long callCount = 1l;
 
     @Getter
     @Setter

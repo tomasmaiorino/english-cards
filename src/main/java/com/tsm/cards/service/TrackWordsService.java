@@ -1,5 +1,7 @@
 package com.tsm.cards.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,7 +38,7 @@ public class TrackWordsService {
 
         log.info("Searching for track cache [{}] .", word);
 
-        TrackWord track = repository.findById(word).orElseThrow(() -> new ResourceNotFoundException("not found"));
+        TrackWord track = findOptionalTrackById(word).orElseThrow(() -> new ResourceNotFoundException("not found"));
 
         log.info("Found track [{}] .", track);
 
@@ -44,26 +46,39 @@ public class TrackWordsService {
 
     }
 
-    public TrackWord incrementTrack(final TrackWord track) {
-        Assert.notNull(track, "The Track must not be null.");
-        log.info("incrementing track [{}] .", track);
+    private Optional<TrackWord> findOptionalTrackById(final String word) {
+        Assert.notNull(word, "The id must not be null.");
+
+        log.info("Searching for track cache [{}] .", word);
+
+        return repository.findById(word);
+
+    }
+
+    public TrackWord incrementTrack(final String word) {
+        Assert.notNull(word, "The word must not be null.");
 
         TrackWord trackTemp = null;
+        Optional<TrackWord> optional = findOptionalTrackById(word);
 
-        try {
-            trackTemp = findTrackById(track.getId());
+        if (optional.isPresent()) {
+            trackTemp = optional.get();
             trackTemp.setCallCount(trackTemp.getCallCount() + 1);
-
-        } catch (ResourceNotFoundException e) {
-            track.setCallCount(1l);
-            trackTemp = track;
-
+        } else {
+            trackTemp = new TrackWord();
+            trackTemp.setId(word);
         }
 
         save(trackTemp);
 
-        log.info("Incremented definition [{}].", trackTemp);
+        log.info("Incremented track word [{}].", trackTemp);
         return trackTemp;
+    }
+
+    public TrackWord incrementTrack(final TrackWord track) {
+        Assert.notNull(track, "The Track must not be null.");
+        log.info("Incrementing track [{}] .", track);
+        return incrementTrack(track.getId());
     }
 
 }

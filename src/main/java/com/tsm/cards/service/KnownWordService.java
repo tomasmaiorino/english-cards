@@ -22,11 +22,11 @@ public class KnownWordService {
 
     public KnownWord findByWord(final String word) {
         Assert.hasText(word, "The word must not be empty or null.");
-        log.debug("Searching for known word [{}] .", word);
+        log.info("Searching for known word [{}] .", word);
 
         KnownWord knownWord = repository.findByWord(word).orElseThrow(() -> new ResourceNotFoundException("not found"));
 
-        log.debug("Found [{}] knownWord.", knownWord);
+        log.info("Found [{}] knownWord.", knownWord);
 
         return knownWord;
     }

@@ -1,3 +1,6 @@
+initial:
+  load:
+    word: home
 oxford:
   service:
     api.id: 123

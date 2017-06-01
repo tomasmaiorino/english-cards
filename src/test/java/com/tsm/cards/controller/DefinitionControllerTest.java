@@ -47,6 +47,7 @@ import com.tsm.cards.service.ManageWordService;
 import com.tsm.cards.service.DefinitionService;
 import com.tsm.cards.service.OxfordService;
 import com.tsm.cards.service.ProcessWordsService;
+import com.tsm.cards.service.TrackWordsService;
 
 @SuppressWarnings("unchecked")
 @FixMethodOrder(MethodSorters.JVM)
@@ -71,6 +72,9 @@ public class DefinitionControllerTest {
 
     @Mock
     private ProcessWordsService mockProcessWordsService;
+
+    @Mock
+    private TrackWordsService mockTrackWordsService;
 
     @Mock
     private BuildDefinitionsResourceService mockBuildDefinitionsResourceService;
@@ -98,8 +102,7 @@ public class DefinitionControllerTest {
         // Assertions
         verify(mockKnowService).findByWord(word.toLowerCase());
 
-        verifyZeroInteractions(mockOxfordService);
-        verifyZeroInteractions(mockDefinitionService);
+        verifyZeroInteractions(mockOxfordService, mockDefinitionService, mockTrackWordsService, mockProcessWordsService);
     }
 
     @Test
@@ -123,28 +126,8 @@ public class DefinitionControllerTest {
         verify(mockKnowService).findByWord(word.toLowerCase());
         verify(mockDefinitionService).findOptionalDefinitionById(word.toLowerCase());
         verify(mockManageWordService).createDefinition(word.toLowerCase());
+        verifyZeroInteractions(mockOxfordService, mockTrackWordsService, mockProcessWordsService);
     }
-
-    // @Test
-    // public void findByWord_CachedWordGiven() throws Exception {
-    // // Set up
-    // String word = "home";
-    // Definition definition = new Definition();
-    // Optional<Definition> optDefinition = Optional.of(definition);
-    //
-    // // Expectations
-    // when(mockKnowService.findByWord(word.toLowerCase())).thenReturn(null);
-    // when(mockDefinitionService.findOptionalDefinitionById(word.toLowerCase())).thenReturn(optDefinition);
-    //
-    // // Do test
-    // Definition result = controller.findByWord(word);
-    //
-    // // Assertions
-    // verify(mockKnowService).findByWord(word.toLowerCase());
-    // verify(mockDefinitionService).findOptionalDefinitionById(word.toLowerCase());
-    // assertThat(result, is(definition));
-    // verifyZeroInteractions(mockManageWordService);
-    // }
 
     @Test
     public void findByWord_CreatedNewDefinition() throws Exception {
@@ -164,6 +147,7 @@ public class DefinitionControllerTest {
         verify(mockKnowService).findByWord(word.toLowerCase());
         verify(mockDefinitionService).findOptionalDefinitionById(word);
         verify(mockManageWordService).createDefinition(word.toLowerCase());
+        verifyZeroInteractions(mockOxfordService, mockTrackWordsService, mockProcessWordsService);
         assertThat(result, is(definition));
     }
 
@@ -188,7 +172,7 @@ public class DefinitionControllerTest {
         // Assertions
         verify(mockProcessWordsService).getValidWords(words);
         verify(mockProcessWordsService, never()).getCachedWords(words);
-        verifyZeroInteractions(mockManageWordService);
+        verifyZeroInteractions(mockManageWordService, mockOxfordService, mockTrackWordsService, mockProcessWordsService);
     }
 
     @Test

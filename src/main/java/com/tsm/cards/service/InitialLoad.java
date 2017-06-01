@@ -33,8 +33,8 @@ public class InitialLoad implements ApplicationListener<ApplicationReadyEvent> {
     @Getter
     @Setter
     private KnownWordService knownWordService;
-
-    @Value("{initial.load.word}")
+    
+    @Value("${initial.load.word}")
     @Getter
     @Setter
     private String initialLoadWord;
@@ -48,7 +48,7 @@ public class InitialLoad implements ApplicationListener<ApplicationReadyEvent> {
             knownWordService.findByWord(getInitialLoadWord());
             log.info("Initial load word found :) ");
         } catch (ResourceNotFoundException e) {
-            log.info("initial load word not found. Let's run the initial load :O ");
+            log.info("initial load word [{}] not found. Let's run the initial load :O ", getInitialLoadWord());
             runInitialLoad();
         } catch (Exception e) {
             log.error("Something went wrong.", e);

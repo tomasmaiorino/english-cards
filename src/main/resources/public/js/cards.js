@@ -1,37 +1,56 @@
-var test_content = "[{'word': 'car','definitions': {'a293b27a-9c4c-4814-a225-4419570b9e86': 'car Isy0cANwPEAYy7pQKBV2','089267b7-2b46-4cb0-a443-f41c2892d657': 'car DiMA385PZZkpw5c5yfqO'},{'word': 'home','definitions': {'b1af647c-0269-4d7a-972d-f67f8c3736c1': 'home KC94oc8gi00vG9L77vby','28e71e93-310b-4195-a727-9361b55493b4': 'home HVuhKsviekex5LR9fsZE'}}]";
-var app = angular.module("EnglishCards", ['ngResource']);
+var app = angular.module("EnglishCards", [ 'ngResource' ]);
 
-      app.factory('sendDefinitionService', ['$resource', function($resource) {
-        console.log("RATING_URL: " + RATING_URL);
-        var Definition = $resource(RATING_URL,{}, {
-        send: { method: "POST", params: {}, headers: {'Content-Type':'application/json'}}
-        }
-      );
-         return function(entry) {
-          // debug(entry);
-           return Definition.send(entry);
-         };
-       }]);
+app.factory('sendDefinitionService', [ '$resource', function($resource) {
+	console.log("DEFINITION_SERVICE_URL: " + DEFINITION_SERVICE_URL);
+	var Definition = $resource(DEFINITION_SERVICE_URL, {}, {
+		definition : {
+			method : "POST",
+			params : {},
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		}
+	});
+	return function(entry) {
+		return Definition.definition(entry);
+	};
+} ]);
 
-       app.controller('SendDefinitionCtrl', ['$scope', 'sendDefinitionService', function($scope, sendDefinitionService) {
-         $scope.sendDefinition = function() {
-             //showRatingErrorMessage(undefined, undefined, undefined, true);
-             var content = new Object();
-             content.words = $('#words').val();
-             $scope.definitions = JSON.parse(test_content);
-  //           $("#btnDefinition").attr("disabled", true);
-//             $("#imgDefinitionLoad").show();
-
-            /*
-             $scope.sentDefinition = sendDefinitionService(JSON.stringify(content));
-             $scope.sentDefinition.$promise.then(function (result) {
-               console.info(result);
-             }, function(error) {
-               showRatingErrorMessage('', '#btnDefinition', '#imgDefinitionLoad');
-               treatError(error, 'send rating');
-             });
-             */
-        }
-
-
-       }]);
+app.controller('SendDefinitionCtrl', [
+		'$scope',
+		'sendDefinitionService',
+		function($scope, sendDefinitionService) {
+			$scope.searchDefinitions = function() {
+				if ($('#words').val() != '') {
+					// pre configuration
+					showSearchLoad(true);
+					$('.search-link').hide('slow');
+					var content = new Object();
+					var arr = parseWords($('#words').val());
+					content.words = arr;
+					$scope.results = sendDefinitionService(JSON
+							.stringify(content));
+					$scope.results.$promise.then(function(result) {
+						showSearchLoad(false);
+						$('.search-link').show('slow');
+						if(result.invalidWords.length > 0) {
+							var invalidContent = '';
+							for (var i = 0; i < result.invalidWords.length; i++) {
+								if (i == 0) {
+									invalidContent = result.invalidWords[i];
+								} else {
+									invalidContent = invalidContent + ', ' + result.invalidWords[i];	
+								}
+							}
+							showMessage('Warning!', 'Some given words are invalid: ' + invalidContent, 'alert-warning', true);
+						}
+					}, function(error) {
+						showSearchLoad(false);
+						$('.search-link').show('slow');
+						treatError(error, 'send definition', {});
+					});
+				} else {
+					showErrorMessage();
+				}
+			}
+		} ]);

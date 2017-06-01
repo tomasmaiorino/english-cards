@@ -27,6 +27,7 @@ import com.tsm.cards.service.DefinitionService;
 import com.tsm.cards.service.KnownWordService;
 import com.tsm.cards.service.ManageWordService;
 import com.tsm.cards.service.ProcessWordsService;
+import com.tsm.cards.service.TrackWordsService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -58,6 +59,11 @@ public class DefinitionController extends BaseController {
     @Getter
     @Setter
     private ProcessWordsService processWordsService;
+
+    @Autowired
+    @Getter
+    @Setter
+    private TrackWordsService trackWordsService;
 
     @Autowired
     @Getter
@@ -108,18 +114,28 @@ public class DefinitionController extends BaseController {
 
         processNotCachedWords(cachedWords, notCachedWords);
 
+        processTrackWords(cachedWords);
+
         List<DefinitionResource> resourceRet = new ArrayList<>();
         if (!cachedWords.isEmpty()) {
             resourceRet = buildDefinitionsResourceService.loadResource(cachedWords);
         }
 
-        log.debug("Sending response with definition results: [{}].", resourceRet);
-
         ResultResource result = new ResultResource();
         result.setDefinitions(new TreeSet<>(resourceRet));
         result.setGivenWords(givenWords);
         result.setInvalidWords(invalidWords);
+
+        log.debug("Sending response with definition results: [{}].", result);
         return result;
+    }
+
+    private void processTrackWords(List<Definition> cachedWords) {
+        log.info("Tracking words ->");
+        cachedWords.forEach(w -> {
+            trackWordsService.incrementTrack(w.getId());
+        });
+        log.info("Tracking words <-");
     }
 
     private Set<String> getValidWords(final DefinitionResource resource) {
