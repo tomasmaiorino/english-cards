@@ -38,6 +38,7 @@ public class BuildDefinitionsResourceServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        service.setMaxDefinitionListSize(4);
     }
 
     @Test(expected = IllegalArgumentException.class)

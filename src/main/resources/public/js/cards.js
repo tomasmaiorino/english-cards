@@ -24,6 +24,7 @@ app.controller('SendDefinitionCtrl', [
 				if ($('#words').val() != '') {
 					// pre configuration
 					showSearchLoad(true);
+					clearMessage();
 					$('.search-link').hide('slow');
 					var content = new Object();
 					var arr = parseWords($('#words').val());
@@ -33,24 +34,19 @@ app.controller('SendDefinitionCtrl', [
 					$scope.results.$promise.then(function(result) {
 						showSearchLoad(false);
 						$('.search-link').show('slow');
-						if(result.invalidWords.length > 0) {
-							var invalidContent = '';
-							for (var i = 0; i < result.invalidWords.length; i++) {
-								if (i == 0) {
-									invalidContent = result.invalidWords[i];
-								} else {
-									invalidContent = invalidContent + ', ' + result.invalidWords[i];	
-								}
-							}
-							showMessage('Warning!', 'Some given words are invalid: ' + invalidContent, 'alert-warning', true);
+						if (result.invalidWords.length > 0) {
+							showMessage('Warning!',
+									'Some given words are invalid: '
+											+ splitWords(result.invalidWords),
+									'alert-warning', true);
 						}
 					}, function(error) {
 						showSearchLoad(false);
 						$('.search-link').show('slow');
-						treatError(error, 'send definition', {});
+						treatError(error, 'send definition', showErrorMessage('Error!', error.data.message));
 					});
 				} else {
-					showErrorMessage();
+					showErrorMessage('Error!', 'At least one word must be informed.');
 				}
 			}
 		} ]);

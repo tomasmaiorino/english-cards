@@ -2,8 +2,7 @@ package com.tsm.cards.model;
 
 import java.util.List;
 
-import javax.persistence.Transient;
-
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 

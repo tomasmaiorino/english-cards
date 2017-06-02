@@ -75,7 +75,21 @@ function showMessage(title, errorMessage, type, show) {
 		$('#msg-row').hide('slow');
 	}
 }
-
+function clearMessage() {
+	showMessage('', '', '', false);
+}
 function showErrorMessage(title, errorMessage, btn, load, hide) {
 	showMessage(title, errorMessage, 'alert-danger', true);
+}
+
+function splitWords(content) {
+	var result = '';
+	for (var i = 0; i < content.length; i++) {
+		if (i == 0) {
+			result = content[i];
+		} else {
+			result = result + ', ' + content[i];
+		}
+	}
+	return result;
 }

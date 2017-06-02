@@ -2,44 +2,33 @@ package com.tsm.cards.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
 
 public class BaseModel {
 
     @Id
+    @Getter
+    @Setter
     private String id;
 
     @CreatedDate
+    @Getter
     private LocalDateTime created;
 
     @LastModifiedDate
+    @Getter
     private LocalDateTime lastUpdated;
-
-    public final LocalDateTime getLastUpdated() {
-        return lastUpdated;
-    }
 
     @JsonIgnore
     public boolean isNew() {
         return created == null;
-    }
-
-    @PrePersist
-    public final void prePersist() {
-        created = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public final void preUpdate() {
-        lastUpdated = LocalDateTime.now();
     }
 
     @Override

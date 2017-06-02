@@ -148,7 +148,7 @@ public class DefinitionControllerIT {
         given().body(resource).contentType(ContentType.JSON).when().post("/definitions").then()
             .statusCode(HttpStatus.CREATED.value()).body("definitions.size()", is(1))
             .body("definitions[0].word", is(word.toLowerCase()))
-            .body("definitions[0].definitions.size()", is(greaterThan(0)));
+            .body("definitions[0].definitions.size()", is(4));
     }
 
     @Test

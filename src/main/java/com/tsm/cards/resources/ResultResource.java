@@ -14,6 +14,10 @@ public class ResultResource {
     @Getter
     @Setter
     private Set<String> invalidWords;
+    
+    @Getter
+    @Setter
+    private Set<String> notFoundWords;
 
     @Getter
     @Setter

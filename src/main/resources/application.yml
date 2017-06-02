@@ -1,13 +1,15 @@
+maxDefinitionListSize: 4
 initial:
   load:
     word: home
+
 oxford:
   service:
-    api.id: 123
-    app.key: 123
-    definitions.service.endpoint: https://od-api.oxforddictionaries.com:443/api/v1/entries/en/X/definitions
+    api.id: cd64b862
+    app.key: 637e34032cc087c4d88301f57171eb6f
+    definitions.service.endpoint: https://od-api.oxforddictionaries.com/api/v1/entries/en/X
 spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/admin
-      database: test
+      database: english_cards

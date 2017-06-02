@@ -47,7 +47,7 @@ $ mvn clean test
 $ mvn integration-test -P it -Doxford.service.api.id=OXFORD_SERVICE_API_ID -Doxford.service.app.key=OXFORD_SERVICE_APP_KEY
 
 ###### To run the application the maven command:
-$ mvn spring-boot:run
+$ mvn spring-boot:run -Dspring.profiles.active=profile -Doxford.service.api.id=xxx -Doxford.service.app.key=xxx
 
 ###### To test the find products by id, open the browser of your preference and type it:
 http://localhost:8080/product/1

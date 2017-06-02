@@ -9,23 +9,11 @@ import lombok.Setter;
 
 @Document(collection = "track_word")
 @TypeAlias("track_word")
-public class TrackWord {
-
-    @Getter
-    @Setter
-    private String id;
+public class TrackWord extends BaseModel {
 
     @Getter
     @Setter
     private Long callCount = 1l;
-
-    @Getter
-    @Setter
-    private Long createdDate;
-
-    @Getter
-    @Setter
-    private Long updatedDate;
 
     @Override
     public String toString() {

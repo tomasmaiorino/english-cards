@@ -53,341 +53,348 @@ import com.tsm.cards.service.TrackWordsService;
 @FixMethodOrder(MethodSorters.JVM)
 public class DefinitionControllerTest {
 
-    private static final String OXFORD_SERVICE_SAMPLE_FILE_NAME = "oxford.json";
+	private static final String OXFORD_SERVICE_SAMPLE_FILE_NAME = "oxford.json";
 
-    @Mock
-    private KnownWordService mockKnowService;
+	@Mock
+	private KnownWordService mockKnowService;
 
-    @Mock
-    private OxfordService mockOxfordService;
+	@Mock
+	private OxfordService mockOxfordService;
 
-    @InjectMocks
-    private DefinitionController controller;
+	@InjectMocks
+	private DefinitionController controller;
 
-    @Mock
-    private DefinitionService mockDefinitionService;
+	@Mock
+	private DefinitionService mockDefinitionService;
 
-    @Mock
-    private ManageWordService mockManageWordService;
+	@Mock
+	private ManageWordService mockManageWordService;
 
-    @Mock
-    private ProcessWordsService mockProcessWordsService;
+	@Mock
+	private ProcessWordsService mockProcessWordsService;
 
-    @Mock
-    private TrackWordsService mockTrackWordsService;
+	@Mock
+	private TrackWordsService mockTrackWordsService;
 
-    @Mock
-    private BuildDefinitionsResourceService mockBuildDefinitionsResourceService;
+	@Mock
+	private BuildDefinitionsResourceService mockBuildDefinitionsResourceService;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+	}
 
-    @Test
-    public void findByWord_InvalidWordGiven_ShouldReturnError() throws Exception {
-        // Set up
-        String word = "home";
+	@Test
+	public void findByWord_InvalidWordGiven_ShouldReturnError() throws Exception {
+		// Set up
+		String word = "home";
 
-        // Expectations
-        when(mockKnowService.findByWord(word.toLowerCase())).thenThrow(ResourceNotFoundException.class);
+		// Expectations
+		when(mockKnowService.findByWord(word.toLowerCase())).thenThrow(ResourceNotFoundException.class);
 
-        // Do test
-        try {
-            controller.findByWord(word);
-            fail();
-        } catch (ResourceNotFoundException e) {
-        }
+		// Do test
+		try {
+			controller.findByWord(word);
+			fail();
+		} catch (ResourceNotFoundException e) {
+		}
 
-        // Assertions
-        verify(mockKnowService).findByWord(word.toLowerCase());
+		// Assertions
+		verify(mockKnowService).findByWord(word.toLowerCase());
 
-        verifyZeroInteractions(mockOxfordService, mockDefinitionService, mockTrackWordsService, mockProcessWordsService);
-    }
+		verifyZeroInteractions(mockOxfordService, mockDefinitionService, mockTrackWordsService,
+				mockProcessWordsService);
+	}
 
-    @Test
-    public void findByWord_InvalidWordGiven_ShouldReturnNotFoundError() throws Exception {
-        // Set up
-        String word = "home";
+	@Test
+	public void findByWord_InvalidWordGiven_ShouldReturnNotFoundError() throws Exception {
+		// Set up
+		String word = "home";
 
-        // Expectations
-        when(mockKnowService.findByWord(word.toLowerCase())).thenReturn(null);
-        when(mockDefinitionService.findOptionalDefinitionById(word.toLowerCase())).thenReturn(Optional.empty());
-        when(mockManageWordService.createDefinition(word.toLowerCase())).thenThrow(ResourceNotFoundException.class);
+		// Expectations
+		when(mockKnowService.findByWord(word.toLowerCase())).thenReturn(null);
+		when(mockDefinitionService.findOptionalDefinitionById(word.toLowerCase())).thenReturn(Optional.empty());
+		when(mockManageWordService.createDefinition(word.toLowerCase())).thenThrow(ResourceNotFoundException.class);
 
-        // Do test
-        try {
-            controller.findByWord(word);
-            fail();
-        } catch (ResourceNotFoundException e) {
-        }
+		// Do test
+		try {
+			controller.findByWord(word);
+			fail();
+		} catch (ResourceNotFoundException e) {
+		}
 
-        // Assertions
-        verify(mockKnowService).findByWord(word.toLowerCase());
-        verify(mockDefinitionService).findOptionalDefinitionById(word.toLowerCase());
-        verify(mockManageWordService).createDefinition(word.toLowerCase());
-        verifyZeroInteractions(mockOxfordService, mockTrackWordsService, mockProcessWordsService);
-    }
+		// Assertions
+		verify(mockKnowService).findByWord(word.toLowerCase());
+		verify(mockDefinitionService).findOptionalDefinitionById(word.toLowerCase());
+		verify(mockManageWordService).createDefinition(word.toLowerCase());
+		verifyZeroInteractions(mockOxfordService, mockTrackWordsService, mockProcessWordsService);
+	}
 
-    @Test
-    public void findByWord_CreatedNewDefinition() throws Exception {
-        // Set up
-        String word = "home";
-        Definition definition = new Definition();
+	@Test
+	public void findByWord_CreatedNewDefinition() throws Exception {
+		// Set up
+		String word = "home";
+		Definition definition = new Definition();
 
-        // Expectations
-        when(mockKnowService.findByWord(word.toLowerCase())).thenReturn(null);
-        when(mockDefinitionService.findOptionalDefinitionById(word)).thenReturn(Optional.empty());
-        when(mockManageWordService.createDefinition(word.toLowerCase())).thenReturn(definition);
+		// Expectations
+		when(mockKnowService.findByWord(word.toLowerCase())).thenReturn(null);
+		when(mockDefinitionService.findOptionalDefinitionById(word)).thenReturn(Optional.empty());
+		when(mockManageWordService.createDefinition(word.toLowerCase())).thenReturn(definition);
 
-        // Do test
-        Definition result = controller.findByWord(word);
+		// Do test
+		Definition result = controller.findByWord(word);
 
-        // Assertions
-        verify(mockKnowService).findByWord(word.toLowerCase());
-        verify(mockDefinitionService).findOptionalDefinitionById(word);
-        verify(mockManageWordService).createDefinition(word.toLowerCase());
-        verifyZeroInteractions(mockOxfordService, mockTrackWordsService, mockProcessWordsService);
-        assertThat(result, is(definition));
-    }
+		// Assertions
+		verify(mockKnowService).findByWord(word.toLowerCase());
+		verify(mockDefinitionService).findOptionalDefinitionById(word);
+		verify(mockManageWordService).createDefinition(word.toLowerCase());
+		verifyZeroInteractions(mockOxfordService, mockTrackWordsService, mockProcessWordsService);
+		assertThat(result, is(definition));
+	}
 
-    @Test
-    public void getDefinitions_InvalidWordsGiven_ShouldReturnNotFoundError() throws Exception {
-        // Set up
-        Set<String> words = new HashSet<>();
-        words.add("home");
-        words.add("car");
-        DefinitionResource resource = new DefinitionResourceBuilder().words(words).build();
+	@Test
+	public void getDefinitions_InvalidWordsGiven_ShouldReturnNotFoundError() throws Exception {
+		// Set up
+		Set<String> words = new HashSet<>();
+		words.add("home");
+		words.add("car");
+		DefinitionResource resource = new DefinitionResourceBuilder().words(words).build();
 
-        // Expectations
-        when(mockProcessWordsService.getValidWords(resource.getWords())).thenThrow(IllegalArgumentException.class);
+		// Expectations
+		when(mockProcessWordsService.getValidWords(resource.getWords())).thenThrow(IllegalArgumentException.class);
 
-        // Do test
-        try {
-            controller.getDefinitions(resource);
-            fail();
-        } catch (IllegalArgumentException e) {
-        }
+		// Do test
+		try {
+			controller.getDefinitions(resource);
+			fail();
+		} catch (IllegalArgumentException e) {
+		}
 
-        // Assertions
-        verify(mockProcessWordsService).getValidWords(words);
-        verify(mockProcessWordsService, never()).getCachedWords(words);
-        verifyZeroInteractions(mockManageWordService, mockOxfordService, mockTrackWordsService, mockProcessWordsService);
-    }
+		// Assertions
+		verify(mockProcessWordsService).getValidWords(words);
+		verify(mockProcessWordsService, never()).getCachedWords(words);
+		verifyZeroInteractions(mockManageWordService, mockOxfordService, mockTrackWordsService,
+				mockProcessWordsService);
+	}
 
-    @Test
-    public void getDefinitions_CachedWordsGiven_Definition() throws Exception {
-        // Set up
-        Set<String> validWords = new HashSet<>();
-        validWords.add("car");
-        validWords.add("home");
-        DefinitionResource resource = new DefinitionResourceBuilder().words(validWords).build();
+	@Test
+	public void getDefinitions_CachedWordsGiven_Definition() throws Exception {
+		// Set up
+		Set<String> validWords = new HashSet<>();
+		validWords.add("car");
+		validWords.add("home");
+		DefinitionResource resource = new DefinitionResourceBuilder().words(validWords).build();
 
-        List<Definition> cachedWords = buildDefinitions(validWords);
-        List<DefinitionResource> definitionsResources = buildDefinitionsResource(cachedWords, null);
+		List<Definition> cachedWords = buildDefinitions(validWords);
+		List<DefinitionResource> definitionsResources = buildDefinitionsResource(cachedWords, null);
 
-        // Expectations
-        when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
-        when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
-        when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
-        when(mockProcessWordsService.getInvalidWords(validWords, validWords)).thenReturn(Collections.emptySet());
+		// Expectations
+		when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
+		when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
+		when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
+		when(mockProcessWordsService.getInvalidWords(validWords, validWords)).thenReturn(Collections.emptySet());
 
-        // Do test
-        ResultResource result = controller.getDefinitions(resource);
+		// Do test
+		ResultResource result = controller.getDefinitions(resource);
 
-        // Assertions
-        verify(mockProcessWordsService).getValidWords(validWords);
-        verify(mockProcessWordsService).getCachedWords(validWords);
-        verify(mockProcessWordsService, never()).getNotCachedWords(cachedWords, validWords);
-        verifyZeroInteractions(mockManageWordService);
-        Assert.assertTrue(result.getDefinitions().containsAll(definitionsResources));
-    }
+		// Assertions
+		verify(mockProcessWordsService).getValidWords(validWords);
+		verify(mockProcessWordsService).getCachedWords(validWords);
+		verify(mockProcessWordsService, never()).getNotCachedWords(cachedWords, validWords);
+		verifyZeroInteractions(mockManageWordService);
+		Assert.assertTrue(result.getDefinitions().containsAll(definitionsResources));
+	}
 
-    @Test
-    public void getDefinitions_CachedNotCachedWordsGiven_Definition() throws Exception {
-        // Set up
-        Set<String> validWords = new HashSet<>();
-        validWords.add("home");
-        validWords.add("car");
-        validWords.add("drive");
+	@Test
+	public void getDefinitions_CachedNotCachedWordsGiven_Definition() throws Exception {
+		// Set up
+		Set<String> validWords = new HashSet<>();
+		validWords.add("home");
+		validWords.add("car");
+		validWords.add("drive");
 
-        DefinitionResource resource = new DefinitionResourceBuilder().words(validWords).build();
+		DefinitionResource resource = new DefinitionResourceBuilder().words(validWords).build();
 
-        Set<String> invalidWords = new HashSet<>();
-        invalidWords.add("xpto");
+		Set<String> invalidWords = new HashSet<>();
+		invalidWords.add("xpto");
 
-        Set<String> cachedWord = new HashSet<>();
-        cachedWord.add("home");
+		Set<String> cachedWord = new HashSet<>();
+		cachedWord.add("home");
 
-        String word = "car";
+		String word = "car";
 
-        Set<String> notCached = new HashSet<>();
-        notCached.add(word);
+		Set<String> notCached = new HashSet<>();
+		notCached.add(word);
 
-        List<Definition> cachedWords = buildDefinitions(cachedWord);
-        List<Definition> notCachedDefinition = buildDefinitions(notCached);
-        List<DefinitionResource> definitionsResources = buildDefinitionsResource(cachedWords, notCachedDefinition);
+		List<Definition> cachedWords = buildDefinitions(cachedWord);
+		List<Definition> notCachedDefinition = buildDefinitions(notCached);
+		List<DefinitionResource> definitionsResources = buildDefinitionsResource(cachedWords, notCachedDefinition);
 
-        // Expectations
-        when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
-        when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
-        when(mockProcessWordsService.getNotCachedWords(cachedWords, validWords)).thenReturn(notCached);
-        when(mockManageWordService.createDefinition(word)).thenReturn(notCachedDefinition.iterator().next());
-        when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
-        when(mockProcessWordsService.getInvalidWords(validWords, validWords)).thenReturn(invalidWords);
+		// Expectations
+		when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
+		when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
+		when(mockProcessWordsService.getNotCachedWords(cachedWords, validWords)).thenReturn(notCached);
+		when(mockManageWordService.createDefinition(word)).thenReturn(notCachedDefinition.iterator().next());
+		when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
+		when(mockProcessWordsService.getInvalidWords(validWords, validWords)).thenReturn(invalidWords);
 
-        // Do test
-        ResultResource result = controller.getDefinitions(resource);
+		// Do test
+		ResultResource result = controller.getDefinitions(resource);
 
-        // Assertions
-        verify(mockProcessWordsService).getValidWords(validWords);
-        verify(mockProcessWordsService).getCachedWords(validWords);
-        verify(mockProcessWordsService).getNotCachedWords(cachedWords, validWords);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(2, result.getDefinitions().size());
-        Assert.assertTrue(result.getDefinitions().containsAll(definitionsResources));
-        assertThat(result.getInvalidWords(), is(invalidWords));
-    }
+		// Assertions
+		verify(mockProcessWordsService).getValidWords(validWords);
+		verify(mockProcessWordsService).getCachedWords(validWords);
+		verify(mockProcessWordsService).getNotCachedWords(cachedWords, validWords);
+		Assert.assertNotNull(result);
+		Assert.assertEquals(2, result.getDefinitions().size());
+		Assert.assertTrue(result.getDefinitions().containsAll(definitionsResources));
+		assertThat(result.getInvalidWords(), is(invalidWords));
+	}
 
-    @Test
-    public void getDefinitions_CachedNotCachedWordsGiven_Definition_ExternalCallError() throws Exception {
-        // Set up
-        Set<String> validWords = new HashSet<>();
-        validWords.add("home");
-        validWords.add("car");
-        validWords.add("drive");
-        DefinitionResource resource = new DefinitionResourceBuilder().words(validWords).build();
+	@Test
+	public void getDefinitions_CachedNotCachedWordsGiven_Definition_ExternalCallError() throws Exception {
+		// Set up
+		Set<String> validWords = new HashSet<>();
+		validWords.add("home");
+		validWords.add("car");
+		validWords.add("drive");
+		validWords.add("women");
+		DefinitionResource resource = new DefinitionResourceBuilder().words(validWords).build();
 
-        Set<String> cachedWord = new HashSet<>();
-        cachedWord.add("home");
+		Set<String> cachedWord = new HashSet<>();
+		cachedWord.add("home");
 
-        String word = "car";
-        String wordTwo = "drive";
+		String word = "car";
+		String wordTwo = "drive";
+		String women = "women";
 
-        Set<String> notCached = new HashSet<>();
-        notCached.add(word);
-        notCached.add(wordTwo);
+		Set<String> notCached = new HashSet<>();
+		notCached.add(word);
+		notCached.add(wordTwo);
+		notCached.add(women);
 
-        Set<String> expectedCacheWords = new HashSet<>();
-        expectedCacheWords.add(word);
+		Set<String> expectedCacheWords = new HashSet<>();
+		expectedCacheWords.add(word);
 
-        List<Definition> cachedWords = buildDefinitions(cachedWord);
-        List<Definition> notCachedDefinition = buildDefinitions(expectedCacheWords);
-        List<DefinitionResource> definitionsResources = buildDefinitionsResource(cachedWords, notCachedDefinition);
+		List<Definition> cachedWords = buildDefinitions(cachedWord);
+		List<Definition> notCachedDefinition = buildDefinitions(expectedCacheWords);
+		List<DefinitionResource> definitionsResources = buildDefinitionsResource(cachedWords, notCachedDefinition);
 
-        // Expectations
-        when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
-        when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
-        when(mockProcessWordsService.getNotCachedWords(cachedWords, validWords)).thenReturn(notCached);
-        when(mockManageWordService.createDefinition(word)).thenReturn(notCachedDefinition.iterator().next());
-        when(mockManageWordService.createDefinition(wordTwo)).thenThrow(Exception.class);
-        when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
-        when(mockProcessWordsService.getInvalidWords(validWords, validWords)).thenReturn(Collections.emptySet());
+		// Expectations
+		when(mockProcessWordsService.getValidWords(validWords)).thenReturn(validWords);
+		when(mockProcessWordsService.getCachedWords(validWords)).thenReturn(cachedWords);
+		when(mockProcessWordsService.getNotCachedWords(cachedWords, validWords)).thenReturn(notCached);
+		when(mockManageWordService.createDefinition(word)).thenReturn(notCachedDefinition.iterator().next());
+		when(mockManageWordService.createDefinition(wordTwo)).thenThrow(Exception.class);
+		when(mockManageWordService.createDefinition(women)).thenThrow(ResourceNotFoundException.class);
+		when(mockBuildDefinitionsResourceService.loadResource(cachedWords)).thenReturn(definitionsResources);
+		when(mockProcessWordsService.getInvalidWords(validWords, validWords)).thenReturn(Collections.emptySet());
 
-        // Do test
-        ResultResource result = controller.getDefinitions(resource);
+		// Do test
+		ResultResource result = controller.getDefinitions(resource);
 
-        // Assertions
-        verify(mockProcessWordsService).getValidWords(validWords);
-        verify(mockProcessWordsService).getCachedWords(validWords);
-        verify(mockProcessWordsService).getNotCachedWords(cachedWords, validWords);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(2, result.getDefinitions().size());
-        Assert.assertTrue(result.getDefinitions().containsAll(definitionsResources));
-    }
+		// Assertions
+		verify(mockProcessWordsService).getValidWords(validWords);
+		verify(mockProcessWordsService).getCachedWords(validWords);
+		verify(mockProcessWordsService).getNotCachedWords(cachedWords, validWords);
+		Assert.assertNotNull(result);
+		Assert.assertEquals(2, result.getDefinitions().size());
+		Assert.assertTrue(result.getDefinitions().containsAll(definitionsResources));
+		Assert.assertTrue(result.getNotFoundWords().contains(women));
+	}
 
-    private List<DefinitionResource> buildDefinitionsResource(List<Definition> notCachedDefinition) {
-        List<DefinitionResource> resource = new ArrayList<>();
-        notCachedDefinition.forEach(c -> {
-            DefinitionResource definitionsResource = new DefinitionResource();
-            c.getResults().forEach(r -> {
-                r.getLexicalEntries().forEach(l -> {
-                    l.getEntries().forEach(e -> {
-                        e.getSenses().forEach(s -> {
-                            definitionsResource.setWord(c.getId());
-                            HashMap<String, String> def = new HashMap<>();
-                            def.put(s.getId(), s.getDefinitions().get(0));
-                            definitionsResource.setDefinitions(def);
-                            if (s.getSubsenses() != null && !s.getSubsenses().isEmpty()) {
-                                HashMap<String, String> def2 = new HashMap<>();
-                                def2.put(s.getId(), s.getDefinitions().get(0));
-                                definitionsResource.setDefinitions(def2);
-                            }
-                        });
-                    });
-                });
-            });
-            resource.add(definitionsResource);
-        });
-        return resource;
-    }
+	private List<DefinitionResource> buildDefinitionsResource(List<Definition> notCachedDefinition) {
+		List<DefinitionResource> resource = new ArrayList<>();
+		notCachedDefinition.forEach(c -> {
+			DefinitionResource definitionsResource = new DefinitionResource();
+			c.getResults().forEach(r -> {
+				r.getLexicalEntries().forEach(l -> {
+					l.getEntries().forEach(e -> {
+						e.getSenses().forEach(s -> {
+							definitionsResource.setWord(c.getId());
+							HashMap<String, String> def = new HashMap<>();
+							def.put(s.getId(), s.getDefinitions().get(0));
+							definitionsResource.setDefinitions(def);
+							if (s.getSubsenses() != null && !s.getSubsenses().isEmpty()) {
+								HashMap<String, String> def2 = new HashMap<>();
+								def2.put(s.getId(), s.getDefinitions().get(0));
+								definitionsResource.setDefinitions(def2);
+							}
+						});
+					});
+				});
+			});
+			resource.add(definitionsResource);
+		});
+		return resource;
+	}
 
-    private List<Definition> buildDefinitions(Set<String> words) {
-        List<Definition> calls = new ArrayList<>();
-        words.forEach(w -> {
-            Definition call = new Definition();
-            Results results = new Results();
-            LexicalEntries lexicalEntries = new LexicalEntries();
-            Entries entries = new Entries();
+	private List<Definition> buildDefinitions(Set<String> words) {
+		List<Definition> calls = new ArrayList<>();
+		words.forEach(w -> {
+			Definition call = new Definition();
+			Results results = new Results();
+			LexicalEntries lexicalEntries = new LexicalEntries();
+			Entries entries = new Entries();
 
-            Senses senses = new Senses();
-            senses.setDefinitions(Collections.singletonList(w + " " + w));
-            senses.setId(UUID.randomUUID().toString());
+			Senses senses = new Senses();
+			senses.setDefinitions(Collections.singletonList(w + " " + w));
+			senses.setId(UUID.randomUUID().toString());
 
-            Subsenses subsenses = new Subsenses();
-            subsenses.setDefinitions(Collections.singletonList(w + " " + w));
-            subsenses.setId(UUID.randomUUID().toString());
-            senses.setSubsenses(Collections.singletonList(subsenses));
+			Subsenses subsenses = new Subsenses();
+			subsenses.setDefinitions(Collections.singletonList(w + " " + w));
+			subsenses.setId(UUID.randomUUID().toString());
+			senses.setSubsenses(Collections.singletonList(subsenses));
 
-            entries.setSenses(Collections.singletonList(senses));
+			entries.setSenses(Collections.singletonList(senses));
 
-            lexicalEntries.setEntries(Collections.singletonList(entries));
-            results.setLexicalEntries(Collections.singletonList(lexicalEntries));
-            results.setId(w);
-            call.setResults(Collections.singletonList(results));
-            call.setId(w);
-            calls.add(call);
-        });
-        return calls;
-    }
+			lexicalEntries.setEntries(Collections.singletonList(entries));
+			results.setLexicalEntries(Collections.singletonList(lexicalEntries));
+			results.setId(w);
+			call.setResults(Collections.singletonList(results));
+			call.setId(w);
+			calls.add(call);
+		});
+		return calls;
+	}
 
-    public List<Definition> buidDefinitionFromFile() {
-        Gson gson = new GsonBuilder().create();
-        Definition definition = gson.fromJson(readingTemplateContent(OXFORD_SERVICE_SAMPLE_FILE_NAME),
-            Definition.class);
-        return Collections.singletonList(definition);
-    }
+	public List<Definition> buidDefinitionFromFile() {
+		Gson gson = new GsonBuilder().create();
+		Definition definition = gson.fromJson(readingTemplateContent(OXFORD_SERVICE_SAMPLE_FILE_NAME),
+				Definition.class);
+		return Collections.singletonList(definition);
+	}
 
-    private String readingTemplateContent(String fileName) {
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        File file = new File(classLoader.getResource(fileName).getFile());
-        try {
-            return new String(Files.readAllBytes(file.toPath()));
+	private String readingTemplateContent(String fileName) {
+		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+		File file = new File(classLoader.getResource(fileName).getFile());
+		try {
+			return new String(Files.readAllBytes(file.toPath()));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 
-    public void debugResourceReturn(List<DefinitionResource> result) {
-        result.forEach(r -> {
-            r.getDefinitions().forEach((k, v) -> {
-                System.out.print(k);
-                System.out.print(" " + v);
-                System.out.println();
-            });
-        });
-    }
+	public void debugResourceReturn(List<DefinitionResource> result) {
+		result.forEach(r -> {
+			r.getDefinitions().forEach((k, v) -> {
+				System.out.print(k);
+				System.out.print(" " + v);
+				System.out.println();
+			});
+		});
+	}
 
-    private List<DefinitionResource> buildDefinitionsResource(List<Definition>... definitions) {
-        List<Definition> result = new ArrayList<>();
-        for (List<Definition> calls : definitions) {
-            if (calls != null && !calls.isEmpty()) {
-                result.addAll(calls);
-            }
-        }
-        List<DefinitionResource> definitionsResources = buildDefinitionsResource(result);
-        return definitionsResources;
-    }
+	private List<DefinitionResource> buildDefinitionsResource(List<Definition>... definitions) {
+		List<Definition> result = new ArrayList<>();
+		for (List<Definition> calls : definitions) {
+			if (calls != null && !calls.isEmpty()) {
+				result.addAll(calls);
+			}
+		}
+		List<DefinitionResource> definitionsResources = buildDefinitionsResource(result);
+		return definitionsResources;
+	}
 }
