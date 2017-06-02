@@ -5,8 +5,8 @@ initial:
 
 oxford:
   service:
-    api.id: cd64b862
-    app.key: 637e34032cc087c4d88301f57171eb6f
+    api.id: x
+    app.key: x
     definitions.service.endpoint: https://od-api.oxforddictionaries.com/api/v1/entries/en/X
 spring:
   data:
