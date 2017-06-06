@@ -60,21 +60,21 @@ public class BuildDefinitionsResourceService {
 		if (e.getSenses() != null && !e.getSenses().isEmpty()) {
 			e.getSenses().forEach(s -> {
 				if (s.getDefinitions() != null && !s.getDefinitions().isEmpty()) {
-					addDefinition(definitions, s.getId(), s.getDefinitions().get(0));
+					addDefinition(definitions, s.getId(), s.getDefinitions());
 				}
 				if (s.getSubsenses() != null && !s.getSubsenses().isEmpty()) {
 					s.getSubsenses().forEach(ss -> {
-						addDefinition(definitions, ss.getId(), ss.getDefinitions().get(0));
+						addDefinition(definitions, ss.getId(), ss.getDefinitions());
 					});
 				}
 			});
 		}
 	}
 
-	private void addDefinition(Map<String, String> definitions, String id, String content) {
-		if (definitions.size() == maxDefinitionListSize) {
+	private void addDefinition(Map<String, String> definitions, String id, List<String> content) {
+		if (definitions.size() == maxDefinitionListSize || content == null || content.isEmpty()) {
 			return;
 		}
-		definitions.put(id, content);
+		definitions.put(id, content.get(0));
 	}
 }
