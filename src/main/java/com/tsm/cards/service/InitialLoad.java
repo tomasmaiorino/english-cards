@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
@@ -78,11 +79,9 @@ public class InitialLoad implements ApplicationListener<ApplicationReadyEvent> {
 	}
 
 	private String readingTemplateContent(String fileName) {
-		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 		log.info("Loading from file [{}]", fileName);
-		log.info("Loading from this path [{}]", classLoader.getResource(fileName));
-		File file = new File(classLoader.getResource(fileName).getFile());
 		try {
+			File file = new ClassPathResource(fileName).getFile();
 			return new String(Files.readAllBytes(file.toPath()));
 
 		} catch (IOException e) {
