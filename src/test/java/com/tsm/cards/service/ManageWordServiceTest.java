@@ -49,8 +49,7 @@ public class ManageWordServiceTest {
 		}
 
 		// Assertions
-		verifyZeroInteractions(mockOxfordService);
-		verifyZeroInteractions(mockDefinitionService);
+		verifyZeroInteractions(mockOxfordService, mockDefinitionService);
 	}
 
 	@Test

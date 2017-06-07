@@ -35,7 +35,7 @@ public class DefinitionService {
 
     public Definition findByDefinitionId(final String definitionId) {
         Assert.notNull(definitionId, "The definitionId must not be null.");
-        log.info("Searching for original call by definitions id [{}] .", definitionId);
+        log.info("Searching for definition by definitions id [{}] .", definitionId);
 
         Definition definition = repository.findByDefinitionId(definitionId).orElse(null);
 

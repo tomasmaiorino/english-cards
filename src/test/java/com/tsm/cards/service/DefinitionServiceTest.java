@@ -1,6 +1,8 @@
 package com.tsm.cards.service;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.verify;
@@ -9,7 +11,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -153,7 +154,7 @@ public class DefinitionServiceTest {
 
         // Assertions
         verify(mockRepository).findByDefinitionId(definitionId);
-        Assert.assertNull(result);
+        assertThat(result, nullValue());
     }
 
     @Test
@@ -172,7 +173,7 @@ public class DefinitionServiceTest {
 
         // Assertions
         verify(mockRepository).findByDefinitionId(definitionId);
-        Assert.assertNotNull(result);
+        assertThat(result, notNullValue());
         assertThat(result, is(definition));
     }
 
@@ -205,8 +206,8 @@ public class DefinitionServiceTest {
 
         // Assertions
         verify(mockRepository).findById(word);
-        Assert.assertNotNull(result);
-        Assert.assertFalse(result.isPresent());
+        assertThat(result, notNullValue());
+        assertThat(result.isPresent(), is(false));
     }
 
     @Test
@@ -224,8 +225,8 @@ public class DefinitionServiceTest {
 
         // Assertions
         verify(mockRepository).findById(word);
-        Assert.assertNotNull(result);
-        Assert.assertTrue(result.isPresent());
+        assertThat(result, notNullValue());
+        assertThat(result.isPresent(), is(true));
         assertThat(result.get(), is(call));
     }
 

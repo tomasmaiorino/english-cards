@@ -165,7 +165,7 @@ public class DefinitionController extends BaseController {
 					notFoundWords.add(n);
 					log.error("Word not found [{}].", n);
 				} catch (Exception e) {
-					log.error("Error creating original call from word: [{}].", n, e);
+					log.error("Error creating definition from word: [{}].", n, e);
 				}
 			});
 			cachedWords.addAll(notCached);

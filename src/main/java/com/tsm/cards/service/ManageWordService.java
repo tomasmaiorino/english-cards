@@ -26,7 +26,7 @@ public class ManageWordService {
 
     public Definition createDefinition(final String word) throws Exception {
         Assert.hasText(word, "The word must not be empty or null.");
-        log.debug("creating original call for known word [{}] .", word);
+        log.debug("creating definition for known word [{}] .", word);
 
         Definition definition = oxfordService.findWordDefinition(word);
         definition.setId(word);

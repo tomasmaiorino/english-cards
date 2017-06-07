@@ -1,6 +1,7 @@
 package com.tsm.cards.service;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
@@ -14,7 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -24,8 +24,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.KnownWord;
 import com.tsm.cards.model.Definition;
+import com.tsm.cards.model.KnownWord;
 
 @SuppressWarnings("unchecked")
 @FixMethodOrder(MethodSorters.JVM)
@@ -58,8 +58,8 @@ public class ProcessWordsServiceTest {
 
         // Do test
         Set<String> result = service.getNotCachedWords(definitions, words);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(words.size(), result.size());
+        assertThat(result, notNullValue());
+        assertThat(result.size(), is(words.size()));
         assertThat(result, is(words));
     }
 
@@ -72,8 +72,8 @@ public class ProcessWordsServiceTest {
 
         // Do test
         Set<String> result = service.getNotCachedWords(definitions, words);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(words.size(), result.size());
+        assertThat(result, notNullValue());
+        assertThat(result.size(), is(words.size()));
         assertThat(result, is(words));
     }
 
@@ -109,10 +109,10 @@ public class ProcessWordsServiceTest {
         Set<String> result = service.getNotCachedWords(definitions, words);
 
         // Assertions
-        Assert.assertNotNull(result);
-        Assert.assertEquals(1, result.size());
-        Assert.assertFalse(result.contains("home"));
-        Assert.assertTrue(result.contains("java"));
+        assertThat(result, notNullValue());
+        assertThat(result.size(), is(1));
+        assertThat(result.contains("home"), is(false));
+        assertThat(result.contains("java"), is(true));
     }
 
     @Test
@@ -127,8 +127,8 @@ public class ProcessWordsServiceTest {
         Set<String> result = service.getNotCachedWords(definitions, words);
 
         // Assertions
-        Assert.assertNotNull(result);
-        Assert.assertEquals(0, result.size());
+        assertThat(result, notNullValue());
+        assertThat(result.size(), is(0));
     }
 
     private List<Definition> buildDefinitions() {
@@ -193,8 +193,8 @@ public class ProcessWordsServiceTest {
         // Assertions
         verify(mockDefinitionService).findById(TEST_WORD_HOME);
         verify(mockDefinitionService).findById(TEST_WORD_WORD);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(1, result.size());
+        assertThat(result, notNullValue());
+        assertThat(result.size(), is(1));
         assertThat(result.get(0), is(home));
     }
 
@@ -216,8 +216,8 @@ public class ProcessWordsServiceTest {
         // Assertions
         verify(mockDefinitionService).findById(TEST_WORD_HOME);
         verify(mockDefinitionService).findById(TEST_WORD_WORD);
-        Assert.assertNotNull(result);
-        Assert.assertTrue(result.isEmpty());
+        assertThat(result, notNullValue());
+        assertThat(result.isEmpty(), is(true));
     }
 
     private Definition buidDefinition(final String word) {
@@ -279,9 +279,9 @@ public class ProcessWordsServiceTest {
         // Assertions
         verify(mockKnownWordService).findByWord(home.toLowerCase());
         verify(mockKnownWordService).findByWord(word.toLowerCase());
-        Assert.assertNotNull(result);
-        Assert.assertEquals(1, result.size());
-        Assert.assertEquals(lowerHome, result.iterator().next());
+        assertThat(result, notNullValue());
+        assertThat(lowerHome, is(result.iterator().next()));
+        assertThat(result.size(), is(1));
     }
 
     @Test
@@ -302,8 +302,8 @@ public class ProcessWordsServiceTest {
         // Assertions
         verify(mockKnownWordService).findByWord(TEST_WORD_HOME);
         verify(mockKnownWordService).findByWord(TEST_WORD_WORD);
-        Assert.assertNotNull(result);
-        Assert.assertTrue(result.isEmpty());
+        assertThat(result, notNullValue());
+        assertThat(result.isEmpty(), is(true));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -322,10 +322,10 @@ public class ProcessWordsServiceTest {
         Set<String> result = service.splitWords(words);
 
         // Assertions
-        Assert.assertNotNull(result);
-        Assert.assertTrue(!result.isEmpty());
-        Assert.assertEquals(1, result.size());
-        Assert.assertEquals(words, result.iterator().next());
+        assertThat(result, notNullValue());
+        assertThat(result.isEmpty(), is(false));
+        assertThat(result.size(), is(1));
+        assertThat(words, is(result.iterator().next()));
     }
 
     @Test
@@ -336,9 +336,9 @@ public class ProcessWordsServiceTest {
         Set<String> result = service.splitWords(words);
 
         // Assertions
-        Assert.assertNotNull(result);
-        Assert.assertTrue(!result.isEmpty());
-        Assert.assertEquals(2, result.size());
+        assertThat(result, notNullValue());
+        assertThat(result.isEmpty(), is(false));
+        assertThat(result.size(), is(2));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -375,9 +375,10 @@ public class ProcessWordsServiceTest {
 
         // Do test
         Set<String> result = service.getInvalidWords(validWords, receivedWords);
-        Assert.assertNotNull(receivedWords);
-        Assert.assertEquals(validWords.size(), 1);
-        Assert.assertTrue(result.contains(invalidWord));
+        assertThat(receivedWords, notNullValue());
+        assertThat(result.isEmpty(), is(false));
+        assertThat(validWords.size(), is(1));
+        assertThat(result.contains(invalidWord), is(true));
     }
 
     @Test
@@ -390,7 +391,8 @@ public class ProcessWordsServiceTest {
 
         // Do test
         Set<String> result = service.getInvalidWords(validWords, receivedWords);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(result.size(), 0);
+        assertThat(result, notNullValue());
+        assertThat(result.isEmpty(), is(true));
+        assertThat(result.size(), is(0));
     }
 }

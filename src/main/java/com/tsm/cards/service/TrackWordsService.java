@@ -29,7 +29,7 @@ public class TrackWordsService {
 
         repository.save(track);
 
-        log.info("Saved definition [{}].", track);
+        log.info("Saved track [{}].", track);
         return track;
     }
 

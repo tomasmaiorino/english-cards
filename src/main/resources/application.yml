@@ -5,8 +5,8 @@ initial:
 
 oxford:
   service:
-    api.id: x
-    app.key: x
+    api.id: ${OXFORD_API_ID}
+    app.key: ${OXFORD_APP_KEY}
     definitions.service.endpoint: https://od-api.oxforddictionaries.com/api/v1/entries/en/X
 spring:
   data:

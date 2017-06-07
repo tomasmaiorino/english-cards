@@ -29,7 +29,7 @@ public class ProcessDefinitionsService {
 
 	public List<Definition> getDefinitionByDefinitionsIds(final Set<String> definitionsIds) {
 		Assert.notEmpty(definitionsIds, "The definitionsIds must not be empty.");
-		log.info("get original call by definitionsIds [{}]", definitionsIds);
+		log.info("get definition by definitionsIds [{}]", definitionsIds);
 
 		List<Definition> calls = new ArrayList<>();
 		definitionsIds.forEach(w -> {
@@ -41,7 +41,7 @@ public class ProcessDefinitionsService {
 			}
 		});
 
-		log.info("original calls found [{}]", calls.size());
+		log.info("definition found [{}]", calls.size());
 		return calls;
 	}
 

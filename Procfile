@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -Dspring.profiles.active=$ACTIVE_PROFILE -Doxford.service.api.id=$OXFORD_API_ID -Doxford.service.app.key=$OXFORD_APP_KEY -jar target/*.jar

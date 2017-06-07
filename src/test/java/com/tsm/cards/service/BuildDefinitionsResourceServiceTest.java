@@ -1,8 +1,10 @@
 package com.tsm.cards.service;
 
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -18,12 +19,9 @@ import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
+import com.tsm.cards.model.Definition;
 import com.tsm.cards.model.Entries;
 import com.tsm.cards.model.LexicalEntries;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.tsm.cards.model.Definition;
 import com.tsm.cards.model.Results;
 import com.tsm.cards.model.Senses;
 import com.tsm.cards.model.Subsenses;
@@ -70,16 +68,16 @@ public class BuildDefinitionsResourceServiceTest {
         // Do test
         List<DefinitionResource> result = service.loadResource(definition);
 
-        Gson gson = new GsonBuilder().create();
-
-        Type listType = new TypeToken<ArrayList<DefinitionResource>>() {
-        }.getType();
-
-        System.out.println(gson.toJson(result, listType));
+//        Gson gson = new GsonBuilder().create();
+//
+//        Type listType = new TypeToken<ArrayList<DefinitionResource>>() {
+//        }.getType();
+//
+//        System.out.println(gson.toJson(result, listType));
         
         // Assertions
-        Assert.assertNotNull(result);
-        Assert.assertTrue(!result.isEmpty());
+        assertThat(result, notNullValue());
+        assertThat(result.isEmpty(), is(false));
     }
 
     private List<Definition> buildDefinitions(Set<String> words) {

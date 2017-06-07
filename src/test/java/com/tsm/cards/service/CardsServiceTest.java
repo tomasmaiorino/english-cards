@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -114,7 +113,7 @@ public class CardsServiceTest {
 
 		// Assertions
 		verify(mockRepository).findByWord(word);
-		Assert.assertTrue(result.isEmpty());
+		assertThat(result.isEmpty(), is(true));
 	}
 
 	@Test
