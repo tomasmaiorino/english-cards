@@ -5,4 +5,4 @@ spring:
   data:
     mongodb:
       uri: ${MONGO_URI}
-      database: english-cards
+      database: ${DATA_BASE}
