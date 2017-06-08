@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dspring.profiles.active=$ACTIVE_PROFILE -Doxford.service.api.id=$OXFORD_API_ID -Doxford.service.app.key=$OXFORD_APP_KEY -Dspring.data.mongodb.uri=$MONGODB_URI -Dspring.data.mongodb.database=$DATA_BASE -jar target/*.jar
+web: java $JAVA_OPTS -Dserver.port=$PORT -Dspring.profiles.active=$ACTIVE_PROFILE -Doxford.service.api.id=$OXFORD_API_ID -Doxford.service.app.key=$OXFORD_APP_KEY -Dspring.data.mongodb.uri=$MONGODB_URI -Dspring.data.mongodb.database=$DATA_BASE -jar target/*.jar
