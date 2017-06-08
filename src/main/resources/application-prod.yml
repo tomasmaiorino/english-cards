@@ -4,5 +4,5 @@ initial:
 spring:
   data:
     mongodb:
-      uri: ${MONGO_URI}
+      uri: ${MONGODB_URI}
       database: ${DATA_BASE}
