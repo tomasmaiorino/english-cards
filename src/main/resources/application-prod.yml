@@ -4,5 +4,5 @@ initial:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/admin
+      uri: ${MONGO_URI}
       database: english-cards
