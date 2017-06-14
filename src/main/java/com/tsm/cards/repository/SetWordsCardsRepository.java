@@ -7,12 +7,13 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.model.Cards;
+import com.tsm.cards.model.SetWordsCards;
 
 @Transactional(propagation = Propagation.MANDATORY)
-public interface CardsRepository extends MongoRepository<Cards, Long> {
+public interface SetWordsCardsRepository extends MongoRepository<SetWordsCards, Long> {
 
-    @Query("{ 'word': ?0 }")
-    List<Cards> findByWord(final String word);
+    @Query("{ 'known_word.id' : ?0 }")
+    List<SetWordsCards> findByKnownWord(final String id);
 
+    List<SetWordsCards> findAll();
 }

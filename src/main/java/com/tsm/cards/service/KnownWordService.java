@@ -1,5 +1,7 @@
 package com.tsm.cards.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,30 +19,46 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class KnownWordService {
 
-    @Autowired
-    private KnownWordRepository repository;
+	@Autowired
+	private KnownWordRepository repository;
 
-    public KnownWord findByWord(final String word) {
-        Assert.hasText(word, "The word must not be empty or null.");
-        log.info("Searching for known word [{}] .", word);
+	public KnownWord findByWord(final String word) {
+		Assert.hasText(word, "The word must not be empty or null.");
+		log.info("Searching for known word [{}] .", word);
 
-        KnownWord knownWord = repository.findByWord(word).orElseThrow(() -> new ResourceNotFoundException("not found"));
+		KnownWord knownWord = repository.findByWord(word).orElseThrow(() -> new ResourceNotFoundException("not found"));
 
-        log.info("Found [{}] knownWord.", knownWord);
+		log.info("Found [{}] knownWord.", knownWord);
 
-        return knownWord;
-    }
+		return knownWord;
+	}
 
-    @Transactional
-    public KnownWord save(final KnownWord knownWord) {
-        Assert.notNull(knownWord, "The knownWord must not be empty or null.");
-        log.debug("Saving knownWord [{}]", knownWord);
+	public List<KnownWord> findByIdsNotIn(final List<String> ids) {
+		Assert.notNull(ids, "The ids must not be null.");
+		Assert.isTrue(!ids.isEmpty(), "The ids must not be empty.");
+		log.info("Searching for known word by ids [{}] .", ids);
 
-        repository.save(knownWord);
+		List<KnownWord> knownWords = repository.findFirst20ByIdNotIn(ids);
 
-        log.debug("Saved [{}] knownWord.", knownWord);
+		if (knownWords.isEmpty()) {
+			throw new ResourceNotFoundException("not found");
+		}
 
-        return knownWord;
-    }
+		log.info("Found [{}] knownWord.", knownWords);
+
+		return knownWords;
+	}
+
+	@Transactional
+	public KnownWord save(final KnownWord knownWord) {
+		Assert.notNull(knownWord, "The knownWord must not be empty or null.");
+		log.debug("Saving knownWord [{}]", knownWord);
+
+		repository.save(knownWord);
+
+		log.debug("Saved [{}] knownWord.", knownWord);
+
+		return knownWord;
+	}
 
 }
