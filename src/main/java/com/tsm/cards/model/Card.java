@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.tsm.cards.exceptions.ErrorsCode;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,12 +16,12 @@ public class Card extends BaseModel {
 
 	@Getter
 	@Setter
-	@NotNull(message = "word required.")
+	@NotNull(message = ErrorsCode.FIELD_REQUIRED)
 	private String word;
 
 	@Getter
 	@Setter
-	@NotNull(message = "image url required.")
+	@NotNull(message = ErrorsCode.FIELD_REQUIRED)
 	private String imageUrl;
 
 	@Getter
