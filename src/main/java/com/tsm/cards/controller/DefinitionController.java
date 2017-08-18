@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.model.Definition;
 import com.tsm.cards.resources.DefinitionResource;
+import com.tsm.cards.resources.ResultResource;
 import com.tsm.cards.service.BuildDefinitionsResourceService;
 import com.tsm.cards.service.DefinitionService;
 import com.tsm.cards.service.KnownWordService;
@@ -64,7 +66,7 @@ public class DefinitionController extends BaseController {
 
     @RequestMapping(path = "/{word}", method = GET, produces = JSON_VALUE)
     @ResponseStatus(OK)
-    public DefinitionResource findByWord(@PathVariable final String word) throws Exception {
+    public ResultResource findByWord(@PathVariable final String word) throws Exception {
         log.debug("Recieved a request to find a word [{}].", word);
 
         knownWordService.findByWord(word.toLowerCase());
@@ -89,8 +91,12 @@ public class DefinitionController extends BaseController {
             throw new BadRequestException("");
         }
 
-        log.debug("Sending response with definition resource: [{}].", resourceRet.get(0));
+        ResultResource result = new ResultResource();
+        result.setDefinitions(new HashSet<>(resourceRet));
+        result.setGivenWords(Collections.singleton(word));
+        
+        log.debug("Sending response with result resource: [{}].", result);
 
-        return resourceRet.get(0);
+        return result;
     }
 }

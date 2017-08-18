@@ -103,19 +103,32 @@ public class DefinitionControllerIT extends BaseTestIT {
     }
 
     @Test
-    public void findByWord_ValidWordGiven_ShouldReturnDefinition() throws URISyntaxException {
+    public void findByWord_ValidCachedWordGiven_ShouldReturnDefinition() throws URISyntaxException {
         // Set Up
         String word = "home";
 
         // Do Test
         given().contentType(ContentType.JSON).when().get(DEFINITIONS_END_POINT + word).then()
-            .statusCode(HttpStatus.OK.value()).body("definitions.size()", is(4))
+            .statusCode(HttpStatus.OK.value()).body("definitions.size()", is(1))
             .body("definitions[0].word", is(word))
-            .body("definitions[0].definitions.size()", is(greaterThan(0)))
-            .body("invalidWords.size()", is(greaterThan(0)));
+            .body("definitions[0].definitions.size()", is(4));
 
     }
 
+    @Test
+    public void findByWord_ValidNotCachedWordGiven_ShouldReturnDefinition() throws URISyntaxException {
+        // Set Up
+    	String word = validWordsToSort[RandomUtils.nextInt(0, validWordsToSort.length - 1)];
+
+        // Do Test
+        given().contentType(ContentType.JSON).when().get(DEFINITIONS_END_POINT + word).then()
+            .statusCode(HttpStatus.OK.value()).body("definitions.size()", is(1))
+            .body("definitions[0].word", is(word))
+            .body("definitions[0].definitions.size()", is(4));
+
+    }
+
+    
     @Test
     @Ignore
     public void getDefinitions_CachedWordAndInvalidWordsGiven_ShouldReturnDefinition() throws URISyntaxException {
