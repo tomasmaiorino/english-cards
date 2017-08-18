@@ -1,6 +1,24 @@
+oxford.service.ap.id: 1 
+oxford.service.ap.key: 1
+oxford.service.definitions.service.endpoint: https://od-api.oxforddictionaries.com:443/api/v1/entries/en/X/definitions
+
 endpoints:
   enabled: true
   sensitive: false
       
 de.flapdoodle.embed: de.flapdoodle.embed.mongo
-  
+client:
+  service:
+    key: cecadbd7-e07c-48b2-b11d-038f7aaab4f6
+    url: api/v1/clients
+it.test.email: 
+spring:
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: update
+    properties.hibernate.dialect: org.hibernate.dialect.HSQLDialect
+    database: HSQL
+  datasource:
+    driverClassName: org.hsqldb.jdbcDriver
+    url: jdbc:hsqldb:mem:auth
+    username: sa      

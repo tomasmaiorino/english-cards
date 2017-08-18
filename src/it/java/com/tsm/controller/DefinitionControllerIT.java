@@ -18,6 +18,7 @@ import java.util.Set;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -46,7 +47,9 @@ import com.tsm.cards.resources.DefinitionResource;
 @SpringBootTest(classes = EnglishCardsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles({ "it" })
 @FixMethodOrder(MethodSorters.JVM)
-public class DefinitionControllerIT {
+public class DefinitionControllerIT extends BaseTestIT {
+
+    public static final String DEFINITIONS_END_POINT = "/api/v1/definitions/";
 
     private static final String EMPTY_WORDS_ERROR_MESSAGE = "The words must not be empty.";
 
@@ -89,32 +92,32 @@ public class DefinitionControllerIT {
     }
 
     @Test
-    public void getDefinitions_NullWordsGiven_ShouldReturnError() {
-        // Set Up
-        Set<String> words = new HashSet<>();
-        DefinitionResource resource = new DefinitionResourceBuilder().words(words).build();
-
-        // Do Test
-        given().body(resource).contentType(ContentType.JSON).when().post("/definitions").then()
-            .statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is(EMPTY_WORDS_ERROR_MESSAGE));
-    }
-
-    @Test
-    public void getDefinitions_InvalidWordsGiven_ShouldReturnError() throws URISyntaxException {
+    public void findByWord_UnknownWordGiven_ShouldReturnError() throws URISyntaxException {
         // Set Up
         String word = "ikkf";
 
-        Set<String> words = new HashSet<>();
-        words.add(word);
-        DefinitionResource resource = new DefinitionResourceBuilder().words(words).build();
-
         // Do Test
-        given().body(resource).contentType(ContentType.JSON).when().post("/definitions").then()
+        given().contentType(ContentType.JSON).when().get(DEFINITIONS_END_POINT + word).then()
             .statusCode(HttpStatus.BAD_REQUEST.value())
-            .body("message", is(String.format(NONE_VALID_WORDS_GIVEN, words)));
+            .body("message", is("Unknown word given."));
     }
 
     @Test
+    public void findByWord_ValidWordGiven_ShouldReturnDefinition() throws URISyntaxException {
+        // Set Up
+        String word = "home";
+
+        // Do Test
+        given().contentType(ContentType.JSON).when().get(DEFINITIONS_END_POINT + word).then()
+            .statusCode(HttpStatus.OK.value()).body("definitions.size()", is(4))
+            .body("definitions[0].word", is(word))
+            .body("definitions[0].definitions.size()", is(greaterThan(0)))
+            .body("invalidWords.size()", is(greaterThan(0)));
+
+    }
+
+    @Test
+    @Ignore
     public void getDefinitions_CachedWordAndInvalidWordsGiven_ShouldReturnDefinition() throws URISyntaxException {
         // Set Up
         String word = "home";
@@ -137,6 +140,7 @@ public class DefinitionControllerIT {
     }
 
     @Test
+    @Ignore
     public void getDefinitions_NotCachedWordGiven_ShouldReturnDefinition() throws URISyntaxException {
         // Set Up
         String word = validWordsToSort[RandomUtils.nextInt(0, validWordsToSort.length - 1)];
@@ -152,6 +156,7 @@ public class DefinitionControllerIT {
     }
 
     @Test
+    @Ignore
     public void getDefinitions_NotCachedAndCachedWordsGiven_ShouldReturnDefinition() throws URISyntaxException {
         // Set Up
         String homeWord = "home";

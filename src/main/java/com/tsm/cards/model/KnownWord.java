@@ -10,7 +10,7 @@ import lombok.Setter;
 @Document(collection = "known_words")
 @TypeAlias("known_word")
 // mongoimport --db test --collection known_words --file 20k.txt
-public class KnownWord extends BaseModel {
+public class KnownWord extends BaseDocumentModel {
 
     @Getter
     @Setter

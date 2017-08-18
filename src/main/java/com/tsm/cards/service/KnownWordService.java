@@ -1,4 +1,5 @@
 package com.tsm.cards.service;
+import static com.tsm.cards.util.ErrorCodes.UNKNOWN_WORD_GIVEN;
 
 import java.util.List;
 
@@ -8,12 +9,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.KnownWord;
 import com.tsm.cards.repository.KnownWordRepository;
 
 import lombok.extern.slf4j.Slf4j;
-
 @Service
 @Slf4j
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
@@ -26,7 +27,7 @@ public class KnownWordService {
 		Assert.hasText(word, "The word must not be empty or null.");
 		log.info("Searching for known word [{}] .", word);
 
-		KnownWord knownWord = repository.findByWord(word).orElseThrow(() -> new ResourceNotFoundException("not found"));
+		KnownWord knownWord = repository.findByWord(word).orElseThrow(() -> new BadRequestException(UNKNOWN_WORD_GIVEN));
 
 		log.info("Found [{}] knownWord.", knownWord);
 

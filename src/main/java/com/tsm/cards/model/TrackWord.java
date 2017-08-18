@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Document(collection = "track_word")
 @TypeAlias("track_word")
-public class TrackWord extends BaseModel {
+public class TrackWord extends BaseDocumentModel {
 
     @Getter
     @Setter

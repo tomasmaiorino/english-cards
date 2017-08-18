@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Document(collection = "user")
 @TypeAlias("user")
-public class User extends BaseModel {
+public class User extends BaseDocumentModel {
 
     @Getter
     @Setter

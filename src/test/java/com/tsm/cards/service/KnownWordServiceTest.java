@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.KnownWord;
 import com.tsm.cards.repository.KnownWordRepository;
@@ -87,7 +88,7 @@ public class KnownWordServiceTest {
 		try {
 			service.findByWord(word);
 			fail();
-		} catch (ResourceNotFoundException e) {
+		} catch (BadRequestException e) {
 		}
 
 		// Assertions

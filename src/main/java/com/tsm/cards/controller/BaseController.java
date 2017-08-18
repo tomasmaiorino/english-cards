@@ -1,22 +1,27 @@
 package com.tsm.cards.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 
-//@Controller
+import org.springframework.beans.factory.annotation.Autowired;
+
+@SuppressWarnings(value = { "rawtypes" })
 public class BaseController {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    protected @ResponseBody ResponseEntity<Map<String, String>> handleException(final IllegalArgumentException e) {
-        Map<String, String> response = new HashMap<>();
-        response.put("message", e.getMessage());
-        return new ResponseEntity<Map<String, String>>(response, HttpStatus.BAD_REQUEST);
+    public static final String JSON_VALUE = "application/json";
+
+    @Autowired
+    private Validator validator;
+
+    protected <T> void validate(final T object, Class clazz) {
+        Set<ConstraintViolation<T>> violations = validator.validate(object, clazz);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(new HashSet<ConstraintViolation<?>>(violations));
+        }
     }
+
 }

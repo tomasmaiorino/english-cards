@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Document(collection = "set_words_cards")
 @TypeAlias("set_words_cards")
-public class SetWordsCards extends BaseModel {
+public class SetWordsCards extends BaseDocumentModel {
 
     @Getter
     @Setter
