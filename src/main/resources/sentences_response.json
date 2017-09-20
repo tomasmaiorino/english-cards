@@ -1,0 +1,993 @@
+{
+    "id":"sleep",
+    "metadata": {
+        "provider": "Oxford University Press"
+    },
+    "results": [{
+        "id": "sleep",
+        "language": "en",
+        "lexicalEntries": [{
+                "language": "en",
+                "lexicalCategory": "Noun",
+                "sentences": [{
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "The apnea index is the number of apneic events occurring each hour averaged over all hours of sleep and for all body positions."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "He rolled over completely, pressed his face into the soft pillow, and allowed the stillness of sleep to take over."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "She rolled to face the door, rubbing sleep from her eyes with one loose fist."
+                    },
+                    {
+                        "regions": [
+                            "New Zealand"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "Immediately, the chief appeared at the palisades, rubbing sleep from his eyes, but still awake enough to raise the alarm."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "Is there anything else that might allow me at least three hours of continuous sleep at night?"
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "The authors conclude that controlled crying reduced infant sleep disorders and benefited depressed mothers."
+                    },
+                    {
+                        "regions": [
+                            "New Zealand"
+                        ],
+                        "registers": [
+                            "literary"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.008"
+                        ],
+                        "text": "The only peace that is going to last, for millions of men, is the peace they will get in the sleep of death."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "registers": [
+                            "literary"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.008"
+                        ],
+                        "text": "I was comforted by the thought of the blissful non-dreaming sleep of death but I could no longer believe in that."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "The average American gets between six and seven hours of sleep a night during the week."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "Sure, they make it sound like a cool thing with the promise of an extra hour of sleep Saturday night."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "For most people a night or two of poor sleep, or even a night of no sleep, isn't that bad."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "Older children and young adults through their 30s need seven to nine hours of sleep each night."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "I fell into a fitful, restless sleep, one that was preoccupied with thoughts of him."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "She fell into a fitful, dreamless sleep."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "And each morning my peaceful sleep was interrupted by the most irritating and annoying ringing sound imaginable."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "Keelah finally gave up, and went along with her friends, rubbing sleep from her weary eyes."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "Among these last six patients, four were obese and had obstructive sleep apnea syndrome."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "Diego rose from that bed of his, rubbing the sleep from his eyes."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "He wipes at his eye, rubbing sleep crumbs from his eyelashes and shrugs sleepily."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "Together we drift off into a much needed sleep, both comfortable and content."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "All she remembered was pulling the covers over herself and dropping off into an exhausted yet restless sleep."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "I got very little sleep for several days and put in a lot of hard labor."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "I slowly put my head into my arms on my desk as sleep creeps into the corners of my eyes."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "It was associated with excessive sleepiness in those averaging less than 7 hours of sleep per night."
+                    },
+                    {
+                        "regions": [
+                            "Australian"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "Not as frightened but still concerned, you walk to the bathroom, rubbing sleep from your eyes."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "He blinked, rubbing sleep from his eyes as he looked at each of us."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "registers": [
+                            "literary"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.008"
+                        ],
+                        "text": "After all isn't death just the deepest sleep imaginable - the kind of sleep which calms all pain and ends all sadness?"
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "The number of hours of sleep per night and any symptoms are recorded in the nursing notes."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "Shay turned the corner rubbing the sleep from her slightly swollen eyes."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "People differ in their need for sleep, and everyone has the occasional night of disturbed sleep."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "Adequate, restful sleep is important to everyone, regardless of age."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "As they get older they may need only nine or ten hours of sleep at night, but it varies just as it does for adults."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "registers": [
+                            "literary"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.008"
+                        ],
+                        "text": "The pair would die a most easy of deaths, a drowsy sleep to never wake from."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "I rubbed the sleep from my eyes, sat up, and looked around."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "It was the same for several human villagers who exited shabby tents, rubbing sleep from their eyes."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.002",
+                            "m_en_gbus0954440.006"
+                        ],
+                        "text": "Based on the results of this study, seven hours of sleep per night seems optimal for longer life."
+                    },
+                    {
+                        "regions": [
+                            "New Zealand"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.011",
+                            "b-en-es0044898.003"
+                        ],
+                        "text": "Lisa ruffled Charlie's hair as she wandered past, rubbing sleep from her eyes."
+                    },
+                    {
+                        "regions": [
+                            "Irish"
+                        ],
+                        "registers": [
+                            "literary"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.008"
+                        ],
+                        "text": "He is not an overly religious man and maintains that there is no after life, that death is a long sleep."
+                    }
+                ],
+                "text": "sleep"
+            },
+            {
+                "language": "en",
+                "lexicalCategory": "Verb",
+                "sentences": [{
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "While you're there, don't sleep with her and don't behave like her boyfriend."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "Not sleeping had become a constant agitation - and the more he worried about it, the worse he slept."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "Between you and your brother you've slept with half the state!"
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "I am one of those people who, when sleeping alone, always awakes with a book on his chest."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "I usually didn't wear a shirt to bed when I slept alone, at home."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "I found myself alone, my friends sleeping to restore their exhausted souls."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "As the Japanese economy stops shrinking in nominal terms, a domestic demand-led recovery could reawaken this sleeping giant."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "Lots of girls pretend to be sexually open but still think that if they sleep with someone then there should be a relationship."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "He didn't say anything about his sexuality, but of course, we who hoped to sleep with him all speculated."
+                    },
+                    {
+                        "regions": [
+                            "Canadian"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "She sleeps badly, and worries constantly about her future."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.027",
+                            "b-en-es0044898.031"
+                        ],
+                        "text": "The Norman Rockwell Room sleeps 4 with one double\\full bed and two single beds."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "All across the school we were known for everything from sleeping together to modeling in nude photos."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.027",
+                            "b-en-es0044898.031"
+                        ],
+                        "text": "The package said sleeps six, but I say more comfortably 4 or 5 people."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "Every child is different and just because yours prefers sleeping alone in his crib does not mean that every child will prefer that."
+                    },
+                    {
+                        "regions": [
+                            "East Asian"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "Having slept for half the day on Sunday, I can't fall asleep at night."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "Alas, the ads were kind of a cheat - by the time Jason finally reached the city that never sleeps, the movie was nearly 3/4 over."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "As if we had new language, new tactics, new ways of communicating that could waken the dormant dissent and the sleeping visions in every heart."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "Could this sleeping giant, if awakened, play a role in the revival of labor unions and progressive politics?"
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "All I wanted was to stay friends and to get on with my life (which I couldn't do when we kept sleeping together)."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "I made it clear that I would like to sleep with her, but she was hesitant."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "I pretended to sleep for half an hour, then got up and made myself some tea."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "But women's issues may be the sleeping giant of American politics these days."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "He asked her to leave him alone and let him sleep, she said."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "It is unloving to yourself to sleep with a man early in the relationship and then run the risk of being dumped because all he wanted was sex."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "And, well, we've also been sleeping together off and on, when neither of us are dating anyone else, for the past five years."
+                    },
+                    {
+                        "regions": [
+                            "Indian"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "This is a city that rarely sleeps, that never seems to rest in its quest for pleasure, in its endeavour at enterprise, in its inherent divinity."
+                    },
+                    {
+                        "regions": [
+                            "Indian"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "They were at their twinkling best, refusing to let the city sleep."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "The sleeping giant is waking up - and not a moment too soon."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "The ego that actually does the writing, the sleeping self, is buried so deep that he's not affected by anything that happens in the real world."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "All this talk of the 70's has obviously woken a sleeping giant within."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "That's why I know I don't have to sleep with my future wife to find out if we're sexually compatible."
+                    },
+                    {
+                        "regions": [
+                            "Irish"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "I forgot to tell you about Tom, who was the only son and had to sleep on the half loft above the kitchen."
+                    },
+                    {
+                        "regions": [
+                            "Irish"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "Raymond told how he slept alone in a old stone granary that was infested with rats during the winter in preparation for the programme."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "I know he's turned down lots of other girls, so for him to feel ready to sleep with me, only me, really says a lot for his feelings."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "Roe helped to wake the sleeping giant of fundamentalist and evangelical southern white Protestant politics."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "Well, gosh, I mean, everybody knows the guy's been sleeping with half of Hollywood for the past five years."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "Noel and Ruby complicate their relationship even further by sleeping together."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "I was very tired after the game, having slept badly all week due to the adrenalin of doing gigs or nerves at the upcoming poker."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "I was worried that I might not have handled it very well and slept badly."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "Making a long story very short, we ended up sleeping together."
+                    },
+                    {
+                        "regions": [
+                            "Canadian"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "Addicts stop eating, stop sleeping and start hallucinating badly."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "However, it might not be surprising to find out that one of those guys thought we were more exclusive just because we were sleeping together."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "The prayer centre in Didsbury opened today welcoming Christians aged 16 to 30 who want to worship when the rest of the city sleeps."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "How could someone so cruel and unforgiving sleep like an innocent child, wrapped up in a mother's arms?"
+                    },
+                    {
+                        "regions": [
+                            "Irish"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "He will not sleep alone and it breaks my heart to see him so frightened."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "If the tide is out, there are usually half a dozen seals sleeping on the rocks, and we just sit there and watch."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "No wonder councillor John Lynch, convener of cultural and leisure services, dubbed it ‘the sleeping giant of British museums’."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "But she had been really mad at me for not being willing to sleep with her."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "registers": [
+                            "literary"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.025"
+                        ],
+                        "text": "One who \"sleeps the eternal slumber\" lives in the heart."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "Cloaked in a blanket of muted late-shows, he sleeps alone on the couch now."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "An older, gorgeous married man wanting to sleep with you can seem like a fabulous compliment and ego boost."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "Half are unable to sleep due to depression and anxiety."
+                    },
+                    {
+                        "regions": [
+                            "Australian"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "The sleeping giants of the competition could well be Byron Bay."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "registers": [
+                            "literary"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.025"
+                        ],
+                        "text": "Bede the priest sleeps eternally."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "You're a beautiful, sexy woman, and if you want to sleep with men and women, I have no judgment about that."
+                    },
+                    {
+                        "regions": [
+                            "South African"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "With all these measures in place, all that the country needs is to work hard to develop Zambia's rural areas - the sleeping giants."
+                    },
+                    {
+                        "regions": [
+                            "South African"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.024"
+                        ],
+                        "text": "Tourism as has been noticed is a sleeping giant."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "Just because I sleep with the same sex does not mean I cannot serve my country."
+                    },
+                    {
+                        "regions": [
+                            "British"
+                        ],
+                        "senseIds": [
+                            "b-en-es0044898.029",
+                            "m_en_gbus0954440.017"
+                        ],
+                        "text": "I must have slept badly and was shrouded in a mist of tiredness that, by rights, should have been long gone."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.029"
+                        ],
+                        "text": "Women who sleep with men who have slept with other men only have to wait 12 months to donate blood."
+                    },
+                    {
+                        "regions": [
+                            "North American"
+                        ],
+                        "senseIds": [
+                            "m_en_gbus0954440.027",
+                            "b-en-es0044898.031"
+                        ],
+                        "text": "The hotel sleeps over 100 guests, and every bedroom is unique."
+                    }
+                ],
+                "text": "sleep"
+            }
+        ],
+        "type": "headword",
+        "word": "sleep"
+    }]
+}

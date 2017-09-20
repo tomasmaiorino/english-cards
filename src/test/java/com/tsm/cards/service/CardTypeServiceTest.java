@@ -18,11 +18,13 @@ import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.model.CardType;
 import com.tsm.cards.repository.CardTypeRepository;
 import com.tsm.cards.util.CardTypeTestBuilder;
+
 @FixMethodOrder(MethodSorters.JVM)
 public class CardTypeServiceTest {
 
@@ -90,6 +92,103 @@ public class CardTypeServiceTest {
 
         assertNotNull(result);
         assertThat(result, is(cardType));
+    }
+
+    @Test
+    public void update_NullOriginGiven_ShouldThrowException() {
+        // Set up
+        CardType origin = null;
+        CardType model = CardTypeTestBuilder.buildModel();
+
+        // Do test
+        try {
+            service.update(origin, model);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
+
+    @Test
+    public void update_NewOriginGiven_ShouldThrowException() {
+        // Set up
+        CardType origin = CardTypeTestBuilder.buildModel();
+        CardType model = CardTypeTestBuilder.buildModel();
+
+        // Do test
+        try {
+            service.update(origin, model);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
+
+    @Test
+    public void update_NullModelGiven_ShouldThrowException() {
+        // Set up
+        CardType origin = CardTypeTestBuilder.buildModel();
+        CardType model = null;
+
+        // Do test
+        try {
+            service.update(origin, model);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
+
+    @Test
+    public void update_DuplicatedNameGiven_ShouldThrowException() {
+        // Set up
+        CardType origin = CardTypeTestBuilder.buildModel();
+        ReflectionTestUtils.setField(origin, "id", 2);
+        CardType model = CardTypeTestBuilder.buildModel();
+        CardType duplicated = CardTypeTestBuilder.buildModel();
+        ReflectionTestUtils.setField(duplicated, "id", 1);
+
+        // Expectations
+        when(mockRepository.findByName(model.getName())).thenReturn(Optional.of(duplicated));
+
+        // Do test
+        try {
+            service.update(origin, model);
+            fail();
+        } catch (BadRequestException e) {
+        }
+
+        // Assertions
+        verify(mockRepository).findByName(model.getName());
+        verify(mockRepository, times(0)).save(origin);
+    }
+
+    @Test
+    public void update_ValidObjectsGiven_ShouldUpdate() {
+        // Set up
+        CardType origin = CardTypeTestBuilder.buildModel();
+        ReflectionTestUtils.setField(origin, "id", 2);
+        CardType model = CardTypeTestBuilder.buildModel();
+        model.setName("new Name");
+
+        // Expectations
+        when(mockRepository.findByName(model.getName())).thenReturn(Optional.of(origin));
+        when(mockRepository.save(origin)).thenReturn(origin);
+
+        // Do test
+        CardType result = service.update(origin, model);
+
+        // Assertions
+        verify(mockRepository).findByName(model.getName());
+
+        assertNotNull(result);
+        assertThat(result, is(origin));
     }
 
 }

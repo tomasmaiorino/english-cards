@@ -1,6 +1,6 @@
-oxford.service.ap.id: 1 
-oxford.service.ap.key: 1
-oxford.service.definitions.service.endpoint: https://od-api.oxforddictionaries.com:443/api/v1/entries/en/X/definitions
+maxDefinitionSynonymsList: 6
+oxford.service.api.id: 
+oxford.service.app.key: 
 
 endpoints:
   enabled: true

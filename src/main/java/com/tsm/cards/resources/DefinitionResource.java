@@ -1,5 +1,6 @@
 package com.tsm.cards.resources;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,6 +23,14 @@ public class DefinitionResource implements Comparable<DefinitionResource> {
     @Getter
     @Setter
     private Map<String, String> definitions;
+
+    @Getter
+    @Setter
+    private Map<String, String> synonyms;
+
+    @Getter
+    @Setter
+    private List<String> sentences;
 
     @Override
     public String toString() {

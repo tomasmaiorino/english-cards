@@ -1,6 +1,6 @@
 package com.tsm.builders;
 
-import com.tsm.cards.model.Definition;
+import com.tsm.cards.documents.Definition;
 
 public class DefinitionTestBuilder {
 

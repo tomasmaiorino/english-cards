@@ -1,3 +1,5 @@
+maxDefinitionSentencesList: 6
+maxDefinitionSynonymsList: 6
 maxDefinitionListSize: 4
 initial:
   load:
@@ -5,9 +7,12 @@ initial:
 
 oxford:
   service:
-    api.id:
-    app.key:
+    api.id: 
+    app.key: 
     definitions.service.endpoint: https://od-api.oxforddictionaries.com/api/v1/entries/en/X
+    synonyms.service.endpoint: https://od-api.oxforddictionaries.com/api/v1/entries/en/X/synonyms
+    sentences.service.endpoint: https://od-api.oxforddictionaries.com/api/v1/entries/en/X/sentences
+
 client:
   service:
     key: cecadbd7-e07c-48b2-b11d-038f7aaab4f6

@@ -83,5 +83,7 @@ public interface ErrorCodes {
     // DEFINITIONS
     public static final String UNKNOWN_WORD_GIVEN = "unknownWordGiven";
 
+    public static final String SYNONYMS_NOT_FOUND = "synonymsNotFound";
+
 
 }

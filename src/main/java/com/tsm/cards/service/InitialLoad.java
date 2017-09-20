@@ -18,8 +18,9 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.KnownWord;
+import com.tsm.cards.definition.service.KnownWordService;
+import com.tsm.cards.documents.KnownWord;
+import com.tsm.cards.exceptions.BadRequestException;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +49,7 @@ public class InitialLoad implements ApplicationListener<ApplicationReadyEvent> {
 		try {
 			knownWordService.findByWord(getInitialLoadWord());
 			log.info("Initial load word found :) ");
-		} catch (ResourceNotFoundException e) {
+		} catch (BadRequestException e) {
 			log.info("initial load word [{}] not found. Let's run the initial load :O ", getInitialLoadWord());
 			runInitialLoad();
 		} catch (Exception e) {

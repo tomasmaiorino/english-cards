@@ -32,6 +32,7 @@ import com.tsm.resource.CardTypeResource;
 public class CardsTypeControllerIT extends BaseTestIT {
 
     public static final String CARDS_TYPE_END_POINT = "/api/v1/cards-type";
+    public static final String PUT_CARDS_TYPE_END_POINT = "/api/v1/cards-type/{id}";
 
     @LocalServerPort
     private int port;
@@ -129,6 +130,85 @@ public class CardsTypeControllerIT extends BaseTestIT {
 
         // Do Test
         given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT).then()
+            .statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is("Duplicated card type name."));
+    }
+
+    @Test
+    public void update_NullNameGiven_ShouldReturnError() {
+        // Set Up
+        CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+        CardTypeResource newResource = CardTypeResource.build().assertFields().name(null);
+
+        // Do Test
+        given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when().put(PUT_CARDS_TYPE_END_POINT, resource.getId())
+            .then()
+            .statusCode(HttpStatus.BAD_REQUEST.value()).body("[0].message", is("The name is required."), "[0].field", is("name"));
+    }
+
+    @Test
+    public void update_EmptyNameGiven_ShouldReturnError() {
+        // Set Up
+        CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+        CardTypeResource newResource = CardTypeResource.build().assertFields().name("");
+
+        // Do Test
+        given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when().put(PUT_CARDS_TYPE_END_POINT, resource.getId())
+            .then()
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+    }
+
+    @Test
+    public void update_SmallNameGiven_ShouldReturnError() {
+        // Set Up
+        CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+        CardTypeResource newResource = CardTypeResource.build().assertFields().name(SMALL_NAME);
+
+        // Do Test
+        given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when().put(PUT_CARDS_TYPE_END_POINT, resource.getId())
+            .then()
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+    }
+
+    @Test
+    public void update_LargeNameGiven_ShouldReturnError() {
+        // Set Up
+        CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+        CardTypeResource newResource = CardTypeResource.build().assertFields().name(LARGE_NAME);
+
+        // Do Test
+        given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when().put(PUT_CARDS_TYPE_END_POINT, resource.getId())
+            .then()
+            .statusCode(HttpStatus.BAD_REQUEST.value())
+            .body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+    }
+
+    @Test
+    public void update_ValidResourceGiven_ShouldSaveClient() {
+        // Set Up
+        CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+        CardTypeResource newResource = CardTypeResource.build().assertFields();
+
+        // Do Test
+        given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when().put(PUT_CARDS_TYPE_END_POINT, resource.getId())
+            .then()
+            .statusCode(HttpStatus.CREATED.value()).body("name", is(newResource.getName()))
+            .body("id", notNullValue());
+    }
+
+    @Test
+    // @Ignore
+    public void update_DuplicatedNameGiven_ShouldReturnError() {
+        // Set Up
+        CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+        CardTypeResource secondResource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+        secondResource.setName(resource.getName());
+
+        // Do Test
+        given().headers(getHeader()).body(secondResource).contentType(ContentType.JSON).when()
+            .put(PUT_CARDS_TYPE_END_POINT, secondResource.getId())
+            .then()
             .statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is("Duplicated card type name."));
     }
 

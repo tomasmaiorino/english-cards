@@ -22,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -37,6 +38,8 @@ import com.tsm.cards.util.CardTypeTestBuilder;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class CardsControllerTest {
+
+    private static final Integer CARD_ID = 1;
 
     @Mock
     private CardService mockService;
@@ -128,6 +131,89 @@ public class CardsControllerTest {
         verify(mockParser).toModel(resource, cardType);
         verify(mockCardTypeService).findById(resource.getCardType());
         verify(mockParser).toResource(card);
+
+        assertNotNull(result);
+        assertThat(result, is(resource));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void update_NotFoundCardResourceGiven_ShouldSaveCard() {
+        // Set up
+        CardResource resource = CardTestBuilder.buildResource();
+
+        // Expectations
+        when(validator.validate(resource, Default.class)).thenReturn(Collections.emptySet());
+        when(mockService.findById(CARD_ID)).thenThrow(ResourceNotFoundException.class);
+
+        // Do test
+        try {
+            controller.update(CARD_ID, resource);
+            fail();
+        } catch (ResourceNotFoundException e) {
+        }
+
+        // Assertions
+        verifyZeroInteractions(mockParser, mockCardTypeService);
+        verify(validator).validate(resource, Default.class);
+        verify(mockService).findById(CARD_ID);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void update_NotFoundCardTypeResourceGiven_ShouldSaveCard() {
+        // Set up
+        CardResource resource = CardTestBuilder.buildResource();
+        Card card = CardTestBuilder.buildModel();
+        ReflectionTestUtils.setField(card, "id", CARD_ID);
+
+        // Expectations
+        when(validator.validate(resource, Default.class)).thenReturn(Collections.emptySet());
+        when(mockService.findById(CARD_ID)).thenReturn(card);
+        when(mockCardTypeService.findById(resource.getCardType())).thenThrow(ResourceNotFoundException.class);
+
+        // Do test
+        try {
+            controller.update(CARD_ID, resource);
+            fail();
+        } catch (ResourceNotFoundException e) {
+        }
+
+        // Assertions
+        verifyZeroInteractions(mockParser);
+        verify(validator).validate(resource, Default.class);
+        verify(mockService).findById(CARD_ID);
+        verify(mockCardTypeService).findById(resource.getCardType());
+    }
+
+    @Test
+    public void update_ValidCardResourceGiven_ShouldSaveCard() {
+        // Set up
+        CardResource resource = CardTestBuilder.buildResource();
+        CardType cardType = CardTypeTestBuilder.buildModel();
+        Card model = CardTestBuilder.buildModel();
+        model.setCardType(cardType);
+
+        Card origin = CardTestBuilder.buildModel();
+        ReflectionTestUtils.setField(origin, "id", CARD_ID);
+
+        // Expectations
+        when(validator.validate(resource, Default.class)).thenReturn(Collections.emptySet());
+        when(mockCardTypeService.findById(resource.getCardType())).thenReturn(cardType);
+        when(mockParser.toModel(resource, cardType)).thenReturn(model);
+        when(mockService.update(origin, model)).thenReturn(origin);
+        when(mockParser.toResource(origin)).thenReturn(resource);
+        when(mockService.findById(CARD_ID)).thenReturn(origin);
+
+        // Do test
+        CardResource result = controller.update(CARD_ID, resource);
+
+        // Assertions
+        verify(validator).validate(resource, Default.class);
+        verify(mockService).update(origin, model);
+        verify(mockParser).toModel(resource, cardType);
+        verify(mockCardTypeService).findById(resource.getCardType());
+        verify(mockParser).toResource(origin);
 
         assertNotNull(result);
         assertThat(result, is(resource));

@@ -28,7 +28,7 @@ public class CardService {
     public Card save(final Card card) {
         Assert.notNull(card, "The card must not be null!");
         log.info("Saving card [{}] .", card);
-        
+
         repository.findByImgUrl(card.getImgUrl()).ifPresent(c -> {
             throw new BadRequestException(DUPLICATED_CARD);
         });
@@ -38,6 +38,35 @@ public class CardService {
         log.info("Saved card [{}].", card);
 
         return card;
+    }
+
+    @Transactional
+    public Card update(final Card origin, final Card model) {
+        Assert.notNull(origin, "The origin must not be null!");
+        Assert.notNull(origin.getId(), "The origin must not be new!");
+        Assert.notNull(model, "The model must not be null!");
+        log.info("Updating card origin[{}] to model [{}].", origin, model);
+
+        repository.findByImgUrl(model.getImgUrl()).ifPresent(c -> {
+            if (!c.getId().equals(origin.getId())) {
+                throw new BadRequestException(DUPLICATED_CARD);
+            }
+        });
+
+        merge(origin, model);
+
+        repository.save(origin);
+
+        log.info("Updated card [{}].", origin);
+
+        return origin;
+    }
+
+    private void merge(final Card origin, final Card model) {
+        origin.setCardStatus(model.getStatus());
+        origin.setCardType(model.getCardType());
+        origin.setImgUrl(model.getImgUrl());
+        origin.setName(model.getName());
     }
 
     public Card findById(final Integer id) {

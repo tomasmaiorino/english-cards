@@ -21,10 +21,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.tsm.cards.definition.repository.KnownWordRepository;
+import com.tsm.cards.definition.service.KnownWordService;
+import com.tsm.cards.documents.KnownWord;
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.KnownWord;
-import com.tsm.cards.repository.KnownWordRepository;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class KnownWordServiceTest {
