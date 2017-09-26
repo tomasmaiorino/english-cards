@@ -218,4 +218,43 @@ public class CardsControllerTest {
         assertNotNull(result);
         assertThat(result, is(resource));
     }
+
+    @Test
+    public void findById_NotFoundCardGiven_ShouldThrowException() {
+
+        // Expectations
+        when(mockService.findById(CARD_ID)).thenThrow(new ResourceNotFoundException(""));
+
+        // Do test
+        try {
+            controller.findById(CARD_ID);
+            fail();
+        } catch (ResourceNotFoundException e) {
+        }
+
+        // Assertions
+        verify(mockService).findById(CARD_ID);
+        verifyZeroInteractions(mockParser);
+    }
+
+    @Test
+    public void findById_FoundCardGiven_ShouldReturnContent() {
+        // Set up
+        CardResource resource = CardTestBuilder.buildResource();
+        Card card = CardTestBuilder.buildModel();
+
+        // Expectations
+        when(mockService.findById(CARD_ID)).thenReturn(card);
+        when(mockParser.toResource(card)).thenReturn(resource);
+
+        // Do test
+        CardResource result = controller.findById(CARD_ID);
+
+        // Assertions
+        verify(mockService).findById(CARD_ID);
+        verify(mockParser).toResource(card);
+
+        assertNotNull(result);
+        assertThat(result, is(resource));
+    }
 }

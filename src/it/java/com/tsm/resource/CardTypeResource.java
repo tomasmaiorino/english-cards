@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.RandomStringUtils.random;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tsm.controller.CardsTypeControllerIT;
@@ -27,7 +28,8 @@ public class CardTypeResource {
 
     public CardTypeResource create() {
         assertFields();
-        return given().headers(getHeaders()).contentType("application/json").body(this).when().post(CardsTypeControllerIT.CARDS_TYPE_END_POINT)
+        return given().headers(getHeaders()).contentType("application/json").body(this).when()
+            .post(CardsTypeControllerIT.CARDS_TYPE_END_POINT)
             .as(CardTypeResource.class);
     }
 
@@ -46,6 +48,10 @@ public class CardTypeResource {
     @Getter
     @Setter
     private String name;
+
+    @Getter
+    @Setter
+    private Set<CardResource> cards;
 
     public CardTypeResource headers(Map<String, String> headers) {
         this.headers = headers;

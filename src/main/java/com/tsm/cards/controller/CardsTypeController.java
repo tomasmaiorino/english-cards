@@ -1,6 +1,8 @@
 package com.tsm.cards.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
@@ -72,6 +74,24 @@ public class CardsTypeController extends BaseController {
         log.debug("returning resource [{}].", result);
 
         return result;
+    }
+
+    @RequestMapping(
+        path = "/{id}",
+        method = GET,
+        produces = JSON_VALUE)
+    @ResponseStatus(OK)
+    public CardTypeResource findById(@PathVariable final Integer id) {
+
+        log.debug("Recieved a request to find an cart type by id [{}].", id);
+
+        CardType cardtype = service.findById(id);
+
+        CardTypeResource resource = parser.toResource(cardtype);
+
+        log.debug("returning resource: [{}].", resource);
+
+        return resource;
     }
 
 }

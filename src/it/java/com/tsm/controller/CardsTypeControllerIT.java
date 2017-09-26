@@ -5,10 +5,12 @@ import static com.tsm.cards.util.ClientTestBuilder.LARGE_NAME;
 import static com.tsm.cards.util.ClientTestBuilder.SMALL_NAME;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.greaterThan;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -23,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.tsm.EnglishCardsApplication;
+import com.tsm.resource.CardResource;
 import com.tsm.resource.CardTypeResource;
 
 @RunWith(SpringRunner.class)
@@ -33,6 +36,7 @@ public class CardsTypeControllerIT extends BaseTestIT {
 
     public static final String CARDS_TYPE_END_POINT = "/api/v1/cards-type";
     public static final String PUT_CARDS_TYPE_END_POINT = "/api/v1/cards-type/{id}";
+    public static final String GET_CARDS_TYPE_END_POINT = "/api/v1/cards-type/{id}";
 
     @LocalServerPort
     private int port;
@@ -210,6 +214,28 @@ public class CardsTypeControllerIT extends BaseTestIT {
             .put(PUT_CARDS_TYPE_END_POINT, secondResource.getId())
             .then()
             .statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is("Duplicated card type name."));
+    }
+
+    @Test
+    public void findById_NotFoundCardTypeGiven_ShouldReturnError() {
+        // Do Test
+        given().contentType(ContentType.JSON).when()
+            .get(GET_CARDS_TYPE_END_POINT, RandomUtils.nextInt(100, 200))
+            .then()
+            .statusCode(HttpStatus.NOT_FOUND.value()).body("message", is("Card type not found."));
+    }
+
+    @Test
+    public void findById_FoundCardTypeGiven_ShouldReturnCardType() {
+        // Set up
+        CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+        CardResource.build().cardType(resource.getId()).assertFields().headers(getHeader()).create();
+
+        // Do Test
+        given().contentType(ContentType.JSON).when()
+            .get(GET_CARDS_TYPE_END_POINT, resource.getId())
+            .then()
+            .statusCode(HttpStatus.OK.value()).body("name", is(resource.getName()), "cards.size()", is(greaterThan(0)));
     }
 
 }

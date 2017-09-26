@@ -1,6 +1,5 @@
 oxford.service.ap.id: 
-oxford.service.ap.key: 
-oxford.service.definitions.service.endpoint: https://od-api.oxforddictionaries.com:443/api/v1/entries/en/X/definitions
+oxford.service.ap.key:
 
 spring:
   mvc:

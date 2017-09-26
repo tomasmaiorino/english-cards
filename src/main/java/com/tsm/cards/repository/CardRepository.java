@@ -16,7 +16,6 @@ public interface CardRepository extends Repository<Card, Integer> {
     
     Optional<Card> findById(final Integer id);
     
-    
     @Query("SELECT c FROM Card c WHERE UPPER(c.imgUrl) = UPPER(?1)")
     Optional<Card> findByImgUrl(final String imgUrl);
 

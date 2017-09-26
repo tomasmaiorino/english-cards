@@ -21,6 +21,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.tsm.cards.exceptions.BadRequestException;
+import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.Card;
 import com.tsm.cards.repository.CardRepository;
 import com.tsm.cards.util.CardTestBuilder;
@@ -189,6 +190,60 @@ public class CardServiceTest {
 
         assertNotNull(result);
         assertThat(result, is(origin));
+    }
+
+    @Test
+    public void findById_NullIdGiven_ShouldThrowException() {
+        // Set up
+        Integer cardId = null;
+
+        // Do test
+        try {
+            service.findById(cardId);
+            fail();
+        } catch (IllegalArgumentException e) {
+        }
+
+        // Assertions
+        verifyZeroInteractions(mockRepository);
+    }
+
+    @Test
+    public void findById_NotFoundCardGiven_ShouldThrowException() {
+        // Set up
+        Integer cardId = 1;
+
+        // Expectations
+        when(mockRepository.findById(cardId)).thenReturn(Optional.empty());
+
+        // Do test
+        try {
+            service.findById(cardId);
+            fail();
+        } catch (ResourceNotFoundException e) {
+        }
+
+        // Assertions
+        verify(mockRepository).findById(cardId);
+    }
+
+    @Test
+    public void findById_FoundCardGiven_ShouldReturnContent() {
+        // Set up
+        Integer cardId = 1;
+        Card card = CardTestBuilder.buildModel();
+
+        // Expectations
+        when(mockRepository.findById(cardId)).thenReturn(Optional.of(card));
+
+        // Do test
+        Card result = service.findById(cardId);
+
+        // Assertions
+        verify(mockRepository).findById(cardId);
+
+        assertNotNull(result);
+        assertThat(result, is(card));
     }
 
 }
