@@ -1,4 +1,7 @@
-It's a application which helps the english student to learn new words.
+It's a application which helps the english student to learn new words. By using this application you will be able to search for more than one word simultaneously.
+This is an initial version and will not be finished. I'm currently working on the branch v3 which will have new features for the english learning also a better UX.
+
+In order to access the actual branch you can access this url: https://fathomless-tundra-22713.herokuapp.com/ and to search for some new words meanings.
 
 This application is running under Spring Boot.
 This applications uses the Oxford service api (https://developer.oxforddictionaries.com/) therefore it is necessary to have an account on oxford service and use their OXFORD_SERVICE_API_ID and OXFORD_SERVICE_APP_KEY. 
@@ -30,12 +33,13 @@ The integration of the pages with the data occurs asynchronously, always making 
 
 ###### Pré-requisitos
 ```
-JDK - Java version 1.7.
+JDK - Java version 1.8.
 
 Any Java IDE with support Maven.
 
 Maven for build and dependecies.
 
+An initial load will be executed in order to load some known words, by doing that we avoid to call the external service when an invalid word was given.
 
 ###### After download the fonts, to install the application and test it execute the maven command:
 $ mvn clean install
@@ -49,23 +53,5 @@ $ mvn integration-test -P it -Doxford.service.api.id=OXFORD_SERVICE_API_ID -Doxf
 ###### To run the application the maven command:
 $ mvn spring-boot:run -Dspring.profiles.active=profile -Doxford.service.api.id=xxx -Doxford.service.app.key=xxx
 
-###### To test the find products by id, open the browser of your preference and type it:
-http://localhost:8080/product/1
-
-###### To test the find products by catalog service, open the browser of your preference and type it:
-http://localhost:8080/product/cat/Store
-
-###### To test find list service by id service, open the browser of your preference and type it:
-http://localhost:8080/order/1
-
-###### To test the find orders by sku id service, open the browser of your preference and type it:
-http://localhost:8080/order/sku/1
-
-###### To test the find all orders service, open the browser of your preference and type it:
-http://localhost:8080/order/all
-
 ###### To test the create order service, tpye it:
-curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:8080/order -d "{\"commerceItems\": [{\"sku\": {\"id\": 3},\"quantity\": 12,\"unitValue\": 12}],\"status\": \"SUBMITTED\",\"paymentStatus\": \"CREATED\",\"totalAmount\": 26}
-
-##### To update the order, type it:
-curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X PUT -d "{\"id\":4, \"commerceItems\": [{\"sku\": {\"id\": 1},\"quantity\": 12,\"unitValue\": 12}],\"status\": \"APPROVED\",\"paymentStatus\": \"CREATED\",\"totalAmount\": 21}" http://localhost:8080/order
+curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST http://localhost:8080/order -d "{\"words\": [\"home\", \"car\"]}"
