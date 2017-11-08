@@ -12,11 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import lombok.extern.slf4j.Slf4j;
 
 @Component
-@Profile(value = "local")
+//@Profile(value = "local")
 @Slf4j
 public class InitiaLocallLoad implements ApplicationListener<ApplicationReadyEvent> {
 
-	private static final String EMAIL_SERVICE_ENDPOINT = "/api/v1/messages/*";
+	private static final String EMAIL_SERVICE_ENDPOINT = "/api/v1/*";
 
 	protected static final String COMMA_SEPARATOR = ",";
 
