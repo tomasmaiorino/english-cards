@@ -30,6 +30,10 @@ public class CardTypeResource extends BaseResource {
     @Setter
     private Set<CardResource> cards;
 
+    @Getter
+    @Setter
+    private String imgUrl;
+
     public void addCards(final CardResource cardResource) {
         if (CollectionUtils.isEmpty(cards)) {
             cards = new HashSet<>();

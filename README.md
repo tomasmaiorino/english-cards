@@ -69,3 +69,21 @@ curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST 
 
 ##### To update the order, type it:
 curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X PUT -d "{\"id\":4, \"commerceItems\": [{\"sku\": {\"id\": 1},\"quantity\": 12,\"unitValue\": 12}],\"status\": \"APPROVED\",\"paymentStatus\": \"CREATED\",\"totalAmount\": 21}" http://localhost:8080/order
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards-type -d "{\"name\": \"kicthen\"}"
+
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 1,\"name\": \"burner\",\"imgUrl\": \"http://myburner/com/burner\", \"status\":\"ACTIVE\"}"
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 1,\"name\": \"burner2\",\"imgUrl\": \"http://myburner/com/burner2\", \"status\":\"ACTIVE\"}"
+
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards-type -d "{\"name\": \"bathroom\"}"
+
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 2,\"name\": \"bathroom\",\"imgUrl\": \"http://myburner/com/bathroom\", \"status\":\"ACTIVE\"}"
+
+
+
+
+

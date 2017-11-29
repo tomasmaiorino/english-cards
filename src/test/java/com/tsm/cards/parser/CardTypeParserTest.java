@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.when;
 
@@ -52,13 +51,14 @@ public class CardTypeParserTest {
 	public void toModel_ValidResourceGiven_ShouldCreateCardModel() {
 		// Set up
 		CardTypeResource resource = CardTypeTestBuilder.buildResource();
-
+		resource.setImgUrl(CardTypeTestBuilder.getImgUrl());
 		// Do test
 		CardType result = parser.toModel(resource);
 
 		// Assertions
 		assertNotNull(result);
-		assertThat(result, allOf(hasProperty("id", nullValue()), hasProperty("name", is(resource.getName()))));
+		assertThat(result, allOf(hasProperty("id", nullValue()), hasProperty("name", is(resource.getName())),
+				hasProperty("imgUrl", is(resource.getImgUrl()))));
 
 	}
 
@@ -75,6 +75,8 @@ public class CardTypeParserTest {
 	public void toResource_ValidCardParserGiven_ShouldCreateResourceModel() {
 		// Set up
 		CardType cardType = CardTypeTestBuilder.buildModel();
+		cardType.setImgUrl(CardTypeTestBuilder.getImgUrl());
+
 		ReflectionTestUtils.setField(cardType, "id", 1);
 		CardResource cardResource = CardTestBuilder.buildResource();
 
@@ -86,7 +88,8 @@ public class CardTypeParserTest {
 
 		// Assertions
 		assertNotNull(result);
-		assertThat(result, allOf(hasProperty("id", is(cardType.getId())), hasProperty("name", is(cardType.getName()))));
+		assertThat(result, allOf(hasProperty("id", is(cardType.getId())), hasProperty("name", is(cardType.getName())),
+				hasProperty("imgUrl", is(result.getImgUrl()))));
 
 	}
 }
