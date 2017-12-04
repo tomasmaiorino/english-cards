@@ -1,7 +1,7 @@
 It's a application which helps the english student to learn new words.
 
 This application is running under Spring Boot.
-This applications uses the Oxford service api (https://developer.oxforddictionaries.com/) therefore it is necessary to have an account on oxford service and use their OXFORD_SERVICE_API_ID and OXFORD_SERVICE_APP_KEY. 
+This applications uses the Oxford service api (https://developer.oxforddictionaries.com/) therefore it is necessary to have an account on oxford service and use their OXFORD_SERVICE_API_ID and OXFORD_SERVICE_APP_KEY.
 
 
 ## Used Technologies
@@ -70,20 +70,29 @@ curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X POST 
 ##### To update the order, type it:
 curl -i -H "Content-Type:application/json" -H "Accept:application/json" -X PUT -d "{\"id\":4, \"commerceItems\": [{\"sku\": {\"id\": 1},\"quantity\": 12,\"unitValue\": 12}],\"status\": \"APPROVED\",\"paymentStatus\": \"CREATED\",\"totalAmount\": 21}" http://localhost:8080/order
 
-curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards-type -d "{\"name\": \"kicthen\"}"
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards-type -d "{\"name\": \"Bathroom\",\"imgUrl\": \"assets/img/cards/bathroom/bathroom-sink.jpg\"}"
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 2,\"name\": \"mirror\",\"imgUrl\": \"assets/img/cards/bathroom/mirror.jpg\", \"status\":\"ACTIVE\"}"
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 2,\"name\": \"shelf\",\"imgUrl\": \"assets/img/cards/bathroom/shelf.jpg\", \"status\":\"ACTIVE\"}"
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 2,\"name\": \"toilet\",\"imgUrl\": \"assets/img/cards/bathroom/toilet.jpg\", \"status\":\"ACTIVE\"}"
 
 
-curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 1,\"name\": \"burner\",\"imgUrl\": \"http://myburner/com/burner\", \"status\":\"ACTIVE\"}"
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 2,\"name\": \"bathroom-sink\",\"imgUrl\": \"assets/img/cards/bathroom/bathroom-sink.jpg\", \"status\":\"ACTIVE\"}"
 
-curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 1,\"name\": \"burner2\",\"imgUrl\": \"http://myburner/com/burner2\", \"status\":\"ACTIVE\"}"
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 2,\"name\": \"bathtub\",\"imgUrl\": \"assets/img/cards/bathroom/bathtub.jpg\", \"status\":\"ACTIVE\"}"
+
+==
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards-type -d "{\"name\": \"Kicthen\",\"imgUrl\": \"assets/img/cards/kitchen/kitchen.jpg\"}"
+
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 1,\"name\": \"burner\",\"imgUrl\": \"assets/img/cards/kitchen/burner.jpg\", \"status\":\"ACTIVE\"}"
+
+curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 1,\"name\": \"cupboard\",\"imgUrl\": \"assets/img/cards/kitchen/cupboard.jpg\", \"status\":\"ACTIVE\"}"
 
 
 curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards-type -d "{\"name\": \"bathroom\"}"
 
 
 curl -i -H "Content-Type:application/json"  -H "AT: cecadbd7-e07c-48b2-b11d-038f7aaab4f6" -H "Accept:application/json" -X POST http://localhost:8080/api/v1/cards -d "{\"cardType\": 2,\"name\": \"bathroom\",\"imgUrl\": \"http://myburner/com/bathroom\", \"status\":\"ACTIVE\"}"
-
-
-
-
-
