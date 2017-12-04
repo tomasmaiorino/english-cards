@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.tsm.cards.definition.repository.TrackWordRepository;
+import com.tsm.cards.documents.TrackWord;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.TrackWord;
-import com.tsm.cards.repository.TrackWordRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

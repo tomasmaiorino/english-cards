@@ -19,9 +19,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tsm.cards.definition.repository.TrackWordRepository;
+import com.tsm.cards.documents.TrackWord;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.TrackWord;
-import com.tsm.cards.repository.TrackWordRepository;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class TrackWordsServiceTest {

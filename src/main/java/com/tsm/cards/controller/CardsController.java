@@ -1,55 +1,106 @@
 package com.tsm.cards.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
+import javax.validation.groups.Default;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tsm.cards.model.Card;
+import com.tsm.cards.model.CardType;
+import com.tsm.cards.parser.CardParser;
+import com.tsm.cards.resources.CardResource;
 import com.tsm.cards.service.CardService;
+import com.tsm.cards.service.CardTypeService;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping(value = "/cards")
+@RequestMapping(value = "/api/v1/cards")
 @Slf4j
-public class CardsController {
+public class CardsController extends BaseController {
 
-	@Autowired
-	@Getter
-	@Setter
-	private CardService cardService;
+    @Autowired
+    private CardService service;
 
-	@RequestMapping(method = POST)
-	@ResponseStatus(OK)
+    @Autowired
+    private CardTypeService cardTypeService;
 
-	public ResponseEntity<?> save(@Valid @RequestBody final Card card, Errors errors) throws Exception {
-		log.debug("Recieved a request to create a card [{}].", card);
+    @Autowired
+    private CardParser parser;
 
-		
-		if (errors.hasErrors()) {
+    @RequestMapping(method = POST,
+        consumes = JSON_VALUE,
+        produces = JSON_VALUE)
+    @ResponseStatus(CREATED)
+    public CardResource save(@RequestBody final CardResource resource) {
+        log.debug("Recieved a request to create a card  [{}].", resource);
 
+        validate(resource, Default.class);
 
+        CardType cardType = cardTypeService.findById(resource.getCardType());
 
-		}
+        Card card = parser.toModel(resource, cardType);
 
-		cardService.save(card);
+        card = service.save(card);
 
-		log.debug("returnig card [{}].", card);
+        CardResource result = parser.toResource(card);
 
-		return null;
-	}
+        log.debug("returning resource [{}].", result);
+
+        return result;
+    }
+
+    @RequestMapping(method = PUT,
+        path = "/{id}",
+        consumes = JSON_VALUE,
+        produces = JSON_VALUE)
+    @ResponseStatus(CREATED)
+    public CardResource update(@PathVariable final Integer id, @RequestBody final CardResource resource) {
+        log.debug("Recieved a request to update a card [{}].", resource);
+
+        validate(resource, Default.class);
+
+        Card origin = service.findById(id);
+
+        CardType cardType = cardTypeService.findById(resource.getCardType());
+
+        Card model = parser.toModel(resource, cardType);
+
+        origin = service.update(origin, model);
+
+        CardResource result = parser.toResource(origin);
+
+        log.debug("returning resource [{}].", result);
+
+        return result;
+    }
+
+    @RequestMapping(
+        path = "/{id}",
+        method = GET,
+        produces = JSON_VALUE)
+    @ResponseStatus(OK)
+    public CardResource findById(@PathVariable final Integer id) {
+
+        log.debug("Recieved a request to find an cart by id [{}].", id);
+
+        Card card = service.findById(id);
+
+        CardResource resource = parser.toResource(card);
+
+        log.debug("returning resource: [{}].", resource);
+
+        return resource;
+    }
 
 }

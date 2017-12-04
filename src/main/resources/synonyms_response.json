@@ -1,0 +1,389 @@
+{
+    "id":"normal",
+    "metadata": {
+        "provider": "Oxford University Press"
+    },
+    "results": [{
+        "id": "normal",
+        "language": "en",
+        "lexicalEntries": [{
+            "entries": [{
+                "homographNumber": "000",
+                "senses": [{
+                        "examples": [{
+                            "text": "the new library system will issue books in the normal way"
+                        }],
+                        "id": "t_en_gb0010054.001",
+                        "synonyms": [{
+                                "id": "usual",
+                                "language": "en",
+                                "text": "usual"
+                            },
+                            {
+                                "id": "standard",
+                                "language": "en",
+                                "text": "standard"
+                            },
+                            {
+                                "id": "typical",
+                                "language": "en",
+                                "text": "typical"
+                            },
+                            {
+                                "id": "stock",
+                                "language": "en",
+                                "text": "stock"
+                            },
+                            {
+                                "id": "common",
+                                "language": "en",
+                                "text": "common"
+                            },
+                            {
+                                "id": "ordinary",
+                                "language": "en",
+                                "text": "ordinary"
+                            },
+                            {
+                                "id": "customary",
+                                "language": "en",
+                                "text": "customary"
+                            },
+                            {
+                                "id": "conventional",
+                                "language": "en",
+                                "text": "conventional"
+                            },
+                            {
+                                "id": "habitual",
+                                "language": "en",
+                                "text": "habitual"
+                            },
+                            {
+                                "id": "accustomed",
+                                "language": "en",
+                                "text": "accustomed"
+                            },
+                            {
+                                "id": "expected",
+                                "language": "en",
+                                "text": "expected"
+                            },
+                            {
+                                "id": "wonted",
+                                "language": "en",
+                                "text": "wonted"
+                            },
+                            {
+                                "id": "everyday",
+                                "language": "en",
+                                "text": "everyday"
+                            },
+                            {
+                                "id": "regular",
+                                "language": "en",
+                                "text": "regular"
+                            },
+                            {
+                                "id": "routine",
+                                "language": "en",
+                                "text": "routine"
+                            },
+                            {
+                                "id": "day-to-day",
+                                "language": "en",
+                                "text": "day-to-day"
+                            },
+                            {
+                                "id": "daily",
+                                "language": "en",
+                                "text": "daily"
+                            },
+                            {
+                                "id": "established",
+                                "language": "en",
+                                "text": "established"
+                            },
+                            {
+                                "id": "settled",
+                                "language": "en",
+                                "text": "settled"
+                            },
+                            {
+                                "id": "set",
+                                "language": "en",
+                                "text": "set"
+                            },
+                            {
+                                "id": "fixed",
+                                "language": "en",
+                                "text": "fixed"
+                            },
+                            {
+                                "id": "traditional",
+                                "language": "en",
+                                "text": "traditional"
+                            },
+                            {
+                                "id": "quotidian",
+                                "language": "en",
+                                "text": "quotidian"
+                            },
+                            {
+                                "id": "prevailing",
+                                "language": "en",
+                                "text": "prevailing"
+                            }
+                        ]
+                    },
+                    {
+                        "examples": [{
+                            "text": "to anyone looking at them, they must seem like a perfectly normal couple"
+                        }],
+                        "id": "t_en_gb0010054.002",
+                        "subsenses": [{
+                                "id": "id0f767a55-0de5-4d39-9546-ca0e3c0f3e34",
+                                "regions": [
+                                    "North American"
+                                ],
+                                "synonyms": [{
+                                    "id": "garden-variety",
+                                    "language": "en",
+                                    "text": "garden-variety"
+                                }]
+                            },
+                            {
+                                "id": "id3416f674-37ef-41da-8863-77696599a696",
+                                "registers": [
+                                    "informal"
+                                ],
+                                "synonyms": [{
+                                        "id": "bog-standard",
+                                        "language": "en",
+                                        "text": "bog-standard"
+                                    },
+                                    {
+                                        "id": "vanilla",
+                                        "language": "en",
+                                        "text": "vanilla"
+                                    },
+                                    {
+                                        "id": "plain_vanilla",
+                                        "language": "en",
+                                        "text": "plain vanilla"
+                                    },
+                                    {
+                                        "id": "a_dime_a_dozen",
+                                        "language": "en",
+                                        "text": "a dime a dozen"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "id632b1d4e-9a0c-46b0-9ff5-7bd7ee4bfc65",
+                                "regions": [
+                                    "British"
+                                ],
+                                "registers": [
+                                    "informal"
+                                ],
+                                "synonyms": [{
+                                    "id": "common_or_garden",
+                                    "language": "en",
+                                    "text": "common or garden"
+                                }]
+                            },
+                            {
+                                "id": "id3791b066-b4b5-4018-ac92-969210a3e9bf",
+                                "regions": [
+                                    "North American"
+                                ],
+                                "registers": [
+                                    "informal"
+                                ],
+                                "synonyms": [{
+                                    "id": "ornery",
+                                    "language": "en",
+                                    "text": "ornery"
+                                }]
+                            }
+                        ],
+                        "synonyms": [{
+                                "id": "ordinary",
+                                "language": "en",
+                                "text": "ordinary"
+                            },
+                            {
+                                "id": "average",
+                                "language": "en",
+                                "text": "average"
+                            },
+                            {
+                                "id": "run-of-the-mill",
+                                "language": "en",
+                                "text": "run-of-the-mill"
+                            },
+                            {
+                                "id": "standard",
+                                "language": "en",
+                                "text": "standard"
+                            },
+                            {
+                                "id": "typical",
+                                "language": "en",
+                                "text": "typical"
+                            },
+                            {
+                                "id": "middle-of-the-road",
+                                "language": "en",
+                                "text": "middle-of-the-road"
+                            },
+                            {
+                                "id": "common",
+                                "language": "en",
+                                "text": "common"
+                            },
+                            {
+                                "id": "conventional",
+                                "language": "en",
+                                "text": "conventional"
+                            },
+                            {
+                                "id": "mainstream",
+                                "language": "en",
+                                "text": "mainstream"
+                            },
+                            {
+                                "id": "unremarkable",
+                                "language": "en",
+                                "text": "unremarkable"
+                            },
+                            {
+                                "id": "unexceptional",
+                                "language": "en",
+                                "text": "unexceptional"
+                            },
+                            {
+                                "id": "plain",
+                                "language": "en",
+                                "text": "plain"
+                            },
+                            {
+                                "id": "simple",
+                                "language": "en",
+                                "text": "simple"
+                            },
+                            {
+                                "id": "homely",
+                                "language": "en",
+                                "text": "homely"
+                            },
+                            {
+                                "id": "homespun",
+                                "language": "en",
+                                "text": "homespun"
+                            },
+                            {
+                                "id": "workaday",
+                                "language": "en",
+                                "text": "workaday"
+                            }
+                        ]
+                    },
+                    {
+                        "examples": [{
+                            "text": "Mr Lowe was convinced that the man was not normal"
+                        }],
+                        "id": "t_en_gb0010054.003",
+                        "subsenses": [{
+                                "id": "id6caf9898-cd7b-4411-a226-2980dd0efd57",
+                                "synonyms": [{
+                                    "id": "compos_mentis",
+                                    "language": "en",
+                                    "text": "compos mentis"
+                                }]
+                            },
+                            {
+                                "id": "idecc0722a-5d26-4880-b649-21d03c06b977",
+                                "registers": [
+                                    "informal"
+                                ],
+                                "synonyms": [{
+                                    "id": "all_there",
+                                    "language": "en",
+                                    "text": "all there"
+                                }]
+                            }
+                        ],
+                        "synonyms": [{
+                                "id": "sane",
+                                "language": "en",
+                                "text": "sane"
+                            },
+                            {
+                                "id": "in_one%27s_right_mind",
+                                "language": "en",
+                                "text": "in one's right mind"
+                            },
+                            {
+                                "id": "right_in_the_head",
+                                "language": "en",
+                                "text": "right in the head"
+                            },
+                            {
+                                "id": "of_sound_mind",
+                                "language": "en",
+                                "text": "of sound mind"
+                            },
+                            {
+                                "id": "in_possession_of_all_one%27s_faculties",
+                                "language": "en",
+                                "text": "in possession of all one's faculties"
+                            },
+                            {
+                                "id": "able_to_reason_clearly",
+                                "language": "en",
+                                "text": "able to reason clearly"
+                            },
+                            {
+                                "id": "able_to_think_clearly",
+                                "language": "en",
+                                "text": "able to think clearly"
+                            },
+                            {
+                                "id": "lucid",
+                                "language": "en",
+                                "text": "lucid"
+                            },
+                            {
+                                "id": "rational",
+                                "language": "en",
+                                "text": "rational"
+                            },
+                            {
+                                "id": "coherent",
+                                "language": "en",
+                                "text": "coherent"
+                            },
+                            {
+                                "id": "balanced",
+                                "language": "en",
+                                "text": "balanced"
+                            },
+                            {
+                                "id": "well_balanced",
+                                "language": "en",
+                                "text": "well balanced"
+                            }
+                        ]
+                    }
+                ]
+            }],
+            "language": "en",
+            "lexicalCategory": "Adjective",
+            "text": "normal"
+        }],
+        "type": "headword",
+        "word": "normal"
+    }]
+}

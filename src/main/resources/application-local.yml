@@ -1,3 +1,16 @@
 oxford.service.ap.id: 
-oxford.service.ap.key: 
-oxford.service.definitions.service.endpoint: https://od-api.oxforddictionaries.com:443/api/v1/entries/en/X/definitions
+oxford.service.ap.key:
+
+spring:
+  mvc:
+    dispatchTraceRequest: true
+    dispatchOptionsRequest: true
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: create
+    properties.hibernate.dialect: org.hibernate.dialect.HSQLDialect
+    database: HSQL
+  datasource:
+    driverClassName: org.hsqldb.jdbcDriver
+    url: jdbc:hsqldb:mem:auth
+    username: sa

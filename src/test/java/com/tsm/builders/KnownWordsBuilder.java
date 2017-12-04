@@ -3,7 +3,7 @@ package com.tsm.builders;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tsm.cards.model.KnownWord;
+import com.tsm.cards.documents.KnownWord;
 
 public class KnownWordsBuilder {
 
