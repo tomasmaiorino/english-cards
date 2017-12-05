@@ -1,16 +1,15 @@
 initial:
   load:
     word: home
-spring:
-  data:
-    mongodb:
-      uri: ${MONGODB_URI}
-      database: ${DATA_BASE}
 client:
   service:
     key: ${CLIENT_KEY}
     url: api/v1/clients 
 spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+      database: ${DATA_BASE}
   mvc:
     dispatch-options-request: true
   datasource:
@@ -27,4 +26,4 @@ oxford:
   service:
     api.id: ${OXFORD_API_ID}
     app.key: ${OXFORD_APP_KEY}
-    definitions.service.endpoint: https://od-api.oxforddictionaries.com/api/v1/entries/en/X      
+    definitions.service.endpoint: https://od-api.oxforddictionaries.com/api/v1/entries/en/X
