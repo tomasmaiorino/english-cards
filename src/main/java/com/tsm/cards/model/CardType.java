@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,12 +19,17 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.tsm.cards.model.Card.CardStatus;
 
 import lombok.Getter;
 
 @Entity
 @Table(name = "card_type")
 public class CardType extends BaseModel {
+
+	public enum CardTypeStatus {
+		ACTIVE, INACTIVE;
+	}
 
 	@Id
 	@GeneratedValue
@@ -40,6 +47,11 @@ public class CardType extends BaseModel {
 
 	@Getter
 	private String imgUrl;
+
+	@Getter
+	@Column(nullable = false, length = 10)
+	@Enumerated(EnumType.STRING)
+	private CardTypeStatus status;
 
 	public void setImgUrl(final String imgUrl) {
 		Assert.hasText(imgUrl, "The imgUrl must not be null!");
@@ -63,6 +75,12 @@ public class CardType extends BaseModel {
 		Assert.hasText(name, "The name must not be null!");
 		this.name = name;
 	}
+	
+    public void setCardTypeStatus(final CardTypeStatus cardTypeStatus) {
+        Assert.notNull(status, "The cardTypeStatus must not be null!");
+        this.status = cardTypeStatus;
+    }
+
 
 	@Override
 	public boolean equals(final Object obj) {

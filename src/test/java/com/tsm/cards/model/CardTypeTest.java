@@ -14,6 +14,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import com.tsm.cards.model.CardType.CardTypeStatus;
 import com.tsm.cards.util.CardTestBuilder;
 import com.tsm.cards.util.CardTypeTestBuilder;
 
@@ -68,6 +69,16 @@ public class CardTypeTest {
 
 		// Do test
 		cardType.addCard(card);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void setCardTypeStatus_NullCardTypeStatusGiven_ShouldThrowException() {
+		// Set up
+		CardType cardType = new CardType();
+		CardTypeStatus cardTypeStatus = null;
+
+		// Do test
+		cardType.setCardTypeStatus(cardTypeStatus);
 	}
 
 	@Test

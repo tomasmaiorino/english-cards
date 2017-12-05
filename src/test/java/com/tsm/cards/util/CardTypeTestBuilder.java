@@ -4,8 +4,11 @@ import static org.apache.commons.lang3.RandomStringUtils.random;
 
 import java.util.Collections;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import com.tsm.cards.model.Card;
 import com.tsm.cards.model.CardType;
+import com.tsm.cards.model.CardType.CardTypeStatus;
 import com.tsm.cards.resources.CardTypeResource;
 
 public class CardTypeTestBuilder {
@@ -35,7 +38,12 @@ public class CardTypeTestBuilder {
 	public static CardTypeResource buildResource() {
 		CardTypeResource resource = new CardTypeResource();
 		resource.setName(VALID_NAME);
+		resource.setStatus(getStatus());
 		return resource;
+	}
+
+	public static String getStatus() {
+		return CardTypeStatus.values()[RandomUtils.nextInt(0, CardTypeStatus.values().length - 1)].name();
 	}
 
 	public static String getName() {

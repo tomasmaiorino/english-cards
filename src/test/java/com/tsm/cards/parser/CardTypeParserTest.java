@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.when;
 
@@ -92,4 +93,10 @@ public class CardTypeParserTest {
 				hasProperty("imgUrl", is(result.getImgUrl()))));
 
 	}
+
+	@Test
+	public void toResources_EmptyCardTypes_ShouldThrowException() {
+		fail();
+	}
+
 }

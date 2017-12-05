@@ -1,5 +1,8 @@
 package com.tsm.cards.parser;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +28,13 @@ public class CardTypeParser {
 		return cardType;
 	}
 
+	public Set<CardTypeResource> toResources(final Set<CardType> cardsType) {
+		Assert.notEmpty(cardsType, "The cardsType must not be empty!");
+		Set<CardTypeResource> resources = new HashSet<>();
+		cardsType.forEach(ct -> resources.add(toResource(ct)));
+		return resources;
+	}
+
 	public CardTypeResource toResource(final CardType cardType) {
 		Assert.notNull(cardType, "The cardType must not be null!");
 		CardTypeResource resource = new CardTypeResource();
@@ -39,7 +49,6 @@ public class CardTypeParser {
 			});
 		}
 		return resource;
-
 	}
 
 }

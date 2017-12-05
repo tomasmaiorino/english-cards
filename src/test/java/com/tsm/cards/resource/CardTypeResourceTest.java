@@ -2,7 +2,9 @@ package com.tsm.cards.resource;
 
 import static com.tsm.cards.util.CardTypeTestBuilder.LARGE_NAME;
 import static com.tsm.cards.util.CardTypeTestBuilder.SMALL_NAME;
+import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_TYPE_STATUS;
 import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_TYPE_NAME_SIZE;
+import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_TYPE_STATUS;
 import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_TYPE_NAME;
 
 import java.util.function.Supplier;
@@ -52,6 +54,19 @@ public class CardTypeResourceTest extends BaseResourceTest {
     public void build_EmptyNameGiven_ShouldThrowException() {
         // Set up
         checkResource(buildResourceFunction, "name", "", INVALID_CARD_TYPE_NAME_SIZE);
+    }
+    
+
+    @Test
+    public void build_NullStatusGiven_ShouldThrowException() {
+        // Set up
+        checkResource(buildResourceFunction, "status", null, REQUIRED_CARD_TYPE_STATUS);
+    }
+
+    @Test
+    public void build_InvalidStatusGiven_ShouldThrowException() {
+        // Set up
+        checkResource(buildResourceFunction, "status", INVALID_CARD_TYPE_STATUS, INVALID_CARD_TYPE_STATUS);
     }
 
 }

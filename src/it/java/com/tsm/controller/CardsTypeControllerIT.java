@@ -37,6 +37,7 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	public static final String CARDS_TYPE_END_POINT = "/api/v1/cards-type";
 	public static final String PUT_CARDS_TYPE_END_POINT = "/api/v1/cards-type/{id}";
 	public static final String GET_CARDS_TYPE_END_POINT = "/api/v1/cards-type/{id}";
+	public static final String GET_ALL_CARDS_TYPE_END_POINT = "/api/v1/cards-type";
 
 	@LocalServerPort
 	private int port;
@@ -112,6 +113,41 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
 				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+	}
+	
+	//
+	
+	@Test
+	public void save_EmptyStatusGiven_ShouldReturnError() {
+		// Set Up
+		CardTypeResource resource = CardTypeResource.build().assertFields().status("");
+
+		// Do Test
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+				.then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("status"));
+	}
+
+	@Test
+	public void save_InvalidStatusGiven_ShouldReturnError() {
+		// Set Up
+		CardTypeResource resource = CardTypeResource.build().assertFields().status("INV");
+
+		// Do Test
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+				.then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("name"));
+	}
+
+	@Test
+	public void save_NullStatusGiven_ShouldReturnError() {
+		// Set Up
+		CardTypeResource resource = CardTypeResource.build().assertFields().status(null);
+
+		// Do Test
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+				.then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is("The status is required."), "[0].field", is("name"));
 	}
 
 	@Test

@@ -24,6 +24,10 @@ public class CardTypeResource {
 		if (Objects.isNull(name)) {
 			name();
 		}
+		if (Objects.isNull(status)) {
+			status();
+		}
+
 		return this;
 	}
 
@@ -57,6 +61,10 @@ public class CardTypeResource {
 	@Setter
 	private String imgUrl;
 
+	@Getter
+	@Setter
+	private String status;
+
 	public CardTypeResource headers(Map<String, String> headers) {
 		this.headers = headers;
 		return this;
@@ -68,6 +76,15 @@ public class CardTypeResource {
 
 	public CardTypeResource name(final String name) {
 		this.name = name;
+		return this;
+	}
+
+	public CardTypeResource status() {
+		return status(CardTypeTestBuilder.getStatus());
+	}
+
+	public CardTypeResource status(final String status) {
+		this.status = status;
 		return this;
 	}
 

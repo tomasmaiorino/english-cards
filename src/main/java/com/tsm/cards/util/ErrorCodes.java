@@ -79,7 +79,9 @@ public interface ErrorCodes {
 
     public static final String DUPLICATED_CARD_TYPE = "duplicatedCardType";
 
+    public static final String INVALID_CARD_TYPE_STATUS = "invalidCardTypeStatus";
 
+    		public static final String REQUIRED_CARD_TYPE_STATUS = "requiredCardTypeStatus";
     // DEFINITIONS
     public static final String UNKNOWN_WORD_GIVEN = "unknownWordGiven";
 
