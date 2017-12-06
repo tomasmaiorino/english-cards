@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import com.tsm.cards.model.CardType;
+import com.tsm.cards.model.CardType.CardTypeStatus;
 import com.tsm.cards.resources.CardTypeResource;
 
 @Component
@@ -22,6 +23,7 @@ public class CardTypeParser {
 		Assert.notNull(resource, "The resource must not be null!");
 		CardType cardType = new CardType();
 		cardType.setName(resource.getName());
+		cardType.setCardTypeStatus(CardTypeStatus.valueOf(resource.getStatus()));
 		if (StringUtils.isNotBlank(resource.getImgUrl())) {
 			cardType.setImgUrl(resource.getImgUrl());
 		}
@@ -40,6 +42,7 @@ public class CardTypeParser {
 		CardTypeResource resource = new CardTypeResource();
 		resource.setName(cardType.getName());
 		resource.setId(cardType.getId());
+		resource.setStatus(cardType.getStatus().name());
 		if (StringUtils.isNotBlank(cardType.getImgUrl())) {
 			resource.setImgUrl(cardType.getImgUrl());
 		}

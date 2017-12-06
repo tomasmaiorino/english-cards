@@ -25,6 +25,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.tsm.EnglishCardsApplication;
+import com.tsm.cards.model.CardType.CardTypeStatus;
+import com.tsm.cards.util.CardTypeTestBuilder;
 import com.tsm.resource.CardResource;
 import com.tsm.resource.CardTypeResource;
 
@@ -114,9 +116,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
 				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
 	}
-	
+
 	//
-	
+
 	@Test
 	public void save_EmptyStatusGiven_ShouldReturnError() {
 		// Set Up
@@ -124,8 +126,8 @@ public class CardsTypeControllerIT extends BaseTestIT {
 
 		// Do Test
 		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("status"));
+				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body("[0].message",
+						is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("status"));
 	}
 
 	@Test
@@ -135,8 +137,8 @@ public class CardsTypeControllerIT extends BaseTestIT {
 
 		// Do Test
 		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("name"));
+				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body("[0].message",
+						is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("status"));
 	}
 
 	@Test
@@ -147,7 +149,7 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		// Do Test
 		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The status is required."), "[0].field", is("name"));
+				.body("[0].message", is("The status is required."), "[0].field", is("status"));
 	}
 
 	@Test
@@ -157,8 +159,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 
 		// Do Test
 		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
-				.then().statusCode(HttpStatus.CREATED.value())
-				.body("name", is(resource.getName()), "imgUrl", is(resource.getImgUrl())).body("id", notNullValue());
+				.then().statusCode(HttpStatus.CREATED.value()).body("name", is(resource.getName()), "status",
+						is(resource.getStatus()), "imgUrl", is(resource.getImgUrl()))
+				.body("id", notNullValue());
 	}
 
 	@Test
@@ -231,7 +234,8 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CARDS_TYPE_END_POINT, resource.getId()).then().statusCode(HttpStatus.CREATED.value())
-				.body("name", is(newResource.getName())).body("id", notNullValue());
+				.body("name", is(newResource.getName()), "status", is(newResource.getStatus()))
+				.body("id", notNullValue());
 	}
 
 	@Test
@@ -241,6 +245,7 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
 		CardTypeResource secondResource = CardTypeResource.build().assertFields().headers(getHeader()).create();
 		secondResource.setName(resource.getName());
+		secondResource.setStatus(CardTypeTestBuilder.getStatus());
 
 		// Do Test
 		given().headers(getHeader()).body(secondResource).contentType(ContentType.JSON).when()
@@ -265,6 +270,17 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		given().contentType(ContentType.JSON).when().get(GET_CARDS_TYPE_END_POINT, resource.getId()).then()
 				.statusCode(HttpStatus.OK.value())
 				.body("name", is(resource.getName()), "cards.size()", is(greaterThan(0)));
+	}
+
+	@Test
+	public void findAll_FoundCardTypeGiven_ShouldReturnCards() {
+		// Set up
+		CardTypeResource.build().status(CardTypeStatus.ACTIVE.name()).assertFields().headers(getHeader()).create();
+
+		// Do Test
+		given().contentType(ContentType.JSON).when().get(GET_ALL_CARDS_TYPE_END_POINT).then()
+				.statusCode(HttpStatus.OK.value())
+				.body("size()", is(greaterThan(0)), "[0].status", is(CardTypeStatus.ACTIVE.name()));
 	}
 
 }

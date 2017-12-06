@@ -19,7 +19,6 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.tsm.cards.model.Card.CardStatus;
 
 import lombok.Getter;
 
@@ -77,7 +76,7 @@ public class CardType extends BaseModel {
 	}
 	
     public void setCardTypeStatus(final CardTypeStatus cardTypeStatus) {
-        Assert.notNull(status, "The cardTypeStatus must not be null!");
+        Assert.notNull(cardTypeStatus, "The cardTypeStatus must not be null!");
         this.status = cardTypeStatus;
     }
 

@@ -32,7 +32,12 @@ public class CardTypeTestBuilder {
 		if (card != null) {
 			cardType.setCards(Collections.singleton(card));
 		}
+		cardType.setCardTypeStatus(getCardTypeStatus());
 		return cardType;
+	}
+
+	public static CardTypeStatus getCardTypeStatus() {
+		return CardTypeStatus.values()[RandomUtils.nextInt(0, CardTypeStatus.values().length - 1)];
 	}
 
 	public static CardTypeResource buildResource() {
@@ -43,7 +48,7 @@ public class CardTypeTestBuilder {
 	}
 
 	public static String getStatus() {
-		return CardTypeStatus.values()[RandomUtils.nextInt(0, CardTypeStatus.values().length - 1)].name();
+		return getCardTypeStatus().name();
 	}
 
 	public static String getName() {
