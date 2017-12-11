@@ -8,6 +8,7 @@ import static com.tsm.cards.util.CardTestBuilder.SMALL_IMG_URL;
 import static com.tsm.cards.util.CardTestBuilder.SMALL_NAME;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.greaterThan;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +40,7 @@ public class CardsControllerIT extends BaseTestIT {
 	public static final String CARDS_END_POINT = "/api/v1/cards";
 	public static final String PUT_CARDS_END_POINT = "/api/v1/cards/{id}";
 	public static final String GET_CARDS_END_POINT = "/api/v1/cards/{id}";
+	public static final String DELETE_CARDS_END_POINT = "/api/v1/cards/{id}";
 
 	@LocalServerPort
 	private int port;
@@ -462,6 +464,28 @@ public class CardsControllerIT extends BaseTestIT {
 				.statusCode(HttpStatus.OK.value()).body("name", is(resource.getName()))
 				.body("cardType", is(resource.getCardType())).body("imgUrl", is(resource.getImgUrl()))
 				.body("status", is(resource.getStatus())).body("id", is(resource.getId()));
+	}
+
+	@Test
+	public void delete_NotFoundCardGiven_ShouldReturnError() {
+		// Do Test
+		given().contentType(ContentType.JSON).when().delete(DELETE_CARDS_END_POINT, RandomUtils.nextInt(100, 200))
+				.then().statusCode(HttpStatus.NOT_FOUND.value()).body("message", is("Card not found."));
+	}
+
+	@Test
+	public void delete_FoundCardGiven_ShouldDelete() {
+		// Set up
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+		CardResource cardResource = CardResource.build().cardType(resource.getId()).assertFields().headers(getHeader())
+				.create();
+
+		// Do Test
+		given().contentType(ContentType.JSON).when().get(DELETE_CARDS_END_POINT, cardResource.getId()).then()
+				.statusCode(HttpStatus.NO_CONTENT.value());
+
+		given().contentType(ContentType.JSON).when().get(GET_CARDS_END_POINT, cardResource.getId()).then()
+				.statusCode(HttpStatus.NOT_FOUND.value()).body("message", is("Card not found."));
 	}
 
 }

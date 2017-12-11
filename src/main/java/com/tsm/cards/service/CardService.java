@@ -21,63 +21,74 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class CardService {
 
-    @Autowired
-    private CardRepository repository;
+	@Autowired
+	private CardRepository repository;
 
-    @Transactional
-    public Card save(final Card card) {
-        Assert.notNull(card, "The card must not be null!");
-        log.info("Saving card [{}] .", card);
+	@Transactional
+	public Card save(final Card card) {
+		Assert.notNull(card, "The card must not be null!");
+		log.info("Saving card [{}] .", card);
 
-        repository.findByImgUrl(card.getImgUrl()).ifPresent(c -> {
-            throw new BadRequestException(DUPLICATED_CARD);
-        });
+		repository.findByImgUrl(card.getImgUrl()).ifPresent(c -> {
+			throw new BadRequestException(DUPLICATED_CARD);
+		});
 
-        repository.save(card);
+		repository.save(card);
 
-        log.info("Saved card [{}].", card);
+		log.info("Saved card [{}].", card);
 
-        return card;
-    }
+		return card;
+	}
 
-    @Transactional
-    public Card update(final Card origin, final Card model) {
-        Assert.notNull(origin, "The origin must not be null!");
-        Assert.notNull(origin.getId(), "The origin must not be new!");
-        Assert.notNull(model, "The model must not be null!");
-        log.info("Updating card origin[{}] to model [{}].", origin, model);
+	@Transactional
+	public Card update(final Card origin, final Card model) {
+		Assert.notNull(origin, "The origin must not be null!");
+		Assert.notNull(origin.getId(), "The origin must not be new!");
+		Assert.notNull(model, "The model must not be null!");
+		log.info("Updating card origin[{}] to model [{}].", origin, model);
 
-        repository.findByImgUrl(model.getImgUrl()).ifPresent(c -> {
-            if (!c.getId().equals(origin.getId())) {
-                throw new BadRequestException(DUPLICATED_CARD);
-            }
-        });
+		repository.findByImgUrl(model.getImgUrl()).ifPresent(c -> {
+			if (!c.getId().equals(origin.getId())) {
+				throw new BadRequestException(DUPLICATED_CARD);
+			}
+		});
 
-        merge(origin, model);
+		merge(origin, model);
 
-        repository.save(origin);
+		repository.save(origin);
 
-        log.info("Updated card [{}].", origin);
+		log.info("Updated card [{}].", origin);
 
-        return origin;
-    }
+		return origin;
+	}
 
-    private void merge(final Card origin, final Card model) {
-        origin.setCardStatus(model.getStatus());
-        origin.setCardType(model.getCardType());
-        origin.setImgUrl(model.getImgUrl());
-        origin.setName(model.getName());
-    }
+	private void merge(final Card origin, final Card model) {
+		origin.setCardStatus(model.getStatus());
+		origin.setCardType(model.getCardType());
+		origin.setImgUrl(model.getImgUrl());
+		origin.setName(model.getName());
+	}
 
-    public Card findById(final Integer id) {
-        Assert.notNull(id, "The id must not be null!");
-        log.info("Finding card by id [{}] .", id);
+	public Card findById(final Integer id) {
+		Assert.notNull(id, "The id must not be null!");
+		log.info("Finding card by id [{}] .", id);
 
-        Card card = repository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException(CARD_NOT_FOUND));
+		Card card = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(CARD_NOT_FOUND));
 
-        log.info("Card found [{}].", card);
+		log.info("Card found [{}].", card);
 
-        return card;
-    }
+		return card;
+	}
+
+	@Transactional
+	public void delete(final Card card) {
+		Assert.notNull(card, "The card must not be null!");
+		Assert.notNull(card.getId(), "The origin must not be new!");
+		log.info("Deleting card [{}].", card);
+
+		repository.delete(card);
+
+		log.info("Card deleted.");
+
+	}
 }

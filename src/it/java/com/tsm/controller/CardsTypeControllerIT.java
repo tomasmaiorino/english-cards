@@ -41,6 +41,7 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	public static final String GET_CARDS_TYPE_END_POINT = "/api/v1/cards-type/{id}";
 	public static final String GET_ALL_CARDS_TYPE_END_POINT = "/api/v1/cards-type";
 
+
 	@LocalServerPort
 	private int port;
 

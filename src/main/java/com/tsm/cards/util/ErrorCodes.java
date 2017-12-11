@@ -81,11 +81,26 @@ public interface ErrorCodes {
 
     public static final String INVALID_CARD_TYPE_STATUS = "invalidCardTypeStatus";
 
-    		public static final String REQUIRED_CARD_TYPE_STATUS = "requiredCardTypeStatus";
+	public static final String REQUIRED_CARD_TYPE_STATUS = "requiredCardTypeStatus";
+	
     // DEFINITIONS
     public static final String UNKNOWN_WORD_GIVEN = "unknownWordGiven";
 
     public static final String SYNONYMS_NOT_FOUND = "synonymsNotFound";
+
+
+    // CONTENT TYPE
+    public static final String CONTENT_TYPE_NOT_FOUND = "contentTypeNotFound";
+    
+    public static final String REQUIRED_CONTENT_TYPE_NAME = "requiredContentTypeName";
+
+    public static final String INVALID_CONTENT_TYPE_NAME_SIZE = "invalidContenTypeNameSize";
+
+    public static final String DUPLICATED_CONTENT_TYPE = "duplicatedContentType";
+
+    public static final String INVALID_CONTENT_TYPE_STATUS = "invalidContentTypeStatus";
+
+	public static final String REQUIRED_CONTENT_TYPE_STATUS = "requiredContentTypeStatus";
 
 
 }

@@ -2,9 +2,11 @@ package com.tsm.cards.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 import javax.validation.groups.Default;
 
@@ -29,78 +31,81 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CardsController extends BaseController {
 
-    @Autowired
-    private CardService service;
+	@Autowired
+	private CardService service;
 
-    @Autowired
-    private CardTypeService cardTypeService;
+	@Autowired
+	private CardTypeService cardTypeService;
 
-    @Autowired
-    private CardParser parser;
+	@Autowired
+	private CardParser parser;
 
-    @RequestMapping(method = POST,
-        consumes = JSON_VALUE,
-        produces = JSON_VALUE)
-    @ResponseStatus(CREATED)
-    public CardResource save(@RequestBody final CardResource resource) {
-        log.debug("Recieved a request to create a card  [{}].", resource);
+	@RequestMapping(method = POST, consumes = JSON_VALUE, produces = JSON_VALUE)
+	@ResponseStatus(CREATED)
+	public CardResource save(@RequestBody final CardResource resource) {
+		log.debug("Recieved a request to create a card  [{}].", resource);
 
-        validate(resource, Default.class);
+		validate(resource, Default.class);
 
-        CardType cardType = cardTypeService.findById(resource.getCardType());
+		CardType cardType = cardTypeService.findById(resource.getCardType());
 
-        Card card = parser.toModel(resource, cardType);
+		Card card = parser.toModel(resource, cardType);
 
-        card = service.save(card);
+		card = service.save(card);
 
-        CardResource result = parser.toResource(card);
+		CardResource result = parser.toResource(card);
 
-        log.debug("returning resource [{}].", result);
+		log.debug("returning resource [{}].", result);
 
-        return result;
-    }
+		return result;
+	}
 
-    @RequestMapping(method = PUT,
-        path = "/{id}",
-        consumes = JSON_VALUE,
-        produces = JSON_VALUE)
-    @ResponseStatus(CREATED)
-    public CardResource update(@PathVariable final Integer id, @RequestBody final CardResource resource) {
-        log.debug("Recieved a request to update a card [{}].", resource);
+	@RequestMapping(method = PUT, path = "/{id}", consumes = JSON_VALUE, produces = JSON_VALUE)
+	@ResponseStatus(CREATED)
+	public CardResource update(@PathVariable final Integer id, @RequestBody final CardResource resource) {
+		log.debug("Recieved a request to update a card [{}].", resource);
 
-        validate(resource, Default.class);
+		validate(resource, Default.class);
 
-        Card origin = service.findById(id);
+		Card origin = service.findById(id);
 
-        CardType cardType = cardTypeService.findById(resource.getCardType());
+		CardType cardType = cardTypeService.findById(resource.getCardType());
 
-        Card model = parser.toModel(resource, cardType);
+		Card model = parser.toModel(resource, cardType);
 
-        origin = service.update(origin, model);
+		origin = service.update(origin, model);
 
-        CardResource result = parser.toResource(origin);
+		CardResource result = parser.toResource(origin);
 
-        log.debug("returning resource [{}].", result);
+		log.debug("returning resource [{}].", result);
 
-        return result;
-    }
+		return result;
+	}
 
-    @RequestMapping(
-        path = "/{id}",
-        method = GET,
-        produces = JSON_VALUE)
-    @ResponseStatus(OK)
-    public CardResource findById(@PathVariable final Integer id) {
+	@RequestMapping(path = "/{id}", method = GET, produces = JSON_VALUE)
+	@ResponseStatus(OK)
+	public CardResource findById(@PathVariable final Integer id) {
 
-        log.debug("Recieved a request to find an cart by id [{}].", id);
+		log.debug("Recieved a request to find an cart by id [{}].", id);
 
-        Card card = service.findById(id);
+		Card card = service.findById(id);
 
-        CardResource resource = parser.toResource(card);
+		CardResource resource = parser.toResource(card);
 
-        log.debug("returning resource: [{}].", resource);
+		log.debug("returning resource: [{}].", resource);
 
-        return resource;
-    }
+		return resource;
+	}
 
+	@RequestMapping(method = DELETE, path = "/{id}", consumes = JSON_VALUE, produces = JSON_VALUE)
+	@ResponseStatus(NO_CONTENT)
+	public void delete(@PathVariable final Integer id) {
+		log.debug("Recieved a request to delete a card [{}].", id);
+
+		Card origin = service.findById(id);
+
+		service.delete(origin);
+
+		log.debug("card deleted].");
+	}
 }
