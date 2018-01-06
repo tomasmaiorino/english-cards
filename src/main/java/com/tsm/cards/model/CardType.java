@@ -53,7 +53,6 @@ public class CardType extends BaseModel {
 	private CardTypeStatus status;
 
 	public void setImgUrl(final String imgUrl) {
-		Assert.hasText(imgUrl, "The imgUrl must not be null!");
 		this.imgUrl = imgUrl;
 	}
 
@@ -74,12 +73,11 @@ public class CardType extends BaseModel {
 		Assert.hasText(name, "The name must not be null!");
 		this.name = name;
 	}
-	
-    public void setCardTypeStatus(final CardTypeStatus cardTypeStatus) {
-        Assert.notNull(cardTypeStatus, "The cardTypeStatus must not be null!");
-        this.status = cardTypeStatus;
-    }
 
+	public void setCardTypeStatus(final CardTypeStatus cardTypeStatus) {
+		Assert.notNull(cardTypeStatus, "The cardTypeStatus must not be null!");
+		this.status = cardTypeStatus;
+	}
 
 	@Override
 	public boolean equals(final Object obj) {

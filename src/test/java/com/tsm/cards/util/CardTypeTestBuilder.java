@@ -2,9 +2,11 @@ package com.tsm.cards.util;
 
 import static org.apache.commons.lang3.RandomStringUtils.random;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.tsm.cards.model.Card;
 import com.tsm.cards.model.CardType;
@@ -24,6 +26,14 @@ public class CardTypeTestBuilder {
 
 	public static CardType buildModel(final String name) {
 		return buildModel(name, null);
+	}
+
+	public static CardType buildModel(final Integer id) {
+		CardType model = buildModel();
+		ReflectionTestUtils.setField(model, "id", id);
+		ReflectionTestUtils.setField(model, "created", LocalDateTime.now());
+		return model;
+
 	}
 
 	public static CardType buildModel(final String name, final Card card) {

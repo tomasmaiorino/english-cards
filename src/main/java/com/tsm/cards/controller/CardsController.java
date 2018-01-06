@@ -2,11 +2,8 @@ package com.tsm.cards.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 import javax.validation.groups.Default;
 
@@ -21,6 +18,8 @@ import com.tsm.cards.model.Card;
 import com.tsm.cards.model.CardType;
 import com.tsm.cards.parser.CardParser;
 import com.tsm.cards.resources.CardResource;
+import com.tsm.cards.resources.IParser;
+import com.tsm.cards.service.BaseService;
 import com.tsm.cards.service.CardService;
 import com.tsm.cards.service.CardTypeService;
 
@@ -29,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = "/api/v1/cards")
 @Slf4j
-public class CardsController extends BaseController {
+public class CardsController extends BaseController<CardResource, Card, Integer> {
 
 	@Autowired
 	private CardService service;
@@ -42,8 +41,9 @@ public class CardsController extends BaseController {
 
 	@RequestMapping(method = POST, consumes = JSON_VALUE, produces = JSON_VALUE)
 	@ResponseStatus(CREATED)
+	@Override
 	public CardResource save(@RequestBody final CardResource resource) {
-		log.debug("Recieved a request to create a card  [{}].", resource);
+		log.debug("Recieved a request to create a card [{}].", resource);
 
 		validate(resource, Default.class);
 
@@ -61,7 +61,8 @@ public class CardsController extends BaseController {
 	}
 
 	@RequestMapping(method = PUT, path = "/{id}", consumes = JSON_VALUE, produces = JSON_VALUE)
-	@ResponseStatus(CREATED)
+	@ResponseStatus(OK)
+	@Override
 	public CardResource update(@PathVariable final Integer id, @RequestBody final CardResource resource) {
 		log.debug("Recieved a request to update a card [{}].", resource);
 
@@ -82,30 +83,13 @@ public class CardsController extends BaseController {
 		return result;
 	}
 
-	@RequestMapping(path = "/{id}", method = GET, produces = JSON_VALUE)
-	@ResponseStatus(OK)
-	public CardResource findById(@PathVariable final Integer id) {
-
-		log.debug("Recieved a request to find an cart by id [{}].", id);
-
-		Card card = service.findById(id);
-
-		CardResource resource = parser.toResource(card);
-
-		log.debug("returning resource: [{}].", resource);
-
-		return resource;
+	@Override
+	public BaseService<Card, Integer> getService() {
+		return service;
 	}
 
-	@RequestMapping(method = DELETE, path = "/{id}", consumes = JSON_VALUE, produces = JSON_VALUE)
-	@ResponseStatus(NO_CONTENT)
-	public void delete(@PathVariable final Integer id) {
-		log.debug("Recieved a request to delete a card [{}].", id);
-
-		Card origin = service.findById(id);
-
-		service.delete(origin);
-
-		log.debug("card deleted].");
+	@Override
+	public IParser<CardResource, Card> getParser() {
+		return parser;
 	}
 }

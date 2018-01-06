@@ -13,30 +13,24 @@ import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.Client;
 import com.tsm.cards.repository.ClientRepository;
+import com.tsm.cards.repository.IBaseRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class ClientService {
+public class ClientService extends BaseService<Client, Integer> {
 
 	@Autowired
 	private ClientRepository repository;
 
-	@Transactional
-	public Client save(final Client client) {
-		Assert.notNull(client, "The client must not be null.");
-		log.info("Saving client [{}] .", client);
-
-		repository.findByToken(client.getToken()).ifPresent(c -> {
+	@Override
+	protected void saveValidation(final Client model) {
+		repository.findByToken(model.getToken()).ifPresent(c -> {
 			throw new BadRequestException(DUPLICATED_TOKEN);
 		});
 
-		repository.save(client);
-
-		log.info("Saved client [{}].", client);
-		return client;
 	}
 
 	public Client findByToken(final String token) {
@@ -49,5 +43,15 @@ public class ClientService {
 		log.info("Client found [{}].", client);
 
 		return client;
+	}
+
+	@Override
+	public IBaseRepository<Client, Integer> getRepository() {
+		return repository;
+	}
+
+	@Override
+	protected String getClassName() {
+		return Client.class.getSimpleName();
 	}
 }

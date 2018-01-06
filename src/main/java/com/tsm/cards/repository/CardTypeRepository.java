@@ -12,11 +12,7 @@ import com.tsm.cards.model.CardType;
 import com.tsm.cards.model.CardType.CardTypeStatus;
 
 @Transactional(propagation = Propagation.MANDATORY)
-public interface CardTypeRepository extends Repository<CardType, Integer> {
-
-	CardType save(CardType cardType);
-
-	Optional<CardType> findById(final Integer id);
+public interface CardTypeRepository extends IBaseRepository<CardType, Integer>, Repository<CardType, Integer> {
 
 	@Query("SELECT ct FROM CardType ct WHERE UPPER(ct.name) = UPPER(?1)")
 	Optional<CardType> findByName(final String name);

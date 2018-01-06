@@ -21,7 +21,6 @@ import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
@@ -32,6 +31,9 @@ import com.tsm.cards.util.CardTypeTestBuilder;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class CardTypeServiceTest {
+
+	private static final Integer CARD_TYPE_ID = 1;
+	private static final Integer CARD_TYPE_ID_DUPLICATED = 2;
 
 	@InjectMocks
 	private CardTypeService service;
@@ -153,11 +155,9 @@ public class CardTypeServiceTest {
 	@Test
 	public void update_DuplicatedNameGiven_ShouldThrowException() {
 		// Set up
-		CardType origin = CardTypeTestBuilder.buildModel();
-		ReflectionTestUtils.setField(origin, "id", 2);
+		CardType origin = CardTypeTestBuilder.buildModel(CARD_TYPE_ID);
 		CardType model = CardTypeTestBuilder.buildModel();
-		CardType duplicated = CardTypeTestBuilder.buildModel();
-		ReflectionTestUtils.setField(duplicated, "id", 1);
+		CardType duplicated = CardTypeTestBuilder.buildModel(CARD_TYPE_ID_DUPLICATED);
 
 		// Expectations
 		when(mockRepository.findByName(model.getName())).thenReturn(Optional.of(duplicated));
@@ -177,8 +177,7 @@ public class CardTypeServiceTest {
 	@Test
 	public void update_ValidObjectsGiven_ShouldUpdate() {
 		// Set up
-		CardType origin = CardTypeTestBuilder.buildModel();
-		ReflectionTestUtils.setField(origin, "id", 2);
+		CardType origin = CardTypeTestBuilder.buildModel(CARD_TYPE_ID);
 		CardType model = CardTypeTestBuilder.buildModel();
 		model.setName("new Name");
 

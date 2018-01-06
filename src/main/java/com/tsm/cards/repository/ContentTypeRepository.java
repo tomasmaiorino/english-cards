@@ -12,14 +12,11 @@ import com.tsm.cards.model.ContentType;
 import com.tsm.cards.model.ContentType.ContentTypeStatus;
 
 @Transactional(propagation = Propagation.MANDATORY)
-public interface ContentTypeRepository extends Repository<ContentType, Integer> {
-
-	ContentType save(ContentType contentType);
-
-	Optional<ContentType> findById(final Integer id);
+public interface ContentTypeRepository extends Repository<ContentType, Integer>, IBaseRepository<ContentType, Integer> {
 
 	@Query("SELECT ct FROM ContentType ct WHERE UPPER(ct.name) = UPPER(?1)")
 	Optional<ContentType> findByName(final String name);
 
 	Set<ContentType> findAllByStatus(final ContentTypeStatus status);
+
 }

@@ -3,13 +3,14 @@ package com.tsm.resource;
 import static com.jayway.restassured.RestAssured.given;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tsm.cards.util.CardTypeTestBuilder;
-import com.tsm.controller.CardsTypeControllerIT;
+import com.tsm.cards.util.ContentTypeRuleTestBuilder;
 import com.tsm.controller.ContentTypesControllerIT;
 
 import lombok.Getter;
@@ -62,6 +63,13 @@ public class ContentTypeResource {
 	@Setter
 	private String status;
 
+	@Getter
+	private Set<ContentTypeRuleResource> rules;
+
+	@Getter
+	@Setter
+	private Set<ContentResource> contents;
+
 	public ContentTypeResource headers(Map<String, String> headers) {
 		this.headers = headers;
 		return this;
@@ -92,5 +100,26 @@ public class ContentTypeResource {
 	public ContentTypeResource imgUrl(final String imgUrl) {
 		this.imgUrl = imgUrl;
 		return this;
+	}
+
+	private void addRule(ContentTypeRuleResource rule) {
+		if (rules == null) {
+			rules = new HashSet<>();
+		}
+		rules.add(rule);
+	}
+
+	public ContentTypeResource rules(Integer quantity) {
+		ContentTypeRuleResource ruleResource = new ContentTypeRuleResource();
+		while (quantity-- > 0) {
+			ruleResource.setAttribute(ContentTypeRuleTestBuilder.getAttribute());
+			ruleResource.setRule(ContentTypeRuleTestBuilder.getRule());
+			addRule(ruleResource);
+		}
+		return this;
+	}
+
+	public void setRules(final Set<ContentTypeRuleResource> rules) {
+		this.rules = rules;
 	}
 }

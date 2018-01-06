@@ -19,7 +19,6 @@ import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
@@ -30,11 +29,15 @@ import com.tsm.cards.util.CardTestBuilder;
 @FixMethodOrder(MethodSorters.JVM)
 public class CardServiceTest {
 
+	private static final Integer CARD_ID = 1;
+
+	private static final Integer CARD_ID_DUPLICATED = 2;
+
 	@InjectMocks
 	private CardService service;
 
 	@Mock
-	private CardRepository mockRepository;
+	private CardRepository repository;
 
 	@Before
 	public void setUp() {
@@ -54,7 +57,7 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verifyZeroInteractions(mockRepository);
+		verifyZeroInteractions(repository);
 	}
 
 	@Test
@@ -63,7 +66,7 @@ public class CardServiceTest {
 		Card card = CardTestBuilder.buildModel();
 
 		// Expectations
-		when(mockRepository.findByImgUrl(card.getImgUrl())).thenReturn(Optional.of(card));
+		when(repository.findByImgUrl(card.getImgUrl())).thenReturn(Optional.of(card));
 
 		// Do test
 		try {
@@ -73,8 +76,8 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verify(mockRepository).findByImgUrl(card.getImgUrl());
-		verify(mockRepository, times(0)).save(card);
+		verify(repository).findByImgUrl(card.getImgUrl());
+		verify(repository, times(0)).save(card);
 	}
 
 	@Test
@@ -83,14 +86,14 @@ public class CardServiceTest {
 		Card card = CardTestBuilder.buildModel();
 
 		// Expectations
-		when(mockRepository.findByImgUrl(card.getImgUrl())).thenReturn(Optional.empty());
-		when(mockRepository.save(card)).thenReturn(card);
+		when(repository.findByImgUrl(card.getImgUrl())).thenReturn(Optional.empty());
+		when(repository.save(card)).thenReturn(card);
 
 		// Do test
 		Card result = service.save(card);
 
 		// Assertions
-		verify(mockRepository).findByImgUrl(card.getImgUrl());
+		verify(repository).findByImgUrl(card.getImgUrl());
 
 		assertNotNull(result);
 		assertThat(result, is(card));
@@ -110,7 +113,7 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verifyZeroInteractions(mockRepository);
+		verifyZeroInteractions(repository);
 	}
 
 	@Test
@@ -127,7 +130,7 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verifyZeroInteractions(mockRepository);
+		verifyZeroInteractions(repository);
 	}
 
 	@Test
@@ -144,20 +147,18 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verifyZeroInteractions(mockRepository);
+		verifyZeroInteractions(repository);
 	}
 
 	@Test
 	public void update_DuplicatedNameGiven_ShouldThrowException() {
 		// Set up
-		Card origin = CardTestBuilder.buildModel();
-		ReflectionTestUtils.setField(origin, "id", 2);
+		Card origin = CardTestBuilder.buildModel(CARD_ID);
 		Card model = CardTestBuilder.buildModel();
-		Card duplicated = CardTestBuilder.buildModel();
-		ReflectionTestUtils.setField(duplicated, "id", 1);
+		Card duplicated = CardTestBuilder.buildModel(CARD_ID_DUPLICATED);
 
 		// Expectations
-		when(mockRepository.findByImgUrl(model.getImgUrl())).thenReturn(Optional.of(duplicated));
+		when(repository.findByImgUrl(model.getImgUrl())).thenReturn(Optional.of(duplicated));
 
 		// Do test
 		try {
@@ -167,27 +168,26 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verify(mockRepository).findByImgUrl(model.getImgUrl());
-		verify(mockRepository, times(0)).save(origin);
+		verify(repository).findByImgUrl(model.getImgUrl());
+		verify(repository, times(0)).save(origin);
 	}
 
 	@Test
 	public void update_ValidObjectsGiven_ShouldUpdate() {
 		// Set up
-		Card origin = CardTestBuilder.buildModel();
-		ReflectionTestUtils.setField(origin, "id", 2);
+		Card origin = CardTestBuilder.buildModel(CARD_ID);
 		Card model = CardTestBuilder.buildModel();
 		model.setName("new Name");
 
 		// Expectations
-		when(mockRepository.findByImgUrl(model.getImgUrl())).thenReturn(Optional.of(origin));
-		when(mockRepository.save(origin)).thenReturn(origin);
+		when(repository.findByImgUrl(model.getImgUrl())).thenReturn(Optional.of(origin));
+		when(repository.save(origin)).thenReturn(origin);
 
 		// Do test
 		Card result = service.update(origin, model);
 
 		// Assertions
-		verify(mockRepository).findByImgUrl(model.getImgUrl());
+		verify(repository).findByImgUrl(model.getImgUrl());
 
 		assertNotNull(result);
 		assertThat(result, is(origin));
@@ -206,7 +206,7 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verifyZeroInteractions(mockRepository);
+		verifyZeroInteractions(repository);
 	}
 
 	@Test
@@ -215,7 +215,7 @@ public class CardServiceTest {
 		Integer cardId = 1;
 
 		// Expectations
-		when(mockRepository.findById(cardId)).thenReturn(Optional.empty());
+		when(repository.findById(cardId)).thenReturn(Optional.empty());
 
 		// Do test
 		try {
@@ -225,7 +225,7 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verify(mockRepository).findById(cardId);
+		verify(repository).findById(cardId);
 	}
 
 	@Test
@@ -235,13 +235,13 @@ public class CardServiceTest {
 		Card card = CardTestBuilder.buildModel();
 
 		// Expectations
-		when(mockRepository.findById(cardId)).thenReturn(Optional.of(card));
+		when(repository.findById(cardId)).thenReturn(Optional.of(card));
 
 		// Do test
 		Card result = service.findById(cardId);
 
 		// Assertions
-		verify(mockRepository).findById(cardId);
+		verify(repository).findById(cardId);
 
 		assertNotNull(result);
 		assertThat(result, is(card));
@@ -262,7 +262,7 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verifyZeroInteractions(mockRepository);
+		verifyZeroInteractions(repository);
 	}
 
 	@Test
@@ -278,23 +278,22 @@ public class CardServiceTest {
 		}
 
 		// Assertions
-		verifyZeroInteractions(mockRepository);
+		verifyZeroInteractions(repository);
 	}
 
 	@Test
 	public void delete_ValidObjectsGiven_ShouldUpdate() {
 		// Set up
-		Card card = CardTestBuilder.buildModel();
-		ReflectionTestUtils.setField(card, "id", 2);
+		Card card = CardTestBuilder.buildModel(CARD_ID);
 
 		// Expectations
-		doNothing().when(mockRepository).delete(card);
+		doNothing().when(repository).delete(card);
 
 		// Do test
 		service.delete(card);
 
 		// Assertions
-		verify(mockRepository).delete(card);
+		verify(repository).delete(card);
 
 	}
 

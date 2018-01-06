@@ -12,9 +12,10 @@ import org.springframework.util.CollectionUtils;
 import com.tsm.cards.model.CardType;
 import com.tsm.cards.model.CardType.CardTypeStatus;
 import com.tsm.cards.resources.CardTypeResource;
+import com.tsm.cards.resources.IParser;
 
 @Component
-public class CardTypeParser {
+public class CardTypeParser implements IParser<CardTypeResource, CardType> {
 
 	@Autowired
 	private CardParser cardParser;

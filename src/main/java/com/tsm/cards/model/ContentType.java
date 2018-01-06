@@ -1,18 +1,28 @@
 package com.tsm.cards.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "content_type")
@@ -39,23 +49,20 @@ public class ContentType extends BaseModel {
 	@Enumerated(EnumType.STRING)
 	private ContentTypeStatus status;
 
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "contentType")
+	@Getter
+	@Setter
+	@JsonBackReference
+	private Set<Content> contents;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "contentType")
+	@Getter
+	@JsonBackReference
+	private Set<ContentTypeRule> rules;
+
 	public void setImgUrl(final String imgUrl) {
-		Assert.hasText(imgUrl, "The imgUrl must not be null!");
 		this.imgUrl = imgUrl;
 	}
-
-	// public void setCards(final Set<Card> cards) {
-	// Assert.notEmpty(cards, "The cards must not be empty!");
-	// this.cards = cards;
-	// }
-	//
-	// public void addCard(final Card card) {
-	// Assert.notNull(card, "The card must not be null!");
-	// if (cards == null) {
-	// cards = new HashSet<Card>();
-	// }
-	// cards.add(card);
-	// }
 
 	public void setName(final String name) {
 		Assert.hasText(name, "The name must not be null!");
@@ -65,6 +72,24 @@ public class ContentType extends BaseModel {
 	public void setStatus(final ContentTypeStatus status) {
 		Assert.notNull(status, "The status must not be null!");
 		this.status = status;
+	}
+
+	public void setRules(final Set<ContentTypeRule> rules) {
+		// clean rules list
+		if (!CollectionUtils.isEmpty(this.getRules())) {
+			this.getRules().clear();
+		}
+		if (!CollectionUtils.isEmpty(rules)) {
+			this.rules.addAll(rules);
+		}
+	}
+
+	public void addRule(final ContentTypeRule rule) {
+		Assert.notNull(rule, "The rule must not be null!");
+		if (rules == null || rules.isEmpty()) {
+			rules = new HashSet<>();
+		}
+		rules.add(rule);
 	}
 
 	@Override
@@ -94,5 +119,33 @@ public class ContentType extends BaseModel {
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this);
+	}
+
+	public static class ContentTypeBuilder {
+
+		private final ContentType contentType;
+
+		private ContentTypeBuilder(final String name) {
+			contentType = new ContentType();
+			contentType.setName(name);
+		}
+
+		public static ContentTypeBuilder ContentType(final String name) {
+			return new ContentTypeBuilder(name);
+		}
+
+		public ContentTypeBuilder status(final ContentTypeStatus status) {
+			contentType.setStatus(status);
+			return this;
+		}
+
+		public ContentTypeBuilder imgUrl(final String imgUrl) {
+			contentType.setImgUrl(imgUrl);
+			return this;
+		}
+
+		public ContentType build() {
+			return contentType;
+		}
 	}
 }

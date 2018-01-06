@@ -25,8 +25,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.tsm.EnglishCardsApplication;
+import com.tsm.cards.model.Content.ContentStatus;
 import com.tsm.cards.model.ContentType.ContentTypeStatus;
 import com.tsm.cards.util.ContentTypeTestBuilder;
+import com.tsm.resource.ContentResource;
 import com.tsm.resource.ContentTypeResource;
 
 @RunWith(SpringRunner.class)
@@ -39,6 +41,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 	public static final String PUT_CONTENTS_TYPES_END_POINT = "/api/v1/content-types/{id}";
 	public static final String GET_CONTENTS_TYPES_END_POINT = "/api/v1/content-types/{id}";
 	public static final String GET_ALL_CONTENTS_TYPES_END_POINT = "/api/v1/content-types";
+	private static final String INVALID_NAME = "The name must be between 2 and 30 characters.";
 
 	@LocalServerPort
 	private int port;
@@ -55,7 +58,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 
 		// Do Test
 		given().body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT).then()
-				.statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is("Missing admin header."));
+				.statusCode(HttpStatus.BAD_REQUEST.value()).body(MESSAGE_FIELD, is("Missing admin header."));
 	}
 
 	@Test
@@ -67,7 +70,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 
 		// Do Test
 		given().headers(header).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.FORBIDDEN.value()).body("message", is("Access not allowed."));
+				.then().statusCode(HttpStatus.FORBIDDEN.value()).body(MESSAGE_FIELD, is("Access not allowed."));
 	}
 
 	//
@@ -78,9 +81,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().name(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name is required."), "[0].field", is("name"));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is(REQUIRED_NAME), "[0].field", is("name"));
 	}
 
 	@Test
@@ -89,9 +92,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().name("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
 	}
 
 	@Test
@@ -100,9 +103,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().name(SMALL_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
 	}
 
 	@Test
@@ -111,9 +114,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().name(LARGE_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
 	}
 
 	//
@@ -124,9 +127,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().status("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body("[0].message",
-						is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("status"));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is(INVALID_STATUS), "[0].field", is("status"));
 	}
 
 	@Test
@@ -135,9 +138,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().status("INV");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body("[0].message",
-						is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("status"));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is(INVALID_STATUS), "[0].field", is("status"));
 	}
 
 	@Test
@@ -146,19 +149,20 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().status(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The status is required."), "[0].field", is("status"));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("[0].message", is(REQUIRED_STATUS), "[0].field", is("status"));
 	}
 
 	@Test
 	public void save_ValidResourceGiven_ShouldSaveClient() {
 		// Set Up
-		ContentTypeResource resource = ContentTypeResource.build().imgUrl().assertFields();
+		ContentTypeResource resource = ContentTypeResource.build().imgUrl().rules(2).assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.CREATED.value()).body("name", is(resource.getName()), "status",
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.CREATED.value())
+				.body("name", is(resource.getName()), "rules.size()", is(resource.getRules().size()), "status",
 						is(resource.getStatus()), "imgUrl", is(resource.getImgUrl()))
 				.body("id", notNullValue());
 	}
@@ -174,7 +178,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("message", is("Duplicated content type name."));
+				.body(MESSAGE_FIELD, is("Duplicated content type name."));
 	}
 
 	@Test
@@ -186,7 +190,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name is required."), "[0].field", is("name"));
+				.body("[0].message", is(REQUIRED_NAME), "[0].field", is("name"));
 	}
 
 	@Test
@@ -198,7 +202,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
 	}
 
 	@Test
@@ -210,7 +214,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
 	}
 
 	@Test
@@ -222,20 +226,21 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
 	}
 
 	@Test
 	public void update_ValidResourceGiven_ShouldSaveClient() {
 		// Set Up
-		ContentTypeResource resource = ContentTypeResource.build().assertFields().headers(getHeader()).create();
-		ContentTypeResource newResource = ContentTypeResource.build().assertFields();
+		ContentTypeResource resource = ContentTypeResource.build().rules(3).assertFields().headers(getHeader())
+				.create();
+		ContentTypeResource newResource = ContentTypeResource.build().rules(2).assertFields();
 
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
-				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.CREATED.value())
-				.body("name", is(newResource.getName()), "status", is(newResource.getStatus()))
-				.body("id", notNullValue());
+				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.OK.value())
+				.body("name", is(newResource.getName()), "status", is(newResource.getStatus()), "rules.size()",
+						is(newResource.getRules().size()), "id", notNullValue());
 	}
 
 	@Test
@@ -250,25 +255,44 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		// Do Test
 		given().headers(getHeader()).body(secondResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, secondResource.getId()).then()
-				.statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is("Duplicated content type name."));
+				.statusCode(HttpStatus.BAD_REQUEST.value()).body(MESSAGE_FIELD, is("Duplicated content type name."));
 	}
 
 	@Test
 	public void findById_NotFoundContentTypeGiven_ShouldReturnError() {
 		// Do Test
 		given().contentType(ContentType.JSON).when().get(GET_CONTENTS_TYPES_END_POINT, RandomUtils.nextInt(100, 200))
-				.then().statusCode(HttpStatus.NOT_FOUND.value()).body("message", is("Content type not found."));
+				.then().statusCode(HttpStatus.NOT_FOUND.value()).body(MESSAGE_FIELD, is("Content type not found."));
 	}
 
 	@Test
 	public void findById_FoundContentTypeGiven_ShouldReturnContentType() {
 		// Set up
-		ContentTypeResource resource = ContentTypeResource.build().assertFields().headers(getHeader()).create();
+		ContentTypeResource resource = ContentTypeResource.build().imgUrl().assertFields().headers(getHeader())
+				.create();
 
 		// Do Test
 		given().contentType(ContentType.JSON).when().get(GET_CONTENTS_TYPES_END_POINT, resource.getId()).then()
 				.statusCode(HttpStatus.OK.value())
-				.body("name", is(resource.getName()), "cards.size()", is(greaterThan(0)));
+				.body("name", is(resource.getName()), "imgUrl", is(resource.getImgUrl()));
+	}
+
+	@Test
+	public void findById_FoundContentTypeWithContentGiven_ShouldReturnContentType() {
+		// Set up
+		ContentTypeResource resource = ContentTypeResource.build().imgUrl().assertFields().headers(getHeader())
+				.create();
+
+		ContentResource.build().headers(getHeader()).contentType(resource.getId()).status(ContentStatus.ACTIVE.name())
+				.assertFields().create();
+
+		ContentResource.build().headers(getHeader()).contentType(resource.getId()).status(ContentStatus.INACTIVE.name())
+				.assertFields().create();
+
+		// Do Test
+		given().contentType(ContentType.JSON).when().get(GET_CONTENTS_TYPES_END_POINT, resource.getId()).then()
+				.statusCode(HttpStatus.OK.value())
+				.body("name", is(resource.getName()), "contents.size()", is(1), "imgUrl", is(resource.getImgUrl()));
 	}
 
 	@Test

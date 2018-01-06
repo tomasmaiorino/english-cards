@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -172,7 +174,7 @@ public class ContentTypesControllerTest {
 		// Assertions
 		verify(validator).validate(resource, Default.class);
 		verify(mockService).findById(CONTENT_TYPE_ID);
-		verifyZeroInteractions(mockService, mockParser);
+		verify(mockParser, times(0)).toResource(any(ContentType.class));
 	}
 
 	@Test

@@ -1,8 +1,8 @@
 package com.tsm.controller;
 
 import static com.jayway.restassured.RestAssured.given;
-import static com.tsm.cards.util.ClientTestBuilder.LARGE_NAME;
-import static com.tsm.cards.util.ClientTestBuilder.SMALL_NAME;
+import static com.tsm.cards.util.CardTypeTestBuilder.LARGE_NAME;
+import static com.tsm.cards.util.CardTypeTestBuilder.SMALL_NAME;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.greaterThan;
@@ -40,7 +40,6 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	public static final String PUT_CARDS_TYPE_END_POINT = "/api/v1/cards-type/{id}";
 	public static final String GET_CARDS_TYPE_END_POINT = "/api/v1/cards-type/{id}";
 	public static final String GET_ALL_CARDS_TYPE_END_POINT = "/api/v1/cards-type";
-
 
 	@LocalServerPort
 	private int port;
@@ -154,7 +153,7 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	}
 
 	@Test
-	public void save_ValidResourceGiven_ShouldSaveClient() {
+	public void save_ValidResourceGiven_ShouldSaveCardType() {
 		// Set Up
 		CardTypeResource resource = CardTypeResource.build().imgUrl().assertFields();
 
@@ -227,14 +226,14 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	}
 
 	@Test
-	public void update_ValidResourceGiven_ShouldSaveClient() {
+	public void update_ValidResourceGiven_ShouldSaveCardType() {
 		// Set Up
 		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
 		CardTypeResource newResource = CardTypeResource.build().assertFields();
 
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
-				.put(PUT_CARDS_TYPE_END_POINT, resource.getId()).then().statusCode(HttpStatus.CREATED.value())
+				.put(PUT_CARDS_TYPE_END_POINT, resource.getId()).then().statusCode(HttpStatus.OK.value())
 				.body("name", is(newResource.getName()), "status", is(newResource.getStatus()))
 				.body("id", notNullValue());
 	}

@@ -21,7 +21,6 @@ import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
@@ -32,6 +31,10 @@ import com.tsm.cards.util.ContentTypeTestBuilder;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ContentTypeServiceTest {
+
+	private static final Integer CONTENT_TYPE_ID = 1;
+
+	private static final Integer CONTENT_TYPE_ID_DUPLICATED = 2;
 
 	@InjectMocks
 	private ContentTypeService service;
@@ -153,11 +156,9 @@ public class ContentTypeServiceTest {
 	@Test
 	public void update_DuplicatedNameGiven_ShouldThrowException() {
 		// Set up
-		ContentType origin = ContentTypeTestBuilder.buildModel();
-		ReflectionTestUtils.setField(origin, "id", 2);
+		ContentType origin = ContentTypeTestBuilder.buildModel(CONTENT_TYPE_ID);
 		ContentType model = ContentTypeTestBuilder.buildModel();
-		ContentType duplicated = ContentTypeTestBuilder.buildModel();
-		ReflectionTestUtils.setField(duplicated, "id", 1);
+		ContentType duplicated = ContentTypeTestBuilder.buildModel(CONTENT_TYPE_ID_DUPLICATED);
 
 		// Expectations
 		when(mockRepository.findByName(model.getName())).thenReturn(Optional.of(duplicated));
@@ -177,10 +178,10 @@ public class ContentTypeServiceTest {
 	@Test
 	public void update_ValidObjectsGiven_ShouldUpdate() {
 		// Set up
-		ContentType origin = ContentTypeTestBuilder.buildModel();
-		ReflectionTestUtils.setField(origin, "id", 2);
+		ContentType origin = ContentTypeTestBuilder.buildModel(CONTENT_TYPE_ID);
 		ContentType model = ContentTypeTestBuilder.buildModel();
-		model.setName("new Name");
+		String newName = "New name";
+		model.setName(newName);
 
 		// Expectations
 		when(mockRepository.findByName(model.getName())).thenReturn(Optional.of(origin));
@@ -194,6 +195,7 @@ public class ContentTypeServiceTest {
 
 		assertNotNull(result);
 		assertThat(result, is(origin));
+		assertThat(result.getName(), is(newName));
 	}
 
 	@Test

@@ -22,78 +22,104 @@ import lombok.Getter;
 @Table(name = "card")
 public class Card extends BaseModel {
 
-    @Id
-    @GeneratedValue
-    @Getter
-    private Integer id;
+	private Card() {
+	}
 
-    public enum CardStatus {
-        ACTIVE, INACTIVE;
-    }
+	@Id
+	@GeneratedValue
+	@Getter
+	private Integer id;
 
-    @JoinColumn(name = "card_type")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Getter
-    private CardType cardType;
+	public enum CardStatus {
+		ACTIVE, INACTIVE;
+	}
 
-    @Getter
-    private String name;
+	@JoinColumn(name = "card_type")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Getter
+	private CardType cardType;
 
-    @Getter
-    private String imgUrl;
+	@Getter
+	@Column(nullable = false)
+	private String name;
 
-    @Getter
-    @Column(nullable = false, length = 10)
-    @Enumerated(EnumType.STRING)
-    private CardStatus status;
+	@Getter
+	@Column(nullable = false)
+	private String imgUrl;
 
-    public void setCardType(final CardType cardType) {
-        Assert.notNull(cardType, "The cardType must not be null!");
-        this.cardType = cardType;
-    }
+	@Getter
+	@Column(nullable = false, length = 10)
+	@Enumerated(EnumType.STRING)
+	private CardStatus status;
 
-    public void setName(final String name) {
-        Assert.hasText(name, "The name must not be null!");
-        this.name = name;
-    }
+	public void setCardType(final CardType cardType) {
+		Assert.notNull(cardType, "The cardType must not be null!");
+		this.cardType = cardType;
+	}
 
-    public void setImgUrl(final String imgUrl) {
-        Assert.hasText(imgUrl, "The imgUrl must not be null!");
-        this.imgUrl = imgUrl;
-    }
+	public void setName(final String name) {
+		Assert.hasText(name, "The name must not be null!");
+		this.name = name;
+	}
 
-    public void setCardStatus(final CardStatus status) {
-        Assert.notNull(status, "The status must not be null!");
-        this.status = status;
-    }
+	public void setImgUrl(final String imgUrl) {
+		Assert.hasText(imgUrl, "The imgUrl must not be null!");
+		this.imgUrl = imgUrl;
+	}
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        Card other = (Card) obj;
-        if (getId() == null || other.getId() == null) {
-            return false;
-        }
-        return getId().equals(other.getId());
-    }
+	public void setCardStatus(final CardStatus status) {
+		Assert.notNull(status, "The status must not be null!");
+		this.status = status;
+	}
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(getId()).toHashCode();
-    }
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (obj.getClass() != getClass()) {
+			return false;
+		}
+		Card other = (Card) obj;
+		if (getId() == null || other.getId() == null) {
+			return false;
+		}
+		return getId().equals(other.getId());
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
-    }
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(getId()).toHashCode();
+	}
 
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this);
+	}
+
+	public static class CardBuilder {
+
+		private final Card card;
+
+		private CardBuilder(final String name, final CardType cardType, final CardStatus status, final String imgUrl) {
+			card = new Card();
+			card.setCardStatus(status);
+			card.setCardType(cardType);
+			card.setImgUrl(imgUrl);
+			card.setName(name);
+		}
+
+		public static CardBuilder Card(final String name, final CardType cardType, final CardStatus status,
+				final String imgUrl) {
+			return new CardBuilder(name, cardType, status, imgUrl);
+		}
+
+		public Card build() {
+			return card;
+		}
+	}
 }

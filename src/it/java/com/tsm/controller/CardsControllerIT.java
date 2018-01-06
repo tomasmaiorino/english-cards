@@ -1,14 +1,12 @@
 package com.tsm.controller;
 
 import static com.jayway.restassured.RestAssured.given;
-import static com.tsm.cards.util.CardTestBuilder.INVALID_STATUS;
 import static com.tsm.cards.util.CardTestBuilder.LARGE_IMG_URL;
 import static com.tsm.cards.util.CardTestBuilder.LARGE_NAME;
 import static com.tsm.cards.util.CardTestBuilder.SMALL_IMG_URL;
 import static com.tsm.cards.util.CardTestBuilder.SMALL_NAME;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.greaterThan;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -441,7 +439,7 @@ public class CardsControllerIT extends BaseTestIT {
 
 		// Do Test
 		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
-				.put(PUT_CARDS_END_POINT, resource.getId()).then().statusCode(HttpStatus.CREATED.value())
+				.put(PUT_CARDS_END_POINT, resource.getId()).then().statusCode(HttpStatus.OK.value())
 				.body("name", is(newResource.getName())).body("cardType", is(newResource.getCardType()))
 				.body("imgUrl", is(newResource.getImgUrl())).body("status", is(newResource.getStatus()))
 				.body("id", is(resource.getId()));
@@ -469,8 +467,9 @@ public class CardsControllerIT extends BaseTestIT {
 	@Test
 	public void delete_NotFoundCardGiven_ShouldReturnError() {
 		// Do Test
-		given().contentType(ContentType.JSON).when().delete(DELETE_CARDS_END_POINT, RandomUtils.nextInt(100, 200))
-				.then().statusCode(HttpStatus.NOT_FOUND.value()).body("message", is("Card not found."));
+		given().headers(getHeader()).contentType(ContentType.JSON).when()
+				.delete(DELETE_CARDS_END_POINT, RandomUtils.nextInt(100, 200)).then()
+				.statusCode(HttpStatus.NOT_FOUND.value()).body("message", is("Card not found."));
 	}
 
 	@Test
@@ -481,11 +480,10 @@ public class CardsControllerIT extends BaseTestIT {
 				.create();
 
 		// Do Test
-		given().contentType(ContentType.JSON).when().get(DELETE_CARDS_END_POINT, cardResource.getId()).then()
-				.statusCode(HttpStatus.NO_CONTENT.value());
+		given().headers(getHeader()).contentType(ContentType.JSON).when()
+				.delete(DELETE_CARDS_END_POINT, cardResource.getId()).then().statusCode(HttpStatus.NO_CONTENT.value());
 
 		given().contentType(ContentType.JSON).when().get(GET_CARDS_END_POINT, cardResource.getId()).then()
 				.statusCode(HttpStatus.NOT_FOUND.value()).body("message", is("Card not found."));
 	}
-
 }

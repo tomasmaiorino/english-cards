@@ -11,12 +11,10 @@ import com.tsm.cards.model.Client;
 import com.tsm.cards.model.Client.ClientStatus;
 
 @Transactional(propagation = Propagation.MANDATORY)
-public interface ClientRepository extends Repository<Client, Integer> {
+public interface ClientRepository extends Repository<Client, Integer>, IBaseRepository<Client, Integer> {
 
-    Client save(Client client);
-    
-    Optional<Client> findByToken(final String token);
-    
-    Set<Client> findByStatus(final ClientStatus status);
+	Optional<Client> findByToken(final String token);
+
+	Set<Client> findByStatus(final ClientStatus status);
 
 }

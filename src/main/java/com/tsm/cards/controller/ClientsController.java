@@ -1,52 +1,34 @@
 package com.tsm.cards.controller;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
-import javax.validation.groups.Default;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tsm.cards.model.Client;
 import com.tsm.cards.parser.ClientParser;
 import com.tsm.cards.resources.ClientResource;
+import com.tsm.cards.resources.IParser;
+import com.tsm.cards.service.BaseService;
 import com.tsm.cards.service.ClientService;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(value = "/api/v1/clients")
-@Slf4j
-public class ClientsController extends BaseController {
+public class ClientsController extends BaseController<ClientResource, Client, Integer> {
 
-    @Autowired
-    private ClientService service;
+	@Autowired
+	private ClientService service;
 
-    @Autowired
-    private ClientParser parser;
+	@Autowired
+	private ClientParser parser;
 
-    @RequestMapping(method = POST,
-        consumes = JSON_VALUE,
-        produces = JSON_VALUE)
-    @ResponseStatus(CREATED)
-    public ClientResource save(@RequestBody final ClientResource resource) {
-        log.debug("Recieved a request to create a client [{}].", resource);
+	@Override
+	public BaseService<Client, Integer> getService() {
+		return service;
+	}
 
-        validate(resource, Default.class);
-
-        Client client = parser.toModel(resource);
-
-        client = service.save(client);
-
-        ClientResource result = parser.toResource(client);
-
-        log.debug("returnig resource [{}].", result);
-
-        return result;
-    }
+	@Override
+	public IParser<ClientResource, Client> getParser() {
+		return parser;
+	}
 
 }

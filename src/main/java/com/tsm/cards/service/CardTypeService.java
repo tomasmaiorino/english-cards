@@ -1,6 +1,5 @@
 package com.tsm.cards.service;
 
-import static com.tsm.cards.util.ErrorCodes.CARD_TYPE_NOT_FOUND;
 import static com.tsm.cards.util.ErrorCodes.DUPLICATED_CARD_TYPE;
 
 import java.util.Set;
@@ -12,73 +11,42 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.tsm.cards.exceptions.BadRequestException;
-import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.CardType;
 import com.tsm.cards.model.CardType.CardTypeStatus;
 import com.tsm.cards.repository.CardTypeRepository;
+import com.tsm.cards.repository.IBaseRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class CardTypeService {
+public class CardTypeService extends BaseService<CardType, Integer> {
 
 	@Autowired
 	private CardTypeRepository repository;
 
-	@Transactional
-	public CardType save(final CardType cardType) {
-		Assert.notNull(cardType, "The cardType must not be null!");
-		log.info("Saving cardType [{}] .", cardType);
-
-		repository.findByName(cardType.getName()).ifPresent(c -> {
+	@Override
+	protected void saveValidation(CardType model) {
+		repository.findByName(model.getName()).ifPresent(c -> {
 			throw new BadRequestException(DUPLICATED_CARD_TYPE);
 		});
 
-		repository.save(cardType);
-
-		log.info("Saved cardType [{}].", cardType);
-
-		return cardType;
 	}
 
-	@Transactional
-	public CardType update(final CardType origin, CardType model) {
-		Assert.notNull(origin, "The origin must not be null!");
-		Assert.notNull(origin.getId(), "The origin must not be new!");
-		Assert.notNull(model, "The model must not be null!");
-		log.info("Updating card type origin[{}] to model [{}].", origin, model);
-
+	@Override
+	protected void updateValidation(final CardType origin, final CardType model) {
 		repository.findByName(model.getName()).ifPresent(c -> {
 			if (!c.getId().equals(origin.getId())) {
 				throw new BadRequestException(DUPLICATED_CARD_TYPE);
 			}
 		});
-
-		merge(origin, model);
-
-		repository.save(origin);
-
-		log.info("Updated cardType [{}].", origin);
-
-		return origin;
 	}
 
-	private void merge(final CardType origin, final CardType model) {
+	protected void merge(final CardType origin, final CardType model) {
 		origin.setName(model.getName());
-	}
-
-	public CardType findById(final Integer id) {
-		Assert.notNull(id, "The id must not be null!");
-		log.info("Finding card type id [{}] .", id);
-
-		CardType cardType = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(CARD_TYPE_NOT_FOUND));
-
-		log.info("CardType found [{}].", cardType);
-
-		return cardType;
+		origin.setCardTypeStatus(model.getStatus());
+		origin.setImgUrl(model.getImgUrl());
 	}
 
 	public Set<CardType> findAllByStatus(final CardTypeStatus status) {
@@ -90,5 +58,15 @@ public class CardTypeService {
 		log.info("CardTypes found [{}].", cardTypes.size());
 
 		return cardTypes;
+	}
+
+	@Override
+	public IBaseRepository<CardType, Integer> getRepository() {
+		return repository;
+	}
+
+	@Override
+	protected String getClassName() {
+		return CardType.class.getSimpleName();
 	}
 }

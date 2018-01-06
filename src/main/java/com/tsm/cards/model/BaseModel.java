@@ -13,24 +13,25 @@ import lombok.Getter;
 @MappedSuperclass
 public class BaseModel {
 
-    @Getter
-    private LocalDateTime created;
+	@Getter
+	private LocalDateTime created;
 
-    @Getter
-    private LocalDateTime lastUpdated;
+	@Getter
+	private LocalDateTime lastUpdated;
 
-    @JsonIgnore
-    public boolean isNew() {
-        return created == null;
-    }
+	@JsonIgnore
+	public boolean isNew() {
+		return created == null;
+	}
 
-    @PrePersist
-    public void setCreated() {
-        created = LocalDateTime.now();
-    }
+	@PrePersist
+	public void setCreated() {
+		created = LocalDateTime.now();
+	}
 
-    @PreUpdate
-    public void setLastUpdated() {
-        lastUpdated = LocalDateTime.now();
-    }
+	@PreUpdate
+	public void setLastUpdated() {
+		lastUpdated = LocalDateTime.now();
+	}
+
 }
