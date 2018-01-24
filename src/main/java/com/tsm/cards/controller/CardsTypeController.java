@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,7 @@ public class CardsTypeController extends BaseController<CardTypeResource, CardTy
 
 	@RequestMapping(method = GET, produces = JSON_VALUE)
 	@ResponseStatus(OK)
-	public Set<CardTypeResource> findAll() {
+	public Set<CardTypeResource> findAll(@RequestParam(value = "q", required = false) String q) {
 
 		log.debug("Recieved a request to find all active card types.");
 

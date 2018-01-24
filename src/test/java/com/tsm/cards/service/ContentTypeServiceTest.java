@@ -255,6 +255,78 @@ public class ContentTypeServiceTest {
 	//
 
 	@Test
+	public void findByName_NullNamGiven_ShouldThrowException() {
+		// Set up
+		String name = null;
+
+		// Do test
+		try {
+			service.findByName(name);
+			fail();
+		} catch (IllegalArgumentException e) {
+		}
+
+		// Assertions
+		verifyZeroInteractions(mockRepository);
+	}
+
+	@Test
+	public void findByName_EmptyNameGiven_ShouldThrowException() {
+		// Set up
+		String name = null;
+
+		// Do test
+		try {
+			service.findByName(name);
+			fail();
+		} catch (IllegalArgumentException e) {
+		}
+
+		// Assertions
+		verifyZeroInteractions(mockRepository);
+	}
+
+	@Test
+	public void findByName_NotFoundContentTypeGiven_ShouldThrowException() {
+		// Set up
+		String name = "name";
+
+		// Expectations
+		when(mockRepository.findByName(name)).thenReturn(Optional.empty());
+
+		// Do test
+		try {
+			service.findByName(name);
+			fail();
+		} catch (ResourceNotFoundException e) {
+		}
+
+		// Assertions
+		verify(mockRepository).findByName(name);
+	}
+
+	@Test
+	public void findByName_FoundContentTypeGiven_ShouldReturnContent() {
+		// Set up
+		String name = "grammar";
+		ContentType contentType = ContentTypeTestBuilder.buildModel();
+
+		// Expectations
+		when(mockRepository.findByName(name)).thenReturn(Optional.of(contentType));
+
+		// Do test
+		ContentType result = service.findByName(name);
+
+		// Assertions
+		verify(mockRepository).findByName(name);
+
+		assertNotNull(result);
+		assertThat(result, is(contentType));
+	}
+
+	//
+
+	@Test
 	public void findAllByStatus_NullIdGiven_ShouldThrowException() {
 		// Set up
 		ContentTypeStatus status = null;

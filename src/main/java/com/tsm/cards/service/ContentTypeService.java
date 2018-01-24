@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.tsm.cards.exceptions.BadRequestException;
+import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.ContentType;
 import com.tsm.cards.model.ContentType.ContentTypeStatus;
 import com.tsm.cards.repository.ContentTypeRepository;
 import com.tsm.cards.repository.IBaseRepository;
+import com.tsm.cards.util.ErrorCodes;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +44,18 @@ public class ContentTypeService extends BaseService<ContentType, Integer> {
 			}
 		});
 
+	}
+
+	public ContentType findByName(final String name) {
+		Assert.hasText(name, "The name must not be empty!");
+		log.info("Finding model by name [{}] .", name);
+
+		ContentType model = repository.findByName(name)
+				.orElseThrow(() -> new ResourceNotFoundException(ErrorCodes.CONTENT_TYPE_NOT_FOUND));
+
+		log.info("Model found [{}].", model);
+
+		return model;
 	}
 
 	@Override

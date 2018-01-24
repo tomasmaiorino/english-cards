@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.tsm.cards.model.BaseModel;
@@ -119,7 +120,7 @@ public abstract class BaseController<R, M extends BaseModel, I extends Serializa
 
 	@RequestMapping(method = GET, produces = JSON_VALUE)
 	@ResponseStatus(OK)
-	public Set<R> findAll() {
+	public Set<R> findAll(@RequestParam(value = "q", required = false) String q) {
 
 		log.debug("Recieved a request to find all models.");
 

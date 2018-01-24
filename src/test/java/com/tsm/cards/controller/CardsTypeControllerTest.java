@@ -51,6 +51,8 @@ public class CardsTypeControllerTest {
 	@InjectMocks
 	private CardsTypeController controller;
 
+	private static final String FIND_ALL_QUERY = "";
+
 	@Mock
 	private Validator validator;
 
@@ -254,7 +256,7 @@ public class CardsTypeControllerTest {
 		when(mockService.findAllByStatus(CardTypeStatus.ACTIVE)).thenReturn(cardsType);
 
 		// Do test
-		Set<CardTypeResource> result = controller.findAll();
+		Set<CardTypeResource> result = controller.findAll(FIND_ALL_QUERY);
 
 		// Assertions
 		verify(mockService).findAllByStatus(CardTypeStatus.ACTIVE);
@@ -281,7 +283,7 @@ public class CardsTypeControllerTest {
 		when(mockParser.toResources(cardsType)).thenReturn(resources);
 
 		// Do test
-		Set<CardTypeResource> result = controller.findAll();
+		Set<CardTypeResource> result = controller.findAll(FIND_ALL_QUERY);
 
 		// Assertions
 		verify(mockService).findAllByStatus(CardTypeStatus.ACTIVE);

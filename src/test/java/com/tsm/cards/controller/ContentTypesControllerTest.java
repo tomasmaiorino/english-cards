@@ -42,6 +42,8 @@ import com.tsm.cards.util.ContentTypeTestBuilder;
 @FixMethodOrder(MethodSorters.JVM)
 public class ContentTypesControllerTest {
 
+	private static final String FIND_ALL_QUERY = "";
+
 	@Mock
 	private ContentTypeService mockService;
 
@@ -254,7 +256,7 @@ public class ContentTypesControllerTest {
 		when(mockService.findAllByStatus(ContentTypeStatus.ACTIVE)).thenReturn(cardsType);
 
 		// Do test
-		Set<ContentTypeResource> result = controller.findAll();
+		Set<ContentTypeResource> result = controller.findAll(FIND_ALL_QUERY);
 
 		// Assertions
 		verify(mockService).findAllByStatus(ContentTypeStatus.ACTIVE);
@@ -281,7 +283,7 @@ public class ContentTypesControllerTest {
 		when(mockParser.toResources(cardsType)).thenReturn(resources);
 
 		// Do test
-		Set<ContentTypeResource> result = controller.findAll();
+		Set<ContentTypeResource> result = controller.findAll(FIND_ALL_QUERY);
 
 		// Assertions
 		verify(mockService).findAllByStatus(ContentTypeStatus.ACTIVE);
@@ -289,6 +291,61 @@ public class ContentTypesControllerTest {
 
 		assertNotNull(result);
 		assertThat(result.isEmpty(), is(false));
+	}
+
+	@Test
+	public void findAll_FoundContentTypeWithQueryParamGiven_ShouldReturnContent() {
+		// Set up
+		Set<ContentType> contents = new HashSet<>(1);
+		ContentType contentType = ContentTypeTestBuilder.buildModel();
+		contents.add(contentType);
+		String query = "grammar";
+
+		Set<ContentTypeResource> resources = new HashSet<>(1);
+		ContentTypeResource resource = ContentTypeTestBuilder.buildResource();
+		resources.add(resource);
+
+		// Expectations
+		when(mockService.findByName(query)).thenReturn(contentType);
+		when(mockParser.toResources(contents)).thenReturn(resources);
+
+		// Do test
+		Set<ContentTypeResource> result = controller.findAll(query);
+
+		// Assertions
+		verify(mockService).findByName(query);
+		verify(mockParser).toResources(contents);
+
+		assertNotNull(result);
+		assertThat(result.isEmpty(), is(false));
+	}
+
+	@Test
+	public void findAll_NotFoundContentTypeWithQueryParamGiven_ShouldReturnContent() {
+		// Set up
+		Set<ContentType> contents = new HashSet<>(1);
+		ContentType contentType = ContentTypeTestBuilder.buildModel();
+		contents.add(contentType);
+		String query = "grammar";
+
+		Set<ContentTypeResource> resources = new HashSet<>(1);
+		ContentTypeResource resource = ContentTypeTestBuilder.buildResource();
+		resources.add(resource);
+
+		// Expectations
+		when(mockService.findByName(query)).thenThrow(new ResourceNotFoundException(""));
+
+		// Do test
+		try {
+			controller.findAll(query);
+			fail();
+		} catch (ResourceNotFoundException e) {
+
+		}
+
+		// Assertions
+		verify(mockService).findByName(query);
+		verifyZeroInteractions(mockParser);
 	}
 
 }

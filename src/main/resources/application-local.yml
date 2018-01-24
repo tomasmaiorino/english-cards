@@ -1,7 +1,6 @@
 oxford.service.ap.id: 
 oxford.service.ap.key:
 
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/english_cards

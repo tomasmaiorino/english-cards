@@ -6,8 +6,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,15 +38,22 @@ public class ContentTypesController extends BaseController<ContentTypeResource, 
 	@RequestMapping(method = GET, produces = JSON_VALUE)
 	@ResponseStatus(OK)
 	@Override
-	public Set<ContentTypeResource> findAll() {
+	public Set<ContentTypeResource> findAll(@RequestParam(value = "q", required = false) String q) {
 
-		log.debug("Recieved a request to find all active card types.");
+		log.debug("Recieved a request to find all active card types. q = [{}]", q);
 
-		Set<ContentType> cards = service.findAllByStatus(ContentTypeStatus.ACTIVE);
+		Set<ContentType> contents = new HashSet<>();
+
+		if (StringUtils.isNotBlank(q)) {
+			ContentType contentType = service.findByName(q);
+			contents.add(contentType);
+		} else {
+			contents = service.findAllByStatus(ContentTypeStatus.ACTIVE);
+		}
 
 		Set<ContentTypeResource> resources = new HashSet<>();
-		if (!cards.isEmpty()) {
-			resources = parser.toResources(cards);
+		if (!contents.isEmpty()) {
+			resources = parser.toResources(contents);
 		}
 
 		log.debug("returning resources: [{}].", resources.size());

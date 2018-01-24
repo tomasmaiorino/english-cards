@@ -296,7 +296,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 	}
 
 	@Test
-	public void findAll_FoundContentTypeGiven_ShouldReturnCards() {
+	public void findAll_FoundContentTypeGiven_ShouldReturnContentType() {
 		// Set up
 		ContentTypeResource.build().status(ContentTypeStatus.ACTIVE.name()).assertFields().headers(getHeader())
 				.create();
@@ -305,6 +305,32 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		given().contentType(ContentType.JSON).when().get(GET_ALL_CONTENTS_TYPES_END_POINT).then()
 				.statusCode(HttpStatus.OK.value())
 				.body("size()", is(greaterThan(0)), "[0].status", is(ContentTypeStatus.ACTIVE.name()));
+	}
+
+	@Test
+	public void findAll_FoundContentTypeWithNameQueryGiven_ShouldReturnContentType() {
+		// Set up
+		ContentTypeResource contentType = ContentTypeResource.build().status(ContentTypeStatus.ACTIVE.name())
+				.assertFields().headers(getHeader()).create();
+
+		ContentResource.build().headers(getHeader()).contentType(contentType.getId())
+				.status(ContentStatus.ACTIVE.name()).assertFields().create();
+
+		// Do Test
+		given().contentType(ContentType.JSON).when()
+				.get(GET_ALL_CONTENTS_TYPES_END_POINT + "?q=" + contentType.getName()).then()
+				.statusCode(HttpStatus.OK.value())
+				.body("size()", is(greaterThan(0)), "[0].status", is(ContentTypeStatus.ACTIVE.name()));
+	}
+
+	@Test
+	public void findAll_NotFoundContentTypeWithNameQueryGiven_ShouldReturnError() {
+
+		// Do Test
+		given().contentType(ContentType.JSON).when()
+				.get(GET_ALL_CONTENTS_TYPES_END_POINT + "?q=" + ContentTypeTestBuilder.getName()).then()
+				.statusCode(HttpStatus.NOT_FOUND.value());
+
 	}
 
 }
