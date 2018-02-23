@@ -6,6 +6,11 @@ In order to access the actual branch you can access this url: https://fathomless
 This application is running under Spring Boot.
 This applications uses the Oxford service api (https://developer.oxforddictionaries.com/) therefore it is necessary to have an account on oxford service and use their OXFORD_SERVICE_API_ID and OXFORD_SERVICE_APP_KEY.
 
+## Create docker image
+$ docker build -t <image_name> --build-arg branch_name=<parameter_value> .
+
+## Create docker container
+$ docker run -it --rm --name <container_name> <image_name>  mvn spring-boot:run -Drun.arguments="--spring.profiles.active=local"
 
 ## Used Technologies
 
