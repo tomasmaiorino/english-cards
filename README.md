@@ -10,7 +10,7 @@ This applications uses the Oxford service api (https://developer.oxforddictionar
 $ docker build -t <image_name> --build-arg branch_name=<parameter_value> .
 
 ## Create docker container
-$ docker run -it --rm --name <container_name> <image_name>  mvn spring-boot:run -Drun.arguments="--spring.profiles.active=local"
+$ docker run -it --rm --link <container_image_name> -p 8080:8080 --name <container_name> <image_name>  mvn spring-boot:run -Drun.arguments="--spring.profiles.active=local"
 
 ## Used Technologies
 
