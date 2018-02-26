@@ -1,3 +1,6 @@
+logging:
+  path: /var/logs
+  level: DEBUG
 spring:
   datasource:
     url: jdbc:postgresql://postgres:5432/english_cards
