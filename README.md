@@ -1,40 +1,22 @@
-It's a application which helps the english student to learn new words. By using this application you will be able to search for more than one word simultaneously.
-This is an initial version and will not be finished. I'm currently working on the branch v3 which will have new features for the english learning also a better UX.
-
-In order to access the actual branch you can access this url: https://fathomless-tundra-22713.herokuapp.com/ and to search for some new words meanings.
-
-This application is running under Spring Boot.
-This applications uses the Oxford service api (https://developer.oxforddictionaries.com/) therefore it is necessary to have an account on oxford service and use their OXFORD_SERVICE_API_ID and OXFORD_SERVICE_APP_KEY.
-
-## Create docker image
-$ docker build -t <image_name> --build-arg branch_name=<parameter_value> .
-
-## Create docker container
-$ docker run -it --rm --link <container_image_name> -p 8080:8080 --name <container_name> <image_name>  mvn spring-boot:run -Drun.arguments="--spring.profiles.active=local"
+It's rest api that is used to provide end points to create, update and remove cards and contents. This application has been providing the content to a  [link website](https://tomasmaiorino.bitbucket.io/) that was created to help english students to improve their vocabulary and the grammar knowledge as well.
 
 ## Used Technologies
 
 **1. Java version 8.**
 
-**2. POSTGRES / MONGO DB:** Mapping persistent entities in domains objects.
+**2. POSTGRES **
 
-## Additional Technologies
+**3. Spring boot 1.5.4 **
 
-**Database:** For the initial load for the known_word database is based on the known_words.json file. If some problem occur during initial load, it can be made manually e.g: mongoimport --db test --collection known_words --file known_words.json
+**4. Maven **  Life cycle management and project build.
+
+**5. Docker (Optional) ** Used container manager to create an application image and the containers.
+
+## Considerations
 
 **Tests:** The tests are defined as use case of the Junit. The tests have been made available in the structure: src/test/java.
 
 **Integration Tests:** The integration tests are defined as use case of the Junit. The tests have been made available in the structure: src/it/java.
-
-**Spring Boot:** Technology used for create a embeded enviroment of the execution, I used this technology for simplify the use of the Spring and for controle the scope of the database. In the file src/main/resources/application.yml have properties of the Spring Boot for the project.
-
-**Maven:** Life cycle management and project build.
-
-**Docker** Used container manager to create an application image and the containers.
-
-## Considerations
-
-The integration of the pages with the data occurs asynchronously, always making access to REST services available.
 
 ## Usage In Local Machine
 
@@ -80,7 +62,7 @@ docker build -t eng --build-arg branch_name=master .
 ```  
 7 - To create application container and start it.  
 ```$
-docker run --rm -it --link postgres -p 8080:8080 --name eng eng mvn spring-boot:run -Drun.arguments="--spring.profiles.active=container"
+docker run --rm -it --link postgres -p 8080:8080 --name eng eng mvn spring-boot:run -Drun.arguments="--spring.profiles.active=<profile_name>"
 ```  
 
 ###### To run the integrations tests through docker run this command:
