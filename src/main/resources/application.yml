@@ -25,3 +25,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+urls:
+  skip:
+    host:
+      validation: api/v1/clients,api/v1/users/auth      

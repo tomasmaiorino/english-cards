@@ -19,7 +19,7 @@ import com.tsm.cards.util.ContentTypeConstants;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ContentTypeResource extends BaseResource {
+public class ContentTypeResource implements BaseResource {
 
 	@Getter
 	@Setter

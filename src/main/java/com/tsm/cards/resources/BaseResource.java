@@ -1,5 +1,5 @@
 package com.tsm.cards.resources;
 
-public abstract class BaseResource {
+public interface BaseResource {
 
 }

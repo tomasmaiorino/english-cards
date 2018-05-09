@@ -28,10 +28,11 @@ import com.tsm.cards.util.ErrorCodes;
 
 import lombok.extern.slf4j.Slf4j;
 
+@SuppressWarnings("unchecked")
 @RestController
 @RequestMapping(value = "/api/v1/contents")
 @Slf4j
-public class ContentsController extends BaseController<ContentResource, Content, Integer> {
+public class ContentsController extends RestBaseController<ContentResource, Content, Integer> {
 
 	@Autowired
 	private ContentService service;

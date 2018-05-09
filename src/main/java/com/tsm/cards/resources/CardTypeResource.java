@@ -19,7 +19,7 @@ import org.springframework.util.CollectionUtils;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CardTypeResource extends BaseResource {
+public class CardTypeResource implements BaseResource {
 
 	@Getter
 	@Setter

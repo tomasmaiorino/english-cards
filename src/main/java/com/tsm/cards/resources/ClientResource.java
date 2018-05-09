@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ClientResource extends BaseResource {
+public class ClientResource implements BaseResource {
 
     @Getter
     @Setter

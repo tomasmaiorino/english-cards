@@ -115,5 +115,14 @@ public interface ErrorCodes {
 	public static final String INVALID_CONTENT_STATUS = "invalidContentStatus";
 
 	public static final String REQUIRED_CONTENT_STATUS = "requiredContentStatus";
+	
+    // LOGIN
+    public static final String REQUIRED_LOGIN_EMAIL = "requiredLoginEmail";
+
+    public static final String INVALID_LOGIN_EMAIL = "invalidLoginEmail";
+
+    public static final String REQUIRED_LOGIN_PASSWORD = "requiredLoginPassword";
+
+    public static final String INVALID_LOGIN_PASSWORD_SIZE = "invalidLoginPasswordSize";
 
 }

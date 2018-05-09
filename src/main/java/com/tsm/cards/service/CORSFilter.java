@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.tsm.cards.model.Client;
 
 import lombok.extern.slf4j.Slf4j;
 
+@Profile(value = "prod")
 @Component
 @Slf4j
 public class CORSFilter implements Filter {

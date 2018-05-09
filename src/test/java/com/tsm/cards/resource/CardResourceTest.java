@@ -27,7 +27,7 @@ import com.tsm.cards.util.CardTestBuilder;
 @FixMethodOrder(MethodSorters.JVM)
 public class CardResourceTest extends BaseResourceTest {
 
-    private Supplier<? extends BaseResource> buildResourceFunction = CardTestBuilder::buildResource;
+    private Supplier<BaseResource> buildResourceFunction = CardTestBuilder::buildResource;
 
     @Before
     public void setUp() {

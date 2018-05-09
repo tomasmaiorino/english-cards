@@ -20,7 +20,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CardResource extends BaseResource {
+public class CardResource implements BaseResource {
 
 	@Getter
 	@Setter

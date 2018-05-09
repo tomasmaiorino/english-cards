@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = "/api/v1/content-types")
 @Slf4j
-public class ContentTypesController extends BaseController<ContentTypeResource, ContentType, Integer> {
+public class ContentTypesController extends RestBaseController<ContentTypeResource, ContentType, Integer> {
 
 	@Autowired
 	private ContentTypeService service;

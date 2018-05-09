@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = "/api/v1/cards-type")
 @Slf4j
-public class CardsTypeController extends BaseController<CardTypeResource, CardType, Integer> {
+public class CardsTypeController extends RestBaseController<CardTypeResource, CardType, Integer> {
 
 	@Autowired
 	private CardTypeService service;

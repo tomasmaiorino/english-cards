@@ -3,7 +3,7 @@ package com.tsm.cards.resources;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ContentTypeRuleResource extends BaseResource {
+public class ContentTypeRuleResource implements BaseResource {
 
 	@Getter
 	@Setter

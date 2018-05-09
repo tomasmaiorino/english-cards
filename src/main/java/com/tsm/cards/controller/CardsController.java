@@ -25,10 +25,11 @@ import com.tsm.cards.service.CardTypeService;
 
 import lombok.extern.slf4j.Slf4j;
 
+@SuppressWarnings("unchecked")
 @RestController
 @RequestMapping(value = "/api/v1/cards")
 @Slf4j
-public class CardsController extends BaseController<CardResource, Card, Integer> {
+public class CardsController extends RestBaseController<CardResource, Card, Integer> {
 
 	@Autowired
 	private CardService service;
@@ -38,6 +39,7 @@ public class CardsController extends BaseController<CardResource, Card, Integer>
 
 	@Autowired
 	private CardParser parser;
+
 
 	@RequestMapping(method = POST, consumes = JSON_VALUE, produces = JSON_VALUE)
 	@ResponseStatus(CREATED)

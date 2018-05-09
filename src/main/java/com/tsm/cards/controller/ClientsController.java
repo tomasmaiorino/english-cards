@@ -13,7 +13,7 @@ import com.tsm.cards.service.ClientService;
 
 @RestController
 @RequestMapping(value = "/api/v1/clients")
-public class ClientsController extends BaseController<ClientResource, Client, Integer> {
+public class ClientsController extends RestBaseController<ClientResource, Client, Integer> {
 
 	@Autowired
 	private ClientService service;
