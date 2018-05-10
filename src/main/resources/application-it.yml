@@ -6,8 +6,8 @@ user:
     email: user-it@test.com
     name: it user
     pass: 7c30110b
-logging:
-  level: DEBUG
+#logging:
+#  level: DEBUG
 endpoints:
   enabled: true
   sensitive: false
