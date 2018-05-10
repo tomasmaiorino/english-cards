@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.greaterThan;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomUtils;
@@ -27,6 +26,7 @@ import com.jayway.restassured.http.ContentType;
 import com.tsm.EnglishCardsApplication;
 import com.tsm.cards.model.Content.ContentStatus;
 import com.tsm.cards.model.ContentType.ContentTypeStatus;
+import com.tsm.cards.util.ClientTestBuilder;
 import com.tsm.cards.util.ContentTypeTestBuilder;
 import com.tsm.resource.ContentResource;
 import com.tsm.resource.ContentTypeResource;
@@ -58,19 +58,19 @@ public class ContentTypesControllerIT extends BaseTestIT {
 
 		// Do Test
 		given().body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT).then()
-				.statusCode(HttpStatus.BAD_REQUEST.value()).body(MESSAGE_FIELD, is("Missing admin header."));
+				.statusCode(HttpStatus.FORBIDDEN.value());
 	}
 
 	@Test
 	public void save_InvalidHeaderGiven_ShouldReturnError() {
 		// Set Up
 		ContentTypeResource resource = ContentTypeResource.build().assertFields();
-		Map<String, String> header = new HashMap<>();
-		header.put(ADMIN_TOKEN_HEADER, "qwert");
+		getTokenHeader();
+		getHeader().put(AUTHORIZATION_KEY, ClientTestBuilder.CLIENT_TOKEN);
 
 		// Do Test
 		given().headers(header).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_TYPES_END_POINT)
-				.then().statusCode(HttpStatus.FORBIDDEN.value()).body(MESSAGE_FIELD, is("Access not allowed."));
+				.then().statusCode(HttpStatus.FORBIDDEN.value()).body(MESSAGE_FIELD, is("Access Denied"));
 	}
 
 	//
@@ -81,9 +81,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().name(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_NAME), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -92,9 +92,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().name("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -103,9 +103,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().name(SMALL_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -114,9 +114,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().name(LARGE_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	//
@@ -127,9 +127,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().status("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_STATUS), "[0].field", is("status"));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_STATUS), MESSAGE_FIELD_KEY, is("status"));
 	}
 
 	@Test
@@ -138,9 +138,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().status("INV");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_STATUS), "[0].field", is("status"));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_STATUS), MESSAGE_FIELD_KEY, is("status"));
 	}
 
 	@Test
@@ -149,9 +149,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource resource = ContentTypeResource.build().assertFields().status(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_STATUS), "[0].field", is("status"));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_STATUS), MESSAGE_FIELD_KEY, is("status"));
 	}
 
 	@Test
@@ -176,7 +176,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource newResource = ContentTypeResource.build().name(name).assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.post(SAVE_CONTENTS_TYPES_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
 				.body(MESSAGE_FIELD, is("Duplicated content type name."));
 	}
@@ -188,9 +188,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource newResource = ContentTypeResource.build().assertFields().name(null);
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_NAME), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -200,9 +200,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource newResource = ContentTypeResource.build().assertFields().name("");
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -212,9 +212,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource newResource = ContentTypeResource.build().assertFields().name(SMALL_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -224,9 +224,9 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource newResource = ContentTypeResource.build().assertFields().name(LARGE_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -237,7 +237,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		ContentTypeResource newResource = ContentTypeResource.build().rules(2).assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, resource.getId()).then().statusCode(HttpStatus.OK.value())
 				.body("name", is(newResource.getName()), "status", is(newResource.getStatus()), "rules.size()",
 						is(newResource.getRules().size()), "id", notNullValue());
@@ -253,7 +253,7 @@ public class ContentTypesControllerIT extends BaseTestIT {
 		secondResource.setStatus(ContentTypeTestBuilder.getStatus());
 
 		// Do Test
-		given().headers(getHeader()).body(secondResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(secondResource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_TYPES_END_POINT, secondResource.getId()).then()
 				.statusCode(HttpStatus.BAD_REQUEST.value()).body(MESSAGE_FIELD, is("Duplicated content type name."));
 	}
@@ -310,11 +310,12 @@ public class ContentTypesControllerIT extends BaseTestIT {
 	@Test
 	public void findAll_FoundContentTypeWithNameQueryGiven_ShouldReturnContentType() {
 		// Set up
+		Map<String, String> header = getTokenHeader();
 		ContentTypeResource contentType = ContentTypeResource.build().status(ContentTypeStatus.ACTIVE.name())
-				.assertFields().headers(getHeader()).create();
+				.assertFields().headers(header).create();
 
-		ContentResource.build().headers(getHeader()).contentType(contentType.getId())
-				.status(ContentStatus.ACTIVE.name()).assertFields().create();
+		ContentResource.build().headers(header).contentType(contentType.getId()).status(ContentStatus.ACTIVE.name())
+				.assertFields().create();
 
 		// Do Test
 		given().contentType(ContentType.JSON).when()

@@ -1,9 +1,12 @@
 package com.tsm.cards.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 import javax.validation.groups.Default;
 
@@ -25,7 +28,6 @@ import com.tsm.cards.service.CardTypeService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@SuppressWarnings("unchecked")
 @RestController
 @RequestMapping(value = "/api/v1/cards")
 @Slf4j
@@ -39,7 +41,6 @@ public class CardsController extends RestBaseController<CardResource, Card, Inte
 
 	@Autowired
 	private CardParser parser;
-
 
 	@RequestMapping(method = POST, consumes = JSON_VALUE, produces = JSON_VALUE)
 	@ResponseStatus(CREATED)
@@ -83,6 +84,19 @@ public class CardsController extends RestBaseController<CardResource, Card, Inte
 		log.debug("returning resource [{}].", result);
 
 		return result;
+	}
+
+	@RequestMapping(method = GET, path = "/{id}", produces = JSON_VALUE)
+	@ResponseStatus(OK)
+	public CardResource findById(@PathVariable Integer id) {
+		return super.findById(id);
+	}
+
+	@Override
+	@RequestMapping(method = DELETE, path = "/{id}", produces = JSON_VALUE)
+	@ResponseStatus(NO_CONTENT)
+	public void delete(@PathVariable Integer id) {
+		super.delete(id);
 	}
 
 	@Override

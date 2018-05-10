@@ -1,6 +1,5 @@
 package com.tsm.cards.controller;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,10 +9,8 @@ import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.tsm.cards.model.BaseModel;
-
 @SuppressWarnings(value = { "rawtypes" })
-public abstract class BaseController<R, M extends BaseModel, I extends Serializable> {
+public abstract class BaseController {
 
     public static final String JSON_VALUE = "application/json";
     

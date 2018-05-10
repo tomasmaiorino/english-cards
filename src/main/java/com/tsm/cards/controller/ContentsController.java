@@ -1,7 +1,10 @@
 package com.tsm.cards.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
@@ -28,7 +31,6 @@ import com.tsm.cards.util.ErrorCodes;
 
 import lombok.extern.slf4j.Slf4j;
 
-@SuppressWarnings("unchecked")
 @RestController
 @RequestMapping(value = "/api/v1/contents")
 @Slf4j
@@ -74,16 +76,6 @@ public class ContentsController extends RestBaseController<ContentResource, Cont
 		return result;
 	}
 
-	private ContentType recoverContentType(final Integer contentTypeId) {
-		ContentType type = null;
-		try {
-			type = contentTypeService.findById(contentTypeId);
-		} catch (ResourceNotFoundException e) {
-			throw new BadRequestException(ErrorCodes.CONTENT_TYPE_NOT_FOUND);
-		}
-		return type;
-	}
-
 	@RequestMapping(method = PUT, path = "/{id}", consumes = JSON_VALUE, produces = JSON_VALUE)
 	@ResponseStatus(OK)
 	@Override
@@ -105,6 +97,29 @@ public class ContentsController extends RestBaseController<ContentResource, Cont
 		log.debug("returning resource [{}].", result);
 
 		return result;
+	}
+	
+	@RequestMapping(method = GET, path = "/{id}", produces = JSON_VALUE)
+	@ResponseStatus(OK)
+	public ContentResource findById(@PathVariable Integer id) {
+		return super.findById(id);
+	}
+
+	@Override
+	@RequestMapping(method = DELETE, path = "/{id}", produces = JSON_VALUE)
+	@ResponseStatus(NO_CONTENT)
+	public void delete(@PathVariable Integer id) {
+		super.delete(id);
+	}
+	
+	private ContentType recoverContentType(final Integer contentTypeId) {
+		ContentType type = null;
+		try {
+			type = contentTypeService.findById(contentTypeId);
+		} catch (ResourceNotFoundException e) {
+			throw new BadRequestException(ErrorCodes.CONTENT_TYPE_NOT_FOUND);
+		}
+		return type;
 	}
 
 }

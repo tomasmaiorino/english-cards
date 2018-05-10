@@ -4,7 +4,6 @@ import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.RandomUtils;
@@ -22,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.tsm.EnglishCardsApplication;
+import com.tsm.cards.util.ClientTestBuilder;
 import com.tsm.cards.util.ContentTestBuilder;
 import com.tsm.resource.ContentResource;
 import com.tsm.resource.ContentTypeResource;
@@ -46,31 +46,32 @@ public class ContentsControllerIT extends BaseTestIT {
 	@LocalServerPort
 	private int port;
 
+	private Map<String, String> localHeader;
+
 	@Before
 	public void setUp() {
 		RestAssured.port = port;
+		localHeader = getTokenHeader();
 	}
-
 	@Test
 	public void save_NoneHeaderGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().name(null);
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().name(null);
 
 		// Do Test
 		given().body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT).then()
-				.statusCode(HttpStatus.BAD_REQUEST.value()).body(MESSAGE_FIELD, is("Missing admin header."));
+				.statusCode(HttpStatus.FORBIDDEN.value());
 	}
 
 	@Test
 	public void save_InvalidHeaderGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields();
-		Map<String, String> header = new HashMap<>();
-		header.put(ADMIN_TOKEN_HEADER, "qwert");
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields();
+		localHeader.put(AUTHORIZATION_KEY, ClientTestBuilder.CLIENT_TOKEN);
 
 		// Do Test
-		given().headers(header).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT).then()
-				.statusCode(HttpStatus.FORBIDDEN.value()).body(MESSAGE_FIELD, is("Access not allowed."));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT).then()
+				.statusCode(HttpStatus.FORBIDDEN.value()).body(MESSAGE_FIELD, is("Access Denied"));
 	}
 
 	//
@@ -78,47 +79,47 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void save_NullNameGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().name(null);
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().name(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_NAME), "[0].field", is(NAME_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_NAME), MESSAGE_FIELD_KEY, is(NAME_ASSERT_KEY));
 	}
 
 	@Test
 	public void save_EmptyNameGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().name("");
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().name("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is(NAME_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is(NAME_ASSERT_KEY));
 	}
 
 	@Test
 	public void save_SmallNameGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields()
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields()
 				.name(ContentTestBuilder.getSmallName());
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is(NAME_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is(NAME_ASSERT_KEY));
 	}
 
 	@Test
 	public void save_LargeNameGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).name(ContentTestBuilder.getLargeName())
+		ContentResource resource = ContentResource.build().headers(localHeader).name(ContentTestBuilder.getLargeName())
 				.assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is(NAME_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is(NAME_ASSERT_KEY));
 	}
 
 	//
@@ -126,35 +127,35 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void save_EmptyStatusGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().status("");
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().status("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_STATUS), "[0].field", is(STATUS_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_STATUS), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	@Test
 	public void save_InvalidStatusGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields()
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields()
 				.status(ContentTestBuilder.getInvalidEmail());
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_STATUS), "[0].field", is(STATUS_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_STATUS), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	@Test
 	public void save_NullStatusGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().status(null);
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().status(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_STATUS), "[0].field", is(STATUS_KEY));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_STATUS), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	//
@@ -162,47 +163,47 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void save_NullContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().content(null);
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().content(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_CONTENT), "[0].field", is(CONTENT_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_CONTENT), MESSAGE_FIELD_KEY, is(CONTENT_ASSERT_KEY));
 	}
 
 	@Test
 	public void save_EmptyContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().content("");
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().content("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_CONTENT), "[0].field", is(CONTENT_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_CONTENT), MESSAGE_FIELD_KEY, is(CONTENT_ASSERT_KEY));
 	}
 
 	@Test
 	public void save_SmallContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields()
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields()
 				.content(ContentTestBuilder.getSmallContent());
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_CONTENT), "[0].field", is(CONTENT_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_CONTENT), MESSAGE_FIELD_KEY, is(CONTENT_ASSERT_KEY));
 	}
 
 	@Test
 	public void save_LargeContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields()
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields()
 				.content(ContentTestBuilder.getLargeContent());
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_CONTENT), "[0].field", is(CONTENT_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_CONTENT), MESSAGE_FIELD_KEY, is(CONTENT_ASSERT_KEY));
 	}
 
 	@Test
@@ -210,21 +211,21 @@ public class ContentsControllerIT extends BaseTestIT {
 		// Set Up
 		ContentTypeResource contentType = ContentTypeResource.build();
 		contentType.setId(RandomUtils.nextInt(100, 200));
-		ContentResource resource = ContentResource.build().headers(getHeader()).contentType(contentType.getId())
+		ContentResource resource = ContentResource.build().headers(localHeader).contentType(contentType.getId())
 				.assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is("Content type not found."));
 	}
 
 	@Test
 	public void save_ValidResourceGiven_ShouldSaveClient() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when().post(SAVE_CONTENTS_END_POINT)
 				.then().statusCode(HttpStatus.CREATED.value()).body("name", is(resource.getName()), "status",
 						is(resource.getStatus()), "imgUrl", is(resource.getImgUrl()), CONTENT_ASSERT_KEY,
 						is(resource.getContent()), "isHtml", is(false), "id", notNullValue());
@@ -242,7 +243,7 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void findById_FoundContentTypeGiven_ShouldReturnContentType() {
 		// Set up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 
 		// Do Test
 		given().contentType(ContentType.JSON).when().get(GET_CONTENTS_END_POINT, resource.getId()).then()
@@ -256,53 +257,53 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void update_NullNameGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields().name(null);
+		resource = ContentResource.build().headers(localHeader).assertFields().name(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_NAME), "[0].field", is(NAME_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_NAME), MESSAGE_FIELD_KEY, is(NAME_ASSERT_KEY));
 	}
 
 	@Test
 	public void update_EmptyNameGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields().name("");
+		resource = ContentResource.build().headers(localHeader).assertFields().name("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is(NAME_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is(NAME_ASSERT_KEY));
 	}
 
 	@Test
 	public void update_SmallNameGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields().name(ContentTestBuilder.getSmallName());
+		resource = ContentResource.build().headers(localHeader).assertFields().name(ContentTestBuilder.getSmallName());
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is(NAME_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is(NAME_ASSERT_KEY));
 	}
 
 	@Test
 	public void update_LargeNameGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).name(ContentTestBuilder.getLargeName()).assertFields();
+		resource = ContentResource.build().headers(localHeader).name(ContentTestBuilder.getLargeName()).assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_NAME), "[0].field", is(NAME_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_NAME), MESSAGE_FIELD_KEY, is(NAME_ASSERT_KEY));
 	}
 
 	//
@@ -310,41 +311,41 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void update_EmptyStatusGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields().status("");
+		resource = ContentResource.build().headers(localHeader).assertFields().status("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_STATUS), "[0].field", is(STATUS_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_STATUS), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	@Test
 	public void update_InvalidStatusGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields()
+		resource = ContentResource.build().headers(localHeader).assertFields()
 				.status(ContentTestBuilder.getInvalidEmail());
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_STATUS), "[0].field", is(STATUS_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_STATUS), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	@Test
 	public void update_NullStatusGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields().status(null);
+		resource = ContentResource.build().headers(localHeader).assertFields().status(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_STATUS), "[0].field", is(STATUS_KEY));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_STATUS), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	//
@@ -352,64 +353,64 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void update_NullContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields().content(null);
+		resource = ContentResource.build().headers(localHeader).assertFields().content(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(REQUIRED_CONTENT), "[0].field", is(CONTENT_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_CONTENT), MESSAGE_FIELD_KEY, is(CONTENT_ASSERT_KEY));
 	}
 
 	@Test
 	public void update_EmptyContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields().content("");
+		resource = ContentResource.build().headers(localHeader).assertFields().content("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_CONTENT), "[0].field", is(CONTENT_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_CONTENT), MESSAGE_FIELD_KEY, is(CONTENT_ASSERT_KEY));
 	}
 
 	@Test
 	public void update_SmallContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields()
+		resource = ContentResource.build().headers(localHeader).assertFields()
 				.content(ContentTestBuilder.getSmallContent());
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_CONTENT), "[0].field", is(CONTENT_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_CONTENT), MESSAGE_FIELD_KEY, is(CONTENT_ASSERT_KEY));
 	}
 
 	@Test
 	public void update_LargeContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields()
+		resource = ContentResource.build().headers(localHeader).assertFields()
 				.content(ContentTestBuilder.getLargeContent());
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is(INVALID_CONTENT), "[0].field", is(CONTENT_ASSERT_KEY));
+				.body(MESSAGE_CHECK_KEY, is(INVALID_CONTENT), MESSAGE_FIELD_KEY, is(CONTENT_ASSERT_KEY));
 	}
 
 	@Test
 	public void update_NotFoundContentGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, RandomUtils.nextInt(100, 2000)).then()
 				.statusCode(HttpStatus.NOT_FOUND.value()).body(MESSAGE_FIELD, is("The content was not found."));
 	}
@@ -417,14 +418,14 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void update_NotFoundContentTypeGiven_ShouldReturnError() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
 		ContentTypeResource contentType = ContentTypeResource.build();
 		contentType.setId(RandomUtils.nextInt(100, 200));
-		resource = ContentResource.build().headers(getHeader()).contentType(contentType.getId()).assertFields();
+		resource = ContentResource.build().headers(localHeader).contentType(contentType.getId()).assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.BAD_REQUEST.value())
 				.body("message", is("Content type not found."));
 	}
@@ -432,12 +433,12 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void update_ValidResourceGiven_ShouldUpdateClient() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
-		resource = ContentResource.build().headers(getHeader()).assertFields();
+		resource = ContentResource.build().headers(localHeader).assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when()
+		given().headers(localHeader).body(resource).contentType(ContentType.JSON).when()
 				.put(PUT_CONTENTS_END_POINT, contentId).then().statusCode(HttpStatus.OK.value()).body("name",
 						is(resource.getName()), "status", is(resource.getStatus()), "imgUrl", is(resource.getImgUrl()),
 						CONTENT_ASSERT_KEY, is(resource.getContent()), "isHtml", is(false), "id", notNullValue());
@@ -447,7 +448,7 @@ public class ContentsControllerIT extends BaseTestIT {
 	public void delete_NotFoundContentGiven_ShouldReturnError() {
 
 		// Do Test
-		given().headers(getHeader()).contentType(ContentType.JSON).when()
+		given().headers(localHeader).contentType(ContentType.JSON).when()
 				.delete(DELETE_CONTENTS_END_POINT, RandomUtils.nextInt(100, 2000)).then()
 				.statusCode(HttpStatus.NOT_FOUND.value()).body(MESSAGE_FIELD, is("The content was not found."));
 	}
@@ -455,11 +456,11 @@ public class ContentsControllerIT extends BaseTestIT {
 	@Test
 	public void delete_ValidResourceGiven_ShouldUpdateClient() {
 		// Set Up
-		ContentResource resource = ContentResource.build().headers(getHeader()).assertFields().create();
+		ContentResource resource = ContentResource.build().headers(localHeader).assertFields().create();
 		Integer contentId = resource.getId();
 
 		// Do Test
-		given().headers(getHeader()).contentType(ContentType.JSON).when().delete(DELETE_CONTENTS_END_POINT, contentId)
+		given().headers(localHeader).contentType(ContentType.JSON).when().delete(DELETE_CONTENTS_END_POINT, contentId)
 				.then().statusCode(HttpStatus.NO_CONTENT.value());
 
 		given().contentType(ContentType.JSON).when().get(GET_CONTENTS_END_POINT, contentId).then()

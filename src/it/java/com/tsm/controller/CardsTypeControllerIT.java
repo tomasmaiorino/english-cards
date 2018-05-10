@@ -7,9 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.greaterThan;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -27,6 +24,7 @@ import com.jayway.restassured.http.ContentType;
 import com.tsm.EnglishCardsApplication;
 import com.tsm.cards.model.CardType.CardTypeStatus;
 import com.tsm.cards.util.CardTypeTestBuilder;
+import com.tsm.cards.util.ClientTestBuilder;
 import com.tsm.resource.CardResource;
 import com.tsm.resource.CardTypeResource;
 
@@ -56,19 +54,19 @@ public class CardsTypeControllerIT extends BaseTestIT {
 
 		// Do Test
 		given().body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT).then()
-				.statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is("Missing admin header."));
+				.statusCode(HttpStatus.FORBIDDEN.value());
 	}
 
 	@Test
 	public void save_InvalidHeaderGiven_ShouldReturnError() {
 		// Set Up
 		CardTypeResource resource = CardTypeResource.build().assertFields();
-		Map<String, String> header = new HashMap<>();
-		header.put(ADMIN_TOKEN_HEADER, "qwert");
+		getTokenHeader();
+		getTokenHeader().put(AUTHORIZATION_KEY, ClientTestBuilder.CLIENT_TOKEN);
 
 		// Do Test
-		given().headers(header).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT).then()
-				.statusCode(HttpStatus.FORBIDDEN.value()).body("message", is("Access not allowed."));
+		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+				.then().statusCode(HttpStatus.FORBIDDEN.value());
 	}
 
 	//
@@ -79,9 +77,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().assertFields().name(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name is required."), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is(REQUIRED_NAME), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -90,9 +88,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().assertFields().name("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is("The name must be between 2 and 30 characters."), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -101,9 +99,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().assertFields().name(SMALL_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is("The name must be between 2 and 30 characters."), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
@@ -112,9 +110,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().assertFields().name(LARGE_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is("The name must be between 2 and 30 characters."), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	//
@@ -125,9 +123,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().assertFields().status("");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body("[0].message",
-						is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("status"));
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body(MESSAGE_CHECK_KEY,
+						is(INVALID_STATUS), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	@Test
@@ -136,9 +134,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().assertFields().status("INV");
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body("[0].message",
-						is("The status must be either 'INACTIVE' or 'ACTIVE'."), "[0].field", is("status"));
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body(MESSAGE_CHECK_KEY,
+						is("The status must be either 'INACTIVE' or 'ACTIVE'."), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	@Test
@@ -147,9 +145,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().assertFields().status(null);
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The status is required."), "[0].field", is("status"));
+				.body(MESSAGE_CHECK_KEY, is("The status is required."), MESSAGE_FIELD_KEY, is(STATUS_KEY));
 	}
 
 	@Test
@@ -158,9 +156,9 @@ public class CardsTypeControllerIT extends BaseTestIT {
 		CardTypeResource resource = CardTypeResource.build().imgUrl().assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(resource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
-				.then().statusCode(HttpStatus.CREATED.value()).body("name", is(resource.getName()), "status",
-						is(resource.getStatus()), "imgUrl", is(resource.getImgUrl()))
+		given().headers(getTokenHeader()).body(resource).contentType(ContentType.JSON).when()
+				.post(CARDS_TYPE_END_POINT).then().statusCode(HttpStatus.CREATED.value()).body("name",
+						is(resource.getName()), STATUS_KEY, is(resource.getStatus()), "imgUrl", is(resource.getImgUrl()))
 				.body("id", notNullValue());
 	}
 
@@ -168,73 +166,74 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	// @Ignore
 	public void save_DuplicatedNameGiven_ShouldReturnError() {
 		// Set Up
-		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
 		String name = resource.getName();
 		CardTypeResource newResource = CardTypeResource.build().name(name).assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when().post(CARDS_TYPE_END_POINT)
-				.then().statusCode(HttpStatus.BAD_REQUEST.value()).body("message", is("Duplicated card type name."));
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
+				.post(CARDS_TYPE_END_POINT).then().statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("message", is("Duplicated card type name."));
 	}
 
 	@Test
 	public void update_NullNameGiven_ShouldReturnError() {
 		// Set Up
-		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
 		CardTypeResource newResource = CardTypeResource.build().assertFields().name(null);
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CARDS_TYPE_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name is required."), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is("The name is required."), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
 	public void update_EmptyNameGiven_ShouldReturnError() {
 		// Set Up
-		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
 		CardTypeResource newResource = CardTypeResource.build().assertFields().name("");
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CARDS_TYPE_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is("The name must be between 2 and 30 characters."), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
 	public void update_SmallNameGiven_ShouldReturnError() {
 		// Set Up
-		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
 		CardTypeResource newResource = CardTypeResource.build().assertFields().name(SMALL_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CARDS_TYPE_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is("The name must be between 2 and 30 characters."), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
 	public void update_LargeNameGiven_ShouldReturnError() {
 		// Set Up
-		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
 		CardTypeResource newResource = CardTypeResource.build().assertFields().name(LARGE_NAME);
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CARDS_TYPE_END_POINT, resource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("[0].message", is("The name must be between 2 and 30 characters."), "[0].field", is("name"));
+				.body(MESSAGE_CHECK_KEY, is("The name must be between 2 and 30 characters."), MESSAGE_FIELD_KEY, is("name"));
 	}
 
 	@Test
 	public void update_ValidResourceGiven_ShouldSaveCardType() {
 		// Set Up
-		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
 		CardTypeResource newResource = CardTypeResource.build().assertFields();
 
 		// Do Test
-		given().headers(getHeader()).body(newResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(newResource).contentType(ContentType.JSON).when()
 				.put(PUT_CARDS_TYPE_END_POINT, resource.getId()).then().statusCode(HttpStatus.OK.value())
-				.body("name", is(newResource.getName()), "status", is(newResource.getStatus()))
+				.body("name", is(newResource.getName()), STATUS_KEY, is(newResource.getStatus()))
 				.body("id", notNullValue());
 	}
 
@@ -242,13 +241,13 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	// @Ignore
 	public void update_DuplicatedNameGiven_ShouldReturnError() {
 		// Set Up
-		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
-		CardTypeResource secondResource = CardTypeResource.build().assertFields().headers(getHeader()).create();
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
+		CardTypeResource secondResource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
 		secondResource.setName(resource.getName());
 		secondResource.setStatus(CardTypeTestBuilder.getStatus());
 
 		// Do Test
-		given().headers(getHeader()).body(secondResource).contentType(ContentType.JSON).when()
+		given().headers(getTokenHeader()).body(secondResource).contentType(ContentType.JSON).when()
 				.put(PUT_CARDS_TYPE_END_POINT, secondResource.getId()).then().statusCode(HttpStatus.BAD_REQUEST.value())
 				.body("message", is("Duplicated card type name."));
 	}
@@ -263,8 +262,8 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	@Test
 	public void findById_FoundCardTypeGiven_ShouldReturnCardType() {
 		// Set up
-		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getHeader()).create();
-		CardResource.build().cardType(resource.getId()).assertFields().headers(getHeader()).create();
+		CardTypeResource resource = CardTypeResource.build().assertFields().headers(getTokenHeader()).create();
+		CardResource.build().cardType(resource.getId()).assertFields().headers(getTokenHeader()).create();
 
 		// Do Test
 		given().contentType(ContentType.JSON).when().get(GET_CARDS_TYPE_END_POINT, resource.getId()).then()
@@ -275,7 +274,7 @@ public class CardsTypeControllerIT extends BaseTestIT {
 	@Test
 	public void findAll_FoundCardTypeGiven_ShouldReturnCards() {
 		// Set up
-		CardTypeResource.build().status(CardTypeStatus.ACTIVE.name()).assertFields().headers(getHeader()).create();
+		CardTypeResource.build().status(CardTypeStatus.ACTIVE.name()).assertFields().headers(getTokenHeader()).create();
 
 		// Do Test
 		given().contentType(ContentType.JSON).when().get(GET_ALL_CARDS_TYPE_END_POINT).then()

@@ -1,14 +1,20 @@
 package com.tsm.cards.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,6 +55,28 @@ public class CardsTypeController extends RestBaseController<CardTypeResource, Ca
 		log.debug("returning resources: [{}].", resources.size());
 
 		return resources;
+	}
+
+	@Override
+	@RequestMapping(method = POST, consumes = JSON_VALUE, produces = JSON_VALUE)
+	@ResponseStatus(CREATED)
+	@ResponseBody
+	public CardTypeResource save(@RequestBody final CardTypeResource resource) {
+		return super.save(resource);
+	}
+
+	@Override
+	@RequestMapping(method = PUT, path = "/{id}", consumes = JSON_VALUE, produces = JSON_VALUE)
+	@ResponseStatus(OK)
+	@ResponseBody
+	public CardTypeResource update(@PathVariable Integer id, @RequestBody final CardTypeResource resource) {
+		return super.update(id, resource);
+	}
+
+	@RequestMapping(method = GET, path = "/{id}", produces = JSON_VALUE)
+	@ResponseStatus(OK)
+	public CardTypeResource findById(@PathVariable Integer id) {
+		return super.findById(id);
 	}
 
 	@Override

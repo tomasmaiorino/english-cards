@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.tsm.cards.exceptions.ForbiddenRequestException;
@@ -40,7 +41,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Value("#{'${urls.skip.host.validation}'.split(',')}")
-	// @Value(value = "${urls.skip.host.validation}")
 	private List<String> urlSkipHostValidation;
 
 	@Autowired
@@ -83,7 +83,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						user.getEmail(), null, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-				log.info("Authenticated user [{}] setting security context.", userEmail);
+				log.debug("Authenticated user [{}] setting security context.", userEmail);
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
@@ -112,11 +112,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		} else {
 			log.debug("Skiping host verification");
 		}
-
 	}
 
 	private boolean validateHost(final String requestUri) {
-		urlSkipHostValidation.forEach(u -> log.info("url [{}]", u));
+		if(CollectionUtils.isEmpty(urlSkipHostValidation)) {
+			return false;
+		}
+		urlSkipHostValidation.forEach(u -> log.info("Urls to skip host validation [{}].", u));
 		return urlSkipHostValidation.stream().filter(u -> requestUri.contains(u)).count() == 0l;
 
 	}
@@ -129,7 +131,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			log.debug("parsing request [{}].", request);
 
 			token = request.substring(request.lastIndexOf("/") + 1, request.length());
-			log.info("looking for a client with the token [{}].", token);
+			log.debug("looking for a client with the token [{}].", token);
 
 			Client client = clientService.findByToken(token);
 			host = client.getClientHosts().iterator().next().getHost();

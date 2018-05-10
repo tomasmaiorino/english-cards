@@ -24,7 +24,7 @@ public class TokenAuthenticationService {
 
 	static void addAuthentication(final HttpServletResponse response, final String username) {
 		String JWT = Jwts.builder().setSubject(username)
-				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+				.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, SECRET).compact();
 
 		response.addHeader(HEADER_STRING, JWT);

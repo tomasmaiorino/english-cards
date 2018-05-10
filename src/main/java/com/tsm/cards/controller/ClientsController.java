@@ -1,7 +1,15 @@
 package com.tsm.cards.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tsm.cards.model.Client;
@@ -21,6 +29,13 @@ public class ClientsController extends RestBaseController<ClientResource, Client
 	@Autowired
 	private ClientParser parser;
 
+	@RequestMapping(method = POST, consumes = JSON_VALUE, produces = JSON_VALUE)
+	@ResponseStatus(CREATED)
+	@ResponseBody
+	public ClientResource save(@RequestBody final ClientResource resource, final HttpServletRequest request) {
+		return super.save(resource);
+	}
+	
 	@Override
 	public BaseService<Client, Integer> getService() {
 		return service;

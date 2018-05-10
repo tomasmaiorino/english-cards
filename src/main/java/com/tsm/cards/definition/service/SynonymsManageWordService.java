@@ -19,7 +19,7 @@ public class SynonymsManageWordService extends BaseManageWordService<SynonymsDef
         return OxfordService.SYNONYMS;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected BaseDefinitionService getDefinitionService() {
         return definitionSynonymsService;

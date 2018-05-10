@@ -12,7 +12,7 @@ import com.tsm.cards.service.BaseService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@SuppressWarnings(value = { "rawtypes", "unchecked" })
+@SuppressWarnings(value = { "unchecked" })
 @Slf4j
 public abstract class RestBaseController<R, M extends BaseModel, I extends Serializable> extends BaseController {
 
@@ -36,12 +36,6 @@ public abstract class RestBaseController<R, M extends BaseModel, I extends Seria
 		return result;
 	}
 
-	// @SuppressWarnings("unchecked")
-	// @RequestMapping(method = PUT, path = "/{id}", consumes = JSON_VALUE,
-	// produces = JSON_VALUE)
-	// @ResponseStatus(OK)
-	// public R update(@PathVariable final Integer id, @RequestBody final R
-	// resource) {
 	public R update(final Integer id, final R resource) {
 		log.debug("Recieved a request to update a resource  [{}].", resource);
 
@@ -60,10 +54,6 @@ public abstract class RestBaseController<R, M extends BaseModel, I extends Seria
 		return result;
 	}
 
-	// @SuppressWarnings("unchecked")
-	// @RequestMapping(path = "/{id}", method = GET, produces = JSON_VALUE)
-	// @ResponseStatus(OK)
-	// public R findById(@PathVariable final Integer id) {
 	public R findById(final Integer id) {
 
 		log.info("Recieved a request to find an model by id [{}].", id);
@@ -77,11 +67,6 @@ public abstract class RestBaseController<R, M extends BaseModel, I extends Seria
 		return result;
 	}
 
-	// @SuppressWarnings("unchecked")
-	// @RequestMapping(method = DELETE, path = "/{id}", consumes = JSON_VALUE,
-	// produces = JSON_VALUE)
-	// @ResponseStatus(NO_CONTENT)
-	// public void delete(@PathVariable final Integer id) {
 	public void delete(final Integer id) {
 		log.debug("Recieved a request to delete [{}].", id);
 
@@ -92,10 +77,6 @@ public abstract class RestBaseController<R, M extends BaseModel, I extends Seria
 		log.debug("model deleted.");
 	}
 
-	// @RequestMapping(method = GET, produces = JSON_VALUE)
-	// @ResponseStatus(OK)
-	// public Set<R> findAll(@RequestParam(value = "q", required = false) String
-	// q) {
 	public Set<R> findAll(final String q) {
 
 		log.debug("Recieved a request to find all models.");

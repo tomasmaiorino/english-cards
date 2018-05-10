@@ -33,9 +33,6 @@ public class Role extends BaseModel{
 	@Column(name = "role_id")
 	private Integer id;
 
-	// @Column(name = "role")
-	// private String role;
-
 	@Getter
 	@Column(nullable = false, length = 10)
 	@Enumerated(EnumType.STRING)

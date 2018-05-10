@@ -28,4 +28,5 @@ spring:
 urls:
   skip:
     host:
-      validation: api/v1/clients,api/v1/users/auth      
+      validation:
+#      validation: api/v1/clients,api/v1/users/auth      
