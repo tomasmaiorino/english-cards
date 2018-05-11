@@ -1,9 +1,9 @@
 package com.tsm.builders;
 
+import com.tsm.cards.resources.DefinitionResource;
+
 import java.util.Map;
 import java.util.Set;
-
-import com.tsm.cards.resources.DefinitionResource;
 
 public class DefinitionResourceBuilder {
 

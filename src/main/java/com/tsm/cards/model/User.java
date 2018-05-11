@@ -1,30 +1,17 @@
 package com.tsm.cards.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
+import lombok.Getter;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import lombok.Getter;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "send_user")
+@Table(name = "card_user")
 public class User extends BaseModel {
 
 	private User() {

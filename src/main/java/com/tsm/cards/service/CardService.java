@@ -1,16 +1,15 @@
 package com.tsm.cards.service;
 
-import static com.tsm.cards.util.ErrorCodes.DUPLICATED_CARD;
-
+import com.tsm.cards.exceptions.BadRequestException;
+import com.tsm.cards.model.Card;
+import com.tsm.cards.repository.CardRepository;
+import com.tsm.cards.repository.IBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.exceptions.BadRequestException;
-import com.tsm.cards.model.Card;
-import com.tsm.cards.repository.CardRepository;
-import com.tsm.cards.repository.IBaseRepository;
+import static com.tsm.cards.util.ErrorCodes.DUPLICATED_CARD;
 
 @Service
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)

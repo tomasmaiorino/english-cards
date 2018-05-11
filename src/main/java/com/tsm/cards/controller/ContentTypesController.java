@@ -1,24 +1,5 @@
 package com.tsm.cards.controller;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.tsm.cards.model.ContentType;
 import com.tsm.cards.model.ContentType.ContentTypeStatus;
 import com.tsm.cards.parser.ContentTypeParser;
@@ -26,8 +7,17 @@ import com.tsm.cards.resources.ContentTypeResource;
 import com.tsm.cards.resources.IParser;
 import com.tsm.cards.service.BaseService;
 import com.tsm.cards.service.ContentTypeService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/content-types")

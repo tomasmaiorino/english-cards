@@ -1,16 +1,10 @@
 package com.tsm.cards.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
-
+import com.tsm.cards.definition.repository.SynonymsDefinitionRepository;
+import com.tsm.cards.definition.service.SynonymsDefinitionService;
+import com.tsm.cards.documents.BaseDefinition;
+import com.tsm.cards.documents.SynonymsDefinition;
+import com.tsm.cards.exceptions.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -19,11 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.tsm.cards.definition.repository.SynonymsDefinitionRepository;
-import com.tsm.cards.definition.service.SynonymsDefinitionService;
-import com.tsm.cards.documents.BaseDefinition;
-import com.tsm.cards.documents.SynonymsDefinition;
-import com.tsm.cards.exceptions.ResourceNotFoundException;
+import java.util.Optional;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 @FixMethodOrder(MethodSorters.JVM)

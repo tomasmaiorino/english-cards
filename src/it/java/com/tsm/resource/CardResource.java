@@ -1,20 +1,18 @@
 package com.tsm.resource;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.apache.commons.lang3.RandomStringUtils.random;
-
-import java.util.Map;
-import java.util.Objects;
-
-import org.apache.commons.lang3.RandomUtils;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tsm.cards.model.Card.CardStatus;
 import com.tsm.cards.model.Client.ClientStatus;
 import com.tsm.controller.CardsControllerIT;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.RandomUtils;
+
+import java.util.Map;
+import java.util.Objects;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.apache.commons.lang3.RandomStringUtils.random;
 
 public class CardResource {
 

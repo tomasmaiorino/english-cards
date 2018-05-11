@@ -1,15 +1,14 @@
 package com.tsm.cards.repository;
 
-import java.util.Optional;
-import java.util.Set;
-
+import com.tsm.cards.model.CardType;
+import com.tsm.cards.model.CardType.CardTypeStatus;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.model.CardType;
-import com.tsm.cards.model.CardType.CardTypeStatus;
+import java.util.Optional;
+import java.util.Set;
 
 @Transactional(propagation = Propagation.MANDATORY)
 public interface CardTypeRepository extends IBaseRepository<CardType, Integer>, Repository<CardType, Integer> {

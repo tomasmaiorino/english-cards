@@ -1,13 +1,12 @@
 package com.tsm.cards.definition.repository;
 
-import java.util.List;
-
+import com.tsm.cards.documents.SetWordsCards;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.documents.SetWordsCards;
+import java.util.List;
 
 @Transactional(propagation = Propagation.MANDATORY)
 public interface SetWordsCardsRepository extends MongoRepository<SetWordsCards, Long> {

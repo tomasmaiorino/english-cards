@@ -1,18 +1,17 @@
 package com.tsm.cards.parser;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import com.tsm.cards.model.CardType;
+import com.tsm.cards.model.CardType.CardTypeStatus;
+import com.tsm.cards.resources.CardTypeResource;
+import com.tsm.cards.resources.IParser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import com.tsm.cards.model.CardType;
-import com.tsm.cards.model.CardType.CardTypeStatus;
-import com.tsm.cards.resources.CardTypeResource;
-import com.tsm.cards.resources.IParser;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class CardTypeParser implements IParser<CardTypeResource, CardType> {

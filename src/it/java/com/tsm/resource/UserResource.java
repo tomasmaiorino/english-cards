@@ -1,16 +1,15 @@
 package com.tsm.resource;
 
-import static com.jayway.restassured.RestAssured.given;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tsm.cards.util.UserTestBuilder;
+import com.tsm.controller.BaseTestIT;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tsm.controller.BaseTestIT;
-import com.tsm.cards.util.UserTestBuilder;
-
-import lombok.Getter;
-import lombok.Setter;
+import static com.jayway.restassured.RestAssured.given;
 
 public class UserResource {
 

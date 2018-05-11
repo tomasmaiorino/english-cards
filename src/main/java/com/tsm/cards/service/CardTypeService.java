@@ -1,22 +1,20 @@
 package com.tsm.cards.service;
 
-import static com.tsm.cards.util.ErrorCodes.DUPLICATED_CARD_TYPE;
-
-import java.util.Set;
-
+import com.tsm.cards.exceptions.BadRequestException;
+import com.tsm.cards.model.CardType;
+import com.tsm.cards.model.CardType.CardTypeStatus;
+import com.tsm.cards.repository.CardTypeRepository;
+import com.tsm.cards.repository.IBaseRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.tsm.cards.exceptions.BadRequestException;
-import com.tsm.cards.model.CardType;
-import com.tsm.cards.model.CardType.CardTypeStatus;
-import com.tsm.cards.repository.CardTypeRepository;
-import com.tsm.cards.repository.IBaseRepository;
+import java.util.Set;
 
-import lombok.extern.slf4j.Slf4j;
+import static com.tsm.cards.util.ErrorCodes.DUPLICATED_CARD_TYPE;
 
 @Service
 @Slf4j

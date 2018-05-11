@@ -1,12 +1,11 @@
 package com.tsm.cards.parser;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import com.tsm.cards.model.Content;
+import com.tsm.cards.model.Content.ContentStatus;
+import com.tsm.cards.model.ContentType;
+import com.tsm.cards.resources.ContentResource;
+import com.tsm.cards.util.ContentTestBuilder;
+import com.tsm.cards.util.ContentTypeTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -14,12 +13,10 @@ import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
-import com.tsm.cards.model.Content;
-import com.tsm.cards.model.Content.ContentStatus;
-import com.tsm.cards.model.ContentType;
-import com.tsm.cards.resources.ContentResource;
-import com.tsm.cards.util.ContentTestBuilder;
-import com.tsm.cards.util.ContentTypeTestBuilder;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ContentParserTest {

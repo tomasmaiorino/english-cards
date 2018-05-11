@@ -1,21 +1,19 @@
 package com.tsm.resource;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.apache.commons.lang3.RandomStringUtils.random;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tsm.cards.model.Client.ClientStatus;
+import com.tsm.controller.ClientsControllerIT;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.RandomUtils;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.apache.commons.lang3.RandomUtils;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tsm.cards.model.Client.ClientStatus;
-import com.tsm.controller.ClientsControllerIT;
-
-import lombok.Getter;
-import lombok.Setter;
+import static com.jayway.restassured.RestAssured.given;
+import static org.apache.commons.lang3.RandomStringUtils.random;
 
 public class ClientResource {
 

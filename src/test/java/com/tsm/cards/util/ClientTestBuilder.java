@@ -1,15 +1,15 @@
 package com.tsm.cards.util;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
+import com.tsm.cards.model.Client;
+import com.tsm.cards.model.Client.ClientStatus;
+import com.tsm.cards.model.ClientHosts;
+import com.tsm.cards.resources.ClientResource;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.tsm.cards.model.Client;
-import com.tsm.cards.model.ClientHosts;
-import com.tsm.cards.model.Client.ClientStatus;
-import com.tsm.cards.resources.ClientResource;
+import static org.apache.commons.lang3.RandomStringUtils.random;
 
 public class ClientTestBuilder {
 

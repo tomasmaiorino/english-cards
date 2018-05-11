@@ -1,13 +1,13 @@
 package com.tsm.cards.definition.service;
 
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.Assert.fail;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class SynonymsOxfordServiceTest {

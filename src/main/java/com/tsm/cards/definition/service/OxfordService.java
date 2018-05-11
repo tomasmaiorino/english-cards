@@ -1,7 +1,8 @@
 package com.tsm.cards.definition.service;
 
-import java.io.IOException;
-
+import com.tsm.cards.documents.BaseDefinition;
+import com.tsm.cards.exceptions.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -9,10 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.util.Assert;
 
-import com.tsm.cards.documents.BaseDefinition;
-import com.tsm.cards.exceptions.ResourceNotFoundException;
-
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
 
 @SuppressWarnings("deprecation")
 @Slf4j

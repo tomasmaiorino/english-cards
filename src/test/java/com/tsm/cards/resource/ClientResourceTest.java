@@ -1,33 +1,19 @@
 package com.tsm.cards.resource;
 
-import static com.tsm.cards.util.ClientTestBuilder.LARGE_NAME;
-import static com.tsm.cards.util.ClientTestBuilder.LARGE_TOKEN;
-import static com.tsm.cards.util.ClientTestBuilder.RESOURCE_INVALID_EMAIL;
-import static com.tsm.cards.util.ClientTestBuilder.SMALL_NAME;
-import static com.tsm.cards.util.ClientTestBuilder.SMALL_TOKEN;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_EMAIL;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_EMAIL_RECIPIENT;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_NAME_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_TOKEN_SIZE;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_EMAIL;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_EMAIL_RECIPIENT;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_HOSTS;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_NAME;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_TOKEN;
-
-import java.util.Collections;
-import java.util.function.Supplier;
-
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-
+import com.tsm.cards.resources.BaseResource;
+import com.tsm.cards.util.ClientTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.tsm.cards.resources.BaseResource;
-import com.tsm.cards.util.ClientTestBuilder;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import java.util.Collections;
+import java.util.function.Supplier;
+
+import static com.tsm.cards.util.ClientTestBuilder.*;
+import static com.tsm.cards.util.ErrorCodes.*;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ClientResourceTest extends BaseResourceTest {

@@ -1,19 +1,18 @@
 package com.tsm.cards.service;
 
-import static com.tsm.cards.security.SecurityConstants.ACCESS_TOKEN_VALIDITY_SECONDS;
-import static com.tsm.cards.security.SecurityConstants.SIGNING_KEY;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.function.Function;
 
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import static com.tsm.cards.security.SecurityConstants.ACCESS_TOKEN_VALIDITY_SECONDS;
+import static com.tsm.cards.security.SecurityConstants.SIGNING_KEY;
 
 @Component
 public class JwtTokenUtil implements Serializable {

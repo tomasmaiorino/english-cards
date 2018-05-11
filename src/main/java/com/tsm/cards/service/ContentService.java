@@ -1,7 +1,11 @@
 package com.tsm.cards.service;
 
-import java.util.Set;
-
+import com.tsm.cards.model.Content;
+import com.tsm.cards.model.Content.ContentStatus;
+import com.tsm.cards.model.ContentType;
+import com.tsm.cards.repository.ContentRepository;
+import com.tsm.cards.repository.IBaseRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,13 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.tsm.cards.model.Content;
-import com.tsm.cards.model.Content.ContentStatus;
-import com.tsm.cards.model.ContentType;
-import com.tsm.cards.repository.ContentRepository;
-import com.tsm.cards.repository.IBaseRepository;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.Set;
 
 @Service
 @Slf4j

@@ -1,21 +1,20 @@
 package com.tsm.cards.parser;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
-
 import com.tsm.cards.model.Content;
 import com.tsm.cards.model.ContentType;
 import com.tsm.cards.model.ContentType.ContentTypeBuilder;
 import com.tsm.cards.model.ContentType.ContentTypeStatus;
 import com.tsm.cards.resources.ContentTypeResource;
 import com.tsm.cards.resources.IParser;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class ContentTypeParser implements IParser<ContentTypeResource, ContentType> {

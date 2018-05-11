@@ -1,14 +1,12 @@
 package com.tsm.cards.documents;
 
-import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.data.annotation.TypeAlias;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
 @TypeAlias("results")
 public class Results {

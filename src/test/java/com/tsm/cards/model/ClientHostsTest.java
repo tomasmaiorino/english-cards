@@ -4,9 +4,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.tsm.cards.model.Client;
-import com.tsm.cards.model.ClientHosts;
-
 @FixMethodOrder(MethodSorters.JVM)
 public class ClientHostsTest {
 

@@ -1,16 +1,14 @@
 package com.tsm.cards.controller;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.validation.groups.Default;
-
 import com.tsm.cards.model.BaseModel;
 import com.tsm.cards.resources.IParser;
 import com.tsm.cards.service.BaseService;
-
 import lombok.extern.slf4j.Slf4j;
+
+import javax.validation.groups.Default;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @SuppressWarnings(value = { "unchecked" })
 @Slf4j

@@ -1,14 +1,13 @@
 package com.tsm.cards.resources;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class DefinitionResource implements Comparable<DefinitionResource> {
 

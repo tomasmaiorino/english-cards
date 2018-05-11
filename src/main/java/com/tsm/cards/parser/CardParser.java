@@ -1,15 +1,14 @@
 package com.tsm.cards.parser;
 
-import java.util.Set;
-
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
 import com.tsm.cards.model.Card;
 import com.tsm.cards.model.Card.CardStatus;
 import com.tsm.cards.model.CardType;
 import com.tsm.cards.resources.CardResource;
 import com.tsm.cards.resources.IParser;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import java.util.Set;
 
 @Component
 public class CardParser implements IParser<CardResource, Card> {

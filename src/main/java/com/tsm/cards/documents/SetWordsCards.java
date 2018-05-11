@@ -1,13 +1,12 @@
 package com.tsm.cards.documents;
 
-import java.util.List;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
 @Document(collection = "set_words_cards")
 @TypeAlias("set_words_cards")

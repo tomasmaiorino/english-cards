@@ -1,18 +1,11 @@
 package com.tsm.cards.parser;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.tsm.cards.model.CardType;
+import com.tsm.cards.model.CardType.CardTypeStatus;
+import com.tsm.cards.resources.CardResource;
+import com.tsm.cards.resources.CardTypeResource;
+import com.tsm.cards.util.CardTestBuilder;
+import com.tsm.cards.util.CardTypeTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -22,12 +15,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.tsm.cards.model.CardType;
-import com.tsm.cards.model.CardType.CardTypeStatus;
-import com.tsm.cards.resources.CardResource;
-import com.tsm.cards.resources.CardTypeResource;
-import com.tsm.cards.util.CardTestBuilder;
-import com.tsm.cards.util.CardTypeTestBuilder;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.when;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class CardTypeParserTest {

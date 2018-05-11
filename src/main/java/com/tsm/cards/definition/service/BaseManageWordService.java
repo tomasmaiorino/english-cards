@@ -1,10 +1,8 @@
 package com.tsm.cards.definition.service;
 
-import org.springframework.util.Assert;
-
 import com.tsm.cards.documents.BaseDefinition;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.Assert;
 
 @Slf4j
 public abstract class BaseManageWordService<T extends BaseDefinition> {

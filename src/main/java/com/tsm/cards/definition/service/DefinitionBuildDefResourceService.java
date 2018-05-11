@@ -1,19 +1,17 @@
 package com.tsm.cards.definition.service;
 
+import com.tsm.cards.documents.Entries;
+import com.tsm.cards.documents.Results;
+import com.tsm.cards.resources.DefinitionResource;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import com.tsm.cards.documents.Entries;
-import com.tsm.cards.documents.Results;
-import com.tsm.cards.resources.DefinitionResource;
-
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j

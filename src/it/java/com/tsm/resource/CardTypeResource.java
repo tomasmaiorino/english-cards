@@ -1,18 +1,17 @@
 package com.tsm.resource;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.apache.commons.lang3.RandomStringUtils.random;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tsm.cards.util.CardTypeTestBuilder;
+import com.tsm.controller.CardsTypeControllerIT;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tsm.cards.util.CardTypeTestBuilder;
-import com.tsm.controller.CardsTypeControllerIT;
-
-import lombok.Getter;
-import lombok.Setter;
+import static com.jayway.restassured.RestAssured.given;
+import static org.apache.commons.lang3.RandomStringUtils.random;
 
 public class CardTypeResource {
 

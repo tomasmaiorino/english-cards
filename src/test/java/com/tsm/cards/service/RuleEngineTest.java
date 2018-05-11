@@ -1,12 +1,12 @@
 package com.tsm.cards.service;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class RuleEngineTest {

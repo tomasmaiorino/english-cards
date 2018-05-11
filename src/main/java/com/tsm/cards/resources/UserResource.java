@@ -1,18 +1,15 @@
 package com.tsm.cards.resources;
 
-import static com.tsm.cards.util.ErrorCodes.INVALID_LOGIN_EMAIL;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_LOGIN_EMAIL;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_LOGIN_PASSWORD;
-
-import javax.validation.constraints.NotNull;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.validation.constraints.NotNull;
+
+import static com.tsm.cards.util.ErrorCodes.*;
 
 public class UserResource implements BaseResource {
 

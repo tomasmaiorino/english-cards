@@ -1,20 +1,18 @@
 package com.tsm.builders;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.Supplier;
+import com.tsm.cards.resources.BaseResource;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.groups.Default;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Supplier;
 
-import org.springframework.test.util.ReflectionTestUtils;
-
-import com.tsm.cards.resources.BaseResource;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class BaseResourceTest {
 

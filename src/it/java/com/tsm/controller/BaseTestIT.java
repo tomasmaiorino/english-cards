@@ -1,14 +1,12 @@
 package com.tsm.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Value;
-
 import com.tsm.resource.UserResource;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BaseTestIT {
 

@@ -1,15 +1,5 @@
 package com.tsm.cards.service;
 
-import static com.tsm.cards.util.ErrorCodes.DUPLICATED_CONTENT_TYPE;
-
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.ContentType;
@@ -17,8 +7,16 @@ import com.tsm.cards.model.ContentType.ContentTypeStatus;
 import com.tsm.cards.repository.ContentTypeRepository;
 import com.tsm.cards.repository.IBaseRepository;
 import com.tsm.cards.util.ErrorCodes;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import java.util.Set;
+
+import static com.tsm.cards.util.ErrorCodes.DUPLICATED_CONTENT_TYPE;
 
 @Service
 @Slf4j

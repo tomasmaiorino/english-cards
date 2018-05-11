@@ -1,9 +1,8 @@
 maxDefinitionSynonymsList: 6
-oxford.service.api.id:
-oxford.service.app.key:
+
 user:
   it:
-    email: user-it@test.com
+      email: user-it@test.com
     name: it user
     pass: 7c30110b
 #logging:

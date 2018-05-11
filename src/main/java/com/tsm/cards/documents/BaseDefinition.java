@@ -1,13 +1,12 @@
 package com.tsm.cards.documents;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.CollectionUtils;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseDefinition {
 

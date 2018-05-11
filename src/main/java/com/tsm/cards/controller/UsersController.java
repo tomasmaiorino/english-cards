@@ -1,10 +1,11 @@
 package com.tsm.cards.controller;
 
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
-import javax.validation.groups.Default;
-
+import com.tsm.cards.model.User;
+import com.tsm.cards.resources.AuthTokenResource;
+import com.tsm.cards.resources.UserResource;
+import com.tsm.cards.service.JwtTokenUtil;
+import com.tsm.cards.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,13 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tsm.cards.model.User;
-import com.tsm.cards.resources.AuthTokenResource;
-import com.tsm.cards.resources.UserResource;
-import com.tsm.cards.service.JwtTokenUtil;
-import com.tsm.cards.service.UserService;
+import javax.validation.groups.Default;
 
-import lombok.extern.slf4j.Slf4j;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @Slf4j

@@ -1,13 +1,12 @@
 package com.tsm.cards.util;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
-
-import org.springframework.test.util.ReflectionTestUtils;
-
 import com.tsm.cards.model.Card;
 import com.tsm.cards.model.ContentType;
 import com.tsm.cards.model.ContentTypeRule;
 import com.tsm.cards.resources.ContentTypeRuleResource;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import static org.apache.commons.lang3.RandomStringUtils.random;
 
 public class ContentTypeRuleTestBuilder {
 

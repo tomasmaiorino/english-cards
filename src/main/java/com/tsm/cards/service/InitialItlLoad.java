@@ -1,5 +1,12 @@
 package com.tsm.cards.service;
 
+import com.tsm.cards.model.Role;
+import com.tsm.cards.model.User;
+import com.tsm.cards.model.User.UserBuilder;
+import com.tsm.cards.model.User.UserStatus;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -7,15 +14,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import com.tsm.cards.model.Role;
-import com.tsm.cards.model.User;
-import com.tsm.cards.model.User.UserBuilder;
-import com.tsm.cards.model.User.UserStatus;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Profile(value = "it")

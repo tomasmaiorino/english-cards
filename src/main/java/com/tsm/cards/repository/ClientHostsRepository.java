@@ -1,14 +1,13 @@
 package com.tsm.cards.repository;
 
-import java.util.Set;
-
+import com.tsm.cards.model.Client.ClientStatus;
+import com.tsm.cards.model.ClientHosts;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.model.ClientHosts;
-import com.tsm.cards.model.Client.ClientStatus;
+import java.util.Set;
 
 @Transactional(propagation = Propagation.MANDATORY)
 public interface ClientHostsRepository extends Repository<ClientHosts, Integer> {

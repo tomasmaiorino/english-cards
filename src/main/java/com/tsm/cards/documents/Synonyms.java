@@ -1,10 +1,9 @@
 package com.tsm.cards.documents;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.springframework.data.annotation.TypeAlias;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.springframework.data.annotation.TypeAlias;
 
 @TypeAlias("synonyms")
 public class Synonyms {

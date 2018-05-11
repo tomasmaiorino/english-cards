@@ -1,22 +1,5 @@
 package com.tsm.cards.controller;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-
-import javax.validation.groups.Default;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.tsm.cards.exceptions.BadRequestException;
 import com.tsm.cards.exceptions.ResourceNotFoundException;
 import com.tsm.cards.model.Content;
@@ -28,8 +11,14 @@ import com.tsm.cards.service.BaseService;
 import com.tsm.cards.service.ContentService;
 import com.tsm.cards.service.ContentTypeService;
 import com.tsm.cards.util.ErrorCodes;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.groups.Default;
+
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/contents")

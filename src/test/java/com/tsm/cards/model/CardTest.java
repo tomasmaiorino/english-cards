@@ -1,20 +1,17 @@
 package com.tsm.cards.model;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import com.tsm.cards.model.Card.CardStatus;
+import com.tsm.cards.util.CardTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.tsm.cards.model.Card.CardStatus;
-import com.tsm.cards.util.CardTestBuilder;
+import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class CardTest {

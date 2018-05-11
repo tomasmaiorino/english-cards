@@ -1,16 +1,9 @@
 package com.tsm.cards.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-import java.util.Set;
-
+import com.tsm.cards.model.Client.ClientStatus;
+import com.tsm.cards.model.ClientHosts;
+import com.tsm.cards.repository.ClientHostsRepository;
+import com.tsm.cards.util.ClientTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -19,11 +12,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.tsm.cards.model.ClientHosts;
-import com.tsm.cards.model.Client.ClientStatus;
-import com.tsm.cards.repository.ClientHostsRepository;
-import com.tsm.cards.service.ClientHostsService;
-import com.tsm.cards.util.ClientTestBuilder;
+import java.util.Collections;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ClientHostsServiceTest {

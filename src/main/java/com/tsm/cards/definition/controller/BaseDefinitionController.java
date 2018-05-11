@@ -1,12 +1,5 @@
 package com.tsm.cards.definition.controller;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.tsm.cards.controller.BaseController;
 import com.tsm.cards.definition.service.BaseBuildDefResourceService;
 import com.tsm.cards.definition.service.BaseDefinitionService;
@@ -16,8 +9,13 @@ import com.tsm.cards.documents.BaseDefinition;
 import com.tsm.cards.resources.DefinitionResource;
 import com.tsm.cards.resources.ResultResource;
 import com.tsm.cards.service.TrackWordsService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public abstract class BaseDefinitionController<T extends BaseDefinition> extends BaseController {

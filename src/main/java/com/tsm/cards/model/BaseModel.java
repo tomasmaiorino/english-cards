@@ -1,14 +1,12 @@
 package com.tsm.cards.model;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Getter;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 public class BaseModel {

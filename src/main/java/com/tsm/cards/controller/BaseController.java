@@ -1,13 +1,12 @@
 package com.tsm.cards.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.HashSet;
+import java.util.Set;
 
 @SuppressWarnings(value = { "rawtypes" })
 public abstract class BaseController {

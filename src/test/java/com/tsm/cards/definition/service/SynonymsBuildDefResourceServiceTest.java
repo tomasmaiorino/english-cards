@@ -1,17 +1,7 @@
 package com.tsm.cards.definition.service;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
+import com.tsm.cards.documents.*;
+import com.tsm.cards.resources.DefinitionResource;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -19,14 +9,12 @@ import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
-import com.tsm.cards.documents.BaseDefinition;
-import com.tsm.cards.documents.Entries;
-import com.tsm.cards.documents.LexicalEntries;
-import com.tsm.cards.documents.Results;
-import com.tsm.cards.documents.Senses;
-import com.tsm.cards.documents.Subsenses;
-import com.tsm.cards.documents.Synonyms;
-import com.tsm.cards.resources.DefinitionResource;
+import java.util.*;
+
+import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class SynonymsBuildDefResourceServiceTest {

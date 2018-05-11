@@ -1,15 +1,13 @@
 package com.tsm.cards.documents;
 
-import java.time.LocalDateTime;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDateTime;
 
 public class BaseDocumentModel {
 

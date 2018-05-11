@@ -1,23 +1,12 @@
 package com.tsm.cards.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import lombok.Getter;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.Assert;
 
-import lombok.Getter;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")

@@ -1,9 +1,8 @@
 package com.tsm.cards.definition.service;
 
+import com.tsm.cards.documents.Definition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.tsm.cards.documents.Definition;
 
 @Service
 public class DefinitionManageWordService extends BaseManageWordService<Definition> {

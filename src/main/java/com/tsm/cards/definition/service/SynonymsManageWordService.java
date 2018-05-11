@@ -1,9 +1,8 @@
 package com.tsm.cards.definition.service;
 
+import com.tsm.cards.documents.SynonymsDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.tsm.cards.documents.SynonymsDefinition;
 
 @Service
 public class SynonymsManageWordService extends BaseManageWordService<SynonymsDefinition> {

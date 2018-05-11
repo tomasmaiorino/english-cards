@@ -1,20 +1,18 @@
 package com.tsm.cards.definition.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
 import com.tsm.cards.documents.Entries;
 import com.tsm.cards.documents.Results;
 import com.tsm.cards.documents.Synonyms;
 import com.tsm.cards.resources.DefinitionResource;
-
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class SynonymsBuildDefResourceService extends BaseBuildDefResourceService {

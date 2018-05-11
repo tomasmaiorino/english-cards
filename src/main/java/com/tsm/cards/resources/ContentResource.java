@@ -1,23 +1,16 @@
 package com.tsm.cards.resources;
 
-import static com.tsm.cards.util.ErrorCodes.INVALID_CONTENT_NAME_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CONTENT_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CONTENT_STATUS;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CONTENT;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CONTENT_NAME;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CONTENT_STATUS;
+import com.tsm.cards.util.ContentConstants;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
-import com.tsm.cards.util.ContentConstants;
-
-import lombok.Getter;
-import lombok.Setter;
+import static com.tsm.cards.util.ErrorCodes.*;
 
 public class ContentResource implements BaseResource {
 

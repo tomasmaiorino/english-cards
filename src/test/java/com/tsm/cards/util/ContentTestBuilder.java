@@ -1,16 +1,15 @@
 package com.tsm.cards.util;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
-
-import java.time.LocalDateTime;
-
-import org.apache.commons.lang3.RandomUtils;
-import org.springframework.test.util.ReflectionTestUtils;
-
 import com.tsm.cards.model.Content;
 import com.tsm.cards.model.Content.ContentStatus;
 import com.tsm.cards.model.ContentType;
 import com.tsm.cards.resources.ContentResource;
+import org.apache.commons.lang3.RandomUtils;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.time.LocalDateTime;
+
+import static org.apache.commons.lang3.RandomStringUtils.random;
 
 public class ContentTestBuilder extends BaseTestBuilder {
 

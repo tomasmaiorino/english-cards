@@ -1,15 +1,13 @@
 package com.tsm.cards.definition.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.util.Assert;
-
 import com.tsm.cards.documents.BaseDefinition;
 import com.tsm.cards.documents.Results;
 import com.tsm.cards.resources.DefinitionResource;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.Assert;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public abstract class BaseBuildDefResourceService {

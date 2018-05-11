@@ -1,17 +1,16 @@
 package com.tsm.cards.parser;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
 import com.tsm.cards.model.Client;
 import com.tsm.cards.model.Client.ClientStatus;
 import com.tsm.cards.model.ClientHosts;
 import com.tsm.cards.resources.ClientResource;
 import com.tsm.cards.resources.IParser;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class ClientParser implements IParser<ClientResource, Client> {

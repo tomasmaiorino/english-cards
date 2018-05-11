@@ -1,10 +1,5 @@
 package com.tsm.cards.security;
 
-import static com.tsm.cards.security.SecurityConstants.*;
-import static com.tsm.cards.security.SecurityConstants.CARDS_URL;
-import static com.tsm.cards.security.SecurityConstants.DEFINITIONS_URL;
-import static com.tsm.cards.security.SecurityConstants.SIGN_UP_URL;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import static com.tsm.cards.security.SecurityConstants.*;
 
 @Configuration
 @EnableWebSecurity

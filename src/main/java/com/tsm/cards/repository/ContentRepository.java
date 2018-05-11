@@ -1,14 +1,13 @@
 package com.tsm.cards.repository;
 
-import java.util.Set;
-
+import com.tsm.cards.model.Content;
+import com.tsm.cards.model.Content.ContentStatus;
+import com.tsm.cards.model.ContentType;
 import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.model.Content;
-import com.tsm.cards.model.Content.ContentStatus;
-import com.tsm.cards.model.ContentType;
+import java.util.Set;
 
 @Transactional(propagation = Propagation.MANDATORY)
 public interface ContentRepository extends Repository<Content, Integer>, IBaseRepository<Content, Integer> {

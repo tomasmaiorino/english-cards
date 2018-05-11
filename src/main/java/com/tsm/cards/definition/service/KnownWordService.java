@@ -1,20 +1,19 @@
 package com.tsm.cards.definition.service;
-import static com.tsm.cards.util.ErrorCodes.UNKNOWN_WORD_GIVEN;
 
-import java.util.List;
-
+import com.tsm.cards.definition.repository.KnownWordRepository;
+import com.tsm.cards.documents.KnownWord;
+import com.tsm.cards.exceptions.BadRequestException;
+import com.tsm.cards.exceptions.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.tsm.cards.definition.repository.KnownWordRepository;
-import com.tsm.cards.documents.KnownWord;
-import com.tsm.cards.exceptions.BadRequestException;
-import com.tsm.cards.exceptions.ResourceNotFoundException;
+import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
+import static com.tsm.cards.util.ErrorCodes.UNKNOWN_WORD_GIVEN;
 @Service
 @Slf4j
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)

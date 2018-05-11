@@ -1,31 +1,24 @@
 package com.tsm.cards.resource;
 
-import static com.tsm.cards.util.ContentTypeTestBuilder.LARGE_NAME;
-import static com.tsm.cards.util.ContentTypeTestBuilder.SMALL_NAME;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CONTENT_TYPE_NAME_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CONTENT_TYPE_STATUS;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CONTENT_TYPE_NAME;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CONTENT_TYPE_STATUS;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
-import java.util.function.Supplier;
-
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-
+import com.tsm.cards.resources.BaseResource;
+import com.tsm.cards.resources.ContentTypeResource;
+import com.tsm.cards.util.ContentTypeTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.tsm.cards.resources.BaseResource;
-import com.tsm.cards.resources.ContentTypeResource;
-import com.tsm.cards.util.ContentTypeTestBuilder;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import java.util.function.Supplier;
+
+import static com.tsm.cards.util.ContentTypeTestBuilder.LARGE_NAME;
+import static com.tsm.cards.util.ContentTypeTestBuilder.SMALL_NAME;
+import static com.tsm.cards.util.ErrorCodes.*;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ContentTypeResourceTest extends BaseResourceTest {

@@ -1,19 +1,12 @@
 package com.tsm.cards.parser;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.when;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import com.tsm.cards.model.ContentType;
+import com.tsm.cards.model.ContentType.ContentTypeStatus;
+import com.tsm.cards.model.ContentTypeRule;
+import com.tsm.cards.resources.ContentTypeResource;
+import com.tsm.cards.resources.ContentTypeRuleResource;
+import com.tsm.cards.util.ContentTypeRuleTestBuilder;
+import com.tsm.cards.util.ContentTypeTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -22,13 +15,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.tsm.cards.model.ContentType;
-import com.tsm.cards.model.ContentType.ContentTypeStatus;
-import com.tsm.cards.model.ContentTypeRule;
-import com.tsm.cards.resources.ContentTypeResource;
-import com.tsm.cards.resources.ContentTypeRuleResource;
-import com.tsm.cards.util.ContentTypeRuleTestBuilder;
-import com.tsm.cards.util.ContentTypeTestBuilder;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ContentTypeParserTest {

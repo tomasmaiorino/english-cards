@@ -1,27 +1,16 @@
 package com.tsm.cards.resources;
 
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_EMAIL;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_EMAIL_RECIPIENT;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_NAME_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_STATUS;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CLIENT_TOKEN_SIZE;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_EMAIL;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_EMAIL_RECIPIENT;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_HOSTS;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_NAME;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CLIENT_TOKEN;
-
-import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import lombok.Getter;
-import lombok.Setter;
+import static com.tsm.cards.util.ErrorCodes.*;
 
 public class ClientResource implements BaseResource {
 

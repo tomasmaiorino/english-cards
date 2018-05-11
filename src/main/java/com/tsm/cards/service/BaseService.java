@@ -1,17 +1,14 @@
 package com.tsm.cards.service;
 
+import com.tsm.cards.exceptions.ResourceNotFoundException;
+import com.tsm.cards.model.BaseModel;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.Assert;
+
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.Set;
-
-import javax.transaction.Transactional;
-
-import org.springframework.util.Assert;
-
-import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.BaseModel;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class BaseService<I extends BaseModel, T extends Serializable> implements IBaseService<I, T> {

@@ -1,14 +1,10 @@
 package com.tsm.controller;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.tsm.cards.util.ClientTestBuilder.LARGE_NAME;
-import static com.tsm.cards.util.ClientTestBuilder.LARGE_TOKEN;
-import static com.tsm.cards.util.ClientTestBuilder.RESOURCE_INVALID_EMAIL;
-import static com.tsm.cards.util.ClientTestBuilder.SMALL_NAME;
-import static com.tsm.cards.util.ClientTestBuilder.SMALL_TOKEN;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.http.ContentType;
+import com.tsm.EnglishCardsApplication;
+import com.tsm.cards.util.ClientTestBuilder;
+import com.tsm.resource.ClientResource;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -20,11 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.http.ContentType;
-import com.tsm.EnglishCardsApplication;
-import com.tsm.cards.util.ClientTestBuilder;
-import com.tsm.resource.ClientResource;
+import static com.jayway.restassured.RestAssured.given;
+import static com.tsm.cards.util.ClientTestBuilder.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EnglishCardsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

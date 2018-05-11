@@ -1,9 +1,9 @@
 package com.tsm.builders;
 
+import com.tsm.cards.documents.KnownWord;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tsm.cards.documents.KnownWord;
 
 public class KnownWordsBuilder {
 

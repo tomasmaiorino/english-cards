@@ -1,19 +1,17 @@
 package com.tsm.cards.definition.service;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.tsm.cards.documents.SynonymsDefinition;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.tsm.cards.documents.SynonymsDefinition;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 @Service
 public class SynonymsOxfordService extends OxfordService<SynonymsDefinition> {

@@ -1,28 +1,19 @@
 package com.tsm.cards.resource;
 
-import static com.tsm.cards.util.ClientTestBuilder.LARGE_NAME;
-import static com.tsm.cards.util.ClientTestBuilder.SMALL_NAME;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_IMG_URL_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_NAME_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_STATUS;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_TYPE;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_IMG_URL;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_NAME;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_STATUS;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_TYPE;
-
-import java.util.function.Supplier;
-
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-
+import com.tsm.cards.resources.BaseResource;
+import com.tsm.cards.util.CardTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.tsm.cards.resources.BaseResource;
-import com.tsm.cards.util.CardTestBuilder;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import java.util.function.Supplier;
+
+import static com.tsm.cards.util.ClientTestBuilder.LARGE_NAME;
+import static com.tsm.cards.util.ClientTestBuilder.SMALL_NAME;
+import static com.tsm.cards.util.ErrorCodes.*;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class CardResourceTest extends BaseResourceTest {

@@ -1,10 +1,10 @@
 package com.tsm.cards.service;
 
+import com.tsm.cards.repository.IBaseRepository;
+
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.Set;
-
-import com.tsm.cards.repository.IBaseRepository;
 
 
 public interface IBaseService<I, T extends Serializable> {

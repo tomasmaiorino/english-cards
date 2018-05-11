@@ -1,17 +1,15 @@
 package com.tsm.cards.service;
 
-import static com.tsm.cards.util.ErrorCodes.ACCESS_NOT_ALLOWED;
-import static com.tsm.cards.util.ErrorCodes.MISSING_HEADER;
-
+import com.tsm.cards.exceptions.BadRequestException;
+import com.tsm.cards.exceptions.ForbiddenRequestException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import com.tsm.cards.exceptions.BadRequestException;
-import com.tsm.cards.exceptions.ForbiddenRequestException;
-
-import lombok.extern.slf4j.Slf4j;
+import static com.tsm.cards.util.ErrorCodes.ACCESS_NOT_ALLOWED;
+import static com.tsm.cards.util.ErrorCodes.MISSING_HEADER;
 
 @Service
 @Slf4j

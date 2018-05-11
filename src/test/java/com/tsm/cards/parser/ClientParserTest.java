@@ -1,22 +1,18 @@
 package com.tsm.cards.parser;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import com.tsm.cards.model.Client;
+import com.tsm.cards.model.Client.ClientStatus;
+import com.tsm.cards.resources.ClientResource;
+import com.tsm.cards.util.ClientTestBuilder;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.tsm.cards.model.Client;
-import com.tsm.cards.model.Client.ClientStatus;
-import com.tsm.cards.parser.ClientParser;
-import com.tsm.cards.resources.ClientResource;
-import com.tsm.cards.util.ClientTestBuilder;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ClientParserTest {

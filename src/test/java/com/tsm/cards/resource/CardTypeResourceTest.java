@@ -1,24 +1,19 @@
 package com.tsm.cards.resource;
 
-import static com.tsm.cards.util.CardTypeTestBuilder.LARGE_NAME;
-import static com.tsm.cards.util.CardTypeTestBuilder.SMALL_NAME;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_TYPE_STATUS;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_TYPE_NAME_SIZE;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_TYPE_STATUS;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_TYPE_NAME;
-
-import java.util.function.Supplier;
-
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-
+import com.tsm.cards.resources.BaseResource;
+import com.tsm.cards.util.CardTypeTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.tsm.cards.resources.BaseResource;
-import com.tsm.cards.util.CardTypeTestBuilder;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import java.util.function.Supplier;
+
+import static com.tsm.cards.util.CardTypeTestBuilder.LARGE_NAME;
+import static com.tsm.cards.util.CardTypeTestBuilder.SMALL_NAME;
+import static com.tsm.cards.util.ErrorCodes.*;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class CardTypeResourceTest extends BaseResourceTest {

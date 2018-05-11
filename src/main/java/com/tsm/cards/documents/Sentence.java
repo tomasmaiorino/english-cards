@@ -1,11 +1,10 @@
 package com.tsm.cards.documents;
 
-import java.util.List;
-
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
+import java.util.List;
 
 public class Sentence {
 

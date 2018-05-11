@@ -1,9 +1,9 @@
 package com.tsm.cards.resources;
 
-import java.util.Set;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 public class ResultResource {
 

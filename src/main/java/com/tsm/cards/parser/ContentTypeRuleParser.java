@@ -1,14 +1,13 @@
 package com.tsm.cards.parser;
 
-import java.util.Set;
-
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
 import com.tsm.cards.model.ContentType;
 import com.tsm.cards.model.ContentTypeRule;
 import com.tsm.cards.resources.ContentTypeRuleResource;
 import com.tsm.cards.resources.IParser;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import java.util.Set;
 
 @Component
 public class ContentTypeRuleParser implements IParser<ContentTypeRuleResource, ContentTypeRule> {

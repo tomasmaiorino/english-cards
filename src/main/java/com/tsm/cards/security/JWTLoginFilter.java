@@ -1,13 +1,6 @@
 package com.tsm.cards.security;
 
-import java.io.IOException;
-import java.util.Collections;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsm.cards.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +9,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 

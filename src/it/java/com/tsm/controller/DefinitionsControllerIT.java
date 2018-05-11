@@ -1,17 +1,16 @@
 package com.tsm.controller;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.http.ContentType;
+import com.tsm.EnglishCardsApplication;
+import com.tsm.builders.KnownWordsBuilder;
+import com.tsm.cards.definition.repository.DefinitionRepository;
+import com.tsm.cards.definition.repository.KnownWordRepository;
+import com.tsm.cards.documents.Definition;
+import com.tsm.cards.documents.KnownWord;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -25,17 +24,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.http.ContentType;
-import com.tsm.EnglishCardsApplication;
-import com.tsm.builders.KnownWordsBuilder;
-import com.tsm.cards.definition.repository.DefinitionRepository;
-import com.tsm.cards.definition.repository.KnownWordRepository;
-import com.tsm.cards.documents.Definition;
-import com.tsm.cards.documents.KnownWord;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EnglishCardsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

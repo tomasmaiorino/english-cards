@@ -1,14 +1,13 @@
 package com.tsm.cards.definition.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.tsm.cards.documents.KnownWord;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.documents.KnownWord;
+import java.util.List;
+import java.util.Optional;
 
 @Transactional(propagation = Propagation.MANDATORY)
 public interface KnownWordRepository extends MongoRepository<KnownWord, Long> {

@@ -1,26 +1,22 @@
 package com.tsm.cards.resource;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
-import java.util.function.Supplier;
-
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-
+import com.tsm.cards.resources.BaseResource;
+import com.tsm.cards.resources.ContentResource;
+import com.tsm.cards.util.ContentTestBuilder;
+import com.tsm.cards.util.ErrorCodes;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.tsm.cards.resources.BaseResource;
-import com.tsm.cards.resources.ContentResource;
-import com.tsm.cards.util.ContentTestBuilder;
-import com.tsm.cards.util.ErrorCodes;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import java.util.function.Supplier;
+
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ContentResourceTest extends BaseResourceTest {

@@ -1,23 +1,18 @@
 package com.tsm.cards.resources;
 
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_TYPE_NAME_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_TYPE_STATUS;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_TYPE_NAME;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_TYPE_STATUS;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.CollectionUtils;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.tsm.cards.util.ErrorCodes.*;
 
 public class CardTypeResource implements BaseResource {
 

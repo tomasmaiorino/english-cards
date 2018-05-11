@@ -1,12 +1,11 @@
 package com.tsm.cards.documents;
 
-import java.util.List;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.data.annotation.TypeAlias;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
 @TypeAlias("lexicalEntries")
 public class LexicalEntries {

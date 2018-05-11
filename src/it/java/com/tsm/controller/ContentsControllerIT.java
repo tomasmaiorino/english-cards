@@ -1,11 +1,12 @@
 package com.tsm.controller;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-
-import java.util.Map;
-
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.http.ContentType;
+import com.tsm.EnglishCardsApplication;
+import com.tsm.cards.util.ClientTestBuilder;
+import com.tsm.cards.util.ContentTestBuilder;
+import com.tsm.resource.ContentResource;
+import com.tsm.resource.ContentTypeResource;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -18,13 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.http.ContentType;
-import com.tsm.EnglishCardsApplication;
-import com.tsm.cards.util.ClientTestBuilder;
-import com.tsm.cards.util.ContentTestBuilder;
-import com.tsm.resource.ContentResource;
-import com.tsm.resource.ContentTypeResource;
+import java.util.Map;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EnglishCardsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

@@ -1,13 +1,12 @@
 package com.tsm.cards.definition.repository;
 
-import java.util.Optional;
-
+import com.tsm.cards.documents.SentencesDefinition;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tsm.cards.documents.SentencesDefinition;
+import java.util.Optional;
 
 @Transactional(propagation = Propagation.MANDATORY)
 public interface SentencesDefinitionRepository extends BaseDefinitionRepository<SentencesDefinition, String>, MongoRepository<SentencesDefinition, String> {

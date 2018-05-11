@@ -1,9 +1,7 @@
 package com.tsm.cards.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import com.tsm.cards.exceptions.BadRequestException;
+import com.tsm.cards.exceptions.ForbiddenRequestException;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -12,8 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.tsm.cards.exceptions.BadRequestException;
-import com.tsm.cards.exceptions.ForbiddenRequestException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class AssertClientRequestTest {

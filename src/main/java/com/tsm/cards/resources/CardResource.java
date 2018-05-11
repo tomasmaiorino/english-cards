@@ -1,24 +1,16 @@
 package com.tsm.cards.resources;
 
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_IMG_URL_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_NAME_SIZE;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_STATUS;
-import static com.tsm.cards.util.ErrorCodes.INVALID_CARD_TYPE;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_IMG_URL;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_NAME;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_STATUS;
-import static com.tsm.cards.util.ErrorCodes.REQUIRED_CARD_TYPE;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
-import lombok.Getter;
-import lombok.Setter;
+import static com.tsm.cards.util.ErrorCodes.*;
 
 public class CardResource implements BaseResource {
 

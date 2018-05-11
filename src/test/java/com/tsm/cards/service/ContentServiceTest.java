@@ -1,19 +1,12 @@
 package com.tsm.cards.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
+import com.tsm.cards.exceptions.ResourceNotFoundException;
+import com.tsm.cards.model.Content;
+import com.tsm.cards.model.Content.ContentStatus;
+import com.tsm.cards.model.ContentType;
+import com.tsm.cards.repository.ContentRepository;
+import com.tsm.cards.util.ContentTestBuilder;
+import com.tsm.cards.util.ContentTypeTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -22,13 +15,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.tsm.cards.exceptions.ResourceNotFoundException;
-import com.tsm.cards.model.Content;
-import com.tsm.cards.model.Content.ContentStatus;
-import com.tsm.cards.model.ContentType;
-import com.tsm.cards.repository.ContentRepository;
-import com.tsm.cards.util.ContentTestBuilder;
-import com.tsm.cards.util.ContentTypeTestBuilder;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ContentServiceTest {

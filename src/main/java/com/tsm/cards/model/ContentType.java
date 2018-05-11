@@ -1,28 +1,16 @@
 package com.tsm.cards.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "content_type")

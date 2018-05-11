@@ -1,19 +1,18 @@
 package com.tsm.cards.parser;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.NotImplementedException;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
 import com.tsm.cards.model.Content;
 import com.tsm.cards.model.Content.ContentBuilder;
 import com.tsm.cards.model.Content.ContentStatus;
 import com.tsm.cards.model.ContentType;
 import com.tsm.cards.resources.ContentResource;
 import com.tsm.cards.resources.IParser;
+import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class ContentParser implements IParser<ContentResource, Content> {

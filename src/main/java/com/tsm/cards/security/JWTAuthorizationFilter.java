@@ -1,14 +1,14 @@
 package com.tsm.cards.security;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.tsm.cards.exceptions.ForbiddenRequestException;
+import com.tsm.cards.model.Client;
+import com.tsm.cards.model.User;
+import com.tsm.cards.service.ClientService;
+import com.tsm.cards.service.JwtTokenUtil;
+import com.tsm.cards.service.UserService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +20,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.tsm.cards.exceptions.ForbiddenRequestException;
-import com.tsm.cards.model.Client;
-import com.tsm.cards.model.User;
-import com.tsm.cards.service.ClientService;
-import com.tsm.cards.service.JwtTokenUtil;
-import com.tsm.cards.service.UserService;
-
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 public class JWTAuthorizationFilter extends OncePerRequestFilter {

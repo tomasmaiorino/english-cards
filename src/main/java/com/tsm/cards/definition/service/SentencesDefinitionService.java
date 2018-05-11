@@ -1,12 +1,11 @@
 package com.tsm.cards.definition.service;
 
+import com.tsm.cards.definition.repository.SentencesDefinitionRepository;
+import com.tsm.cards.documents.SentencesDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.tsm.cards.definition.repository.SentencesDefinitionRepository;
-import com.tsm.cards.documents.SentencesDefinition;
 
 @Service
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)

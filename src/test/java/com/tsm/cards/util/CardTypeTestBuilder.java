@@ -1,17 +1,16 @@
 package com.tsm.cards.util;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-
-import org.apache.commons.lang3.RandomUtils;
-import org.springframework.test.util.ReflectionTestUtils;
-
 import com.tsm.cards.model.Card;
 import com.tsm.cards.model.CardType;
 import com.tsm.cards.model.CardType.CardTypeStatus;
 import com.tsm.cards.resources.CardTypeResource;
+import org.apache.commons.lang3.RandomUtils;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+
+import static org.apache.commons.lang3.RandomStringUtils.random;
 
 public class CardTypeTestBuilder {
 
