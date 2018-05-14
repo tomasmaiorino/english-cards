@@ -2,7 +2,7 @@ maxDefinitionSynonymsList: 6
 
 user:
   it:
-      email: user-it@test.com
+    email: user-it@test.com
     name: it user
     pass: 7c30110b
 #logging:

@@ -16,7 +16,7 @@ public class Role extends BaseModel{
 	}
 
 	public enum Roles {
-		ADMIN, USER;
+		ADMIN, USER, ACTUATOR
 	}
 
 	@Id
