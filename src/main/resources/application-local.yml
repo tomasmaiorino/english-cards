@@ -1,6 +1,11 @@
 oxford.service.ap.id: 
 oxford.service.ap.key:
-
+eureka:
+  client:
+    healthcheck:
+      enable: true
+    serviceUrl:
+      defaultZone: http://locallhost:8761/eureka
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/english_cards
