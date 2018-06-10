@@ -12,12 +12,12 @@ eureka:
 # custom attribute for the actuator info endpoint
 info:
   app:
-    name: bookstore-service
+    name: english-cards-service
 
 # give the application a name
 spring:
   application:
-    name: bookstore-service
+    name: english-cards-service
   datasource:
     url: jdbc:postgresql://localhost:5432/english_cards
     username: postgres
