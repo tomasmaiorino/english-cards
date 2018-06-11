@@ -125,4 +125,21 @@ public interface ErrorCodes {
 
     public static final String INVALID_LOGIN_PASSWORD_SIZE = "invalidLoginPasswordSize";
 
+	// CONTACT
+	public static final String REQUIRED_CONTACT_NAME = "requiredContactName";
+
+	public static final String INVALID_CONTACT_NAME_SIZE = "invalidContactNameSize";
+
+	public static final String REQUIRED_CONTACT_EMAIL = "requiredContactEmail";
+
+	public static final String INVALID_CONTACT_EMAIL = "invalidContactEmail";
+
+	public static final String REQUIRED_CONTACT_SUBJECT = "requiredContactSubject";
+
+	public static final String INVALID_CONTACT_SUBJECT_SIZE = "invalidContactSubjectSize";
+
+	public static final String REQUIRED_CONTACT_MESSAGE = "requiredContactMessage";
+
+	public static final String INVALID_CONTACT_MESSAGE_SIZE = "invalidContactMessage";
+
 }
