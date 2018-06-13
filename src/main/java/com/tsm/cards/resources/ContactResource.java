@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import static com.tsm.cards.util.ContactConstants.*;
 import static com.tsm.cards.util.ErrorCodes.*;
 
 /**
@@ -22,7 +23,7 @@ public class ContactResource implements BaseResource {
     @Getter
     @Setter
     @NotNull(message = REQUIRED_CONTACT_NAME)
-    @Size(min = 2, max = 30, message = INVALID_CONTACT_NAME_SIZE)
+    @Size(min = CONTACT_MIN_NAME_SIZE, max = CONTACT_MAX_NAME_SIZE, message = INVALID_CONTACT_NAME_SIZE)
     private String name;
 
     @Getter
@@ -34,12 +35,12 @@ public class ContactResource implements BaseResource {
     @Getter
     @Setter
     @NotNull(message = REQUIRED_CONTACT_MESSAGE)
-    @Size(min = 2, max = 300, message = INVALID_CONTACT_MESSAGE_SIZE)
+    @Size(min = CONTACT_MIN_MESSAGE_SIZE, max = CONTACT_MAX_MESSAGE_SIZE, message = INVALID_CONTACT_MESSAGE_SIZE)
     private String message;
 
     @Getter
     @Setter
     @NotNull(message = REQUIRED_CONTACT_SUBJECT)
-    @Size(min = 2, max = 30, message = INVALID_CONTACT_SUBJECT_SIZE)
+    @Size(min = CONTACT_MIN_SUBJECT_SIZE, max = CONTACT_MAX_SUBJECT_SIZE, message = INVALID_CONTACT_SUBJECT_SIZE)
     private String subject;
 }

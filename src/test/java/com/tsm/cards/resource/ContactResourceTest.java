@@ -2,6 +2,7 @@ package com.tsm.cards.resource;
 
 import com.tsm.cards.resources.BaseResource;
 import com.tsm.cards.util.ClientTestBuilder;
+import com.tsm.cards.util.ContactTestBuilder;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import static com.tsm.cards.util.ErrorCodes.*;
 @FixMethodOrder(MethodSorters.JVM)
 public class ContactResourceTest extends BaseResourceTest {
 
-    private Supplier<BaseResource> buildResourceFunction = ClientTestBuilder::buildResoure;
+    private Supplier<BaseResource> buildResourceFunction = ContactTestBuilder::buildResource;
 
     @Before
     public void setUp() {
@@ -30,51 +31,25 @@ public class ContactResourceTest extends BaseResourceTest {
     @Test
     public void build_NullNameGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "name", null, REQUIRED_CLIENT_NAME);
+        checkResource(buildResourceFunction, "name", null, REQUIRED_CONTACT_NAME);
     }
 
     @Test
     public void build_SmallNameGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "name", SMALL_NAME, INVALID_CLIENT_NAME_SIZE);
+        checkResource(buildResourceFunction, "name", SMALL_NAME, INVALID_CONTACT_NAME_SIZE);
     }
 
     @Test
     public void build_LargeNameGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "name", LARGE_NAME, INVALID_CLIENT_NAME_SIZE);
+        checkResource(buildResourceFunction, "name", LARGE_NAME, INVALID_CONTACT_NAME_SIZE);
     }
 
     @Test
     public void build_EmptyNameGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "name", "", INVALID_CLIENT_NAME_SIZE);
-    }
-
-    //
-
-    @Test
-    public void build_NullTokenGiven_ShouldThrowException() {
-        // Set up
-        checkResource(buildResourceFunction, "token", null, REQUIRED_CLIENT_TOKEN);
-    }
-
-    @Test
-    public void build_SmallTokenGiven_ShouldThrowException() {
-        // Set up
-        checkResource(buildResourceFunction, "token", SMALL_TOKEN, INVALID_CLIENT_TOKEN_SIZE);
-    }
-
-    @Test
-    public void build_LargeTokenGiven_ShouldThrowException() {
-        // Set up
-        checkResource(buildResourceFunction, "token", LARGE_TOKEN, INVALID_CLIENT_TOKEN_SIZE);
-    }
-
-    @Test
-    public void build_EmptyTokenGiven_ShouldThrowException() {
-        // Set up
-        checkResource(buildResourceFunction, "token", "", INVALID_CLIENT_TOKEN_SIZE);
+        checkResource(buildResourceFunction, "name", "", INVALID_CONTACT_NAME_SIZE);
     }
 
     //
@@ -82,37 +57,19 @@ public class ContactResourceTest extends BaseResourceTest {
     @Test
     public void build_NullEmailGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "email", null, REQUIRED_CLIENT_EMAIL);
+        checkResource(buildResourceFunction, "email", null, REQUIRED_CONTACT_EMAIL);
     }
 
     @Test
     public void build_InvalidEmailGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "email", RESOURCE_INVALID_EMAIL, INVALID_CLIENT_EMAIL);
+        checkResource(buildResourceFunction, "email", RESOURCE_INVALID_EMAIL, INVALID_CONTACT_EMAIL);
     }
 
     @Test
     public void build_EmptyEmailGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "email", "", REQUIRED_CLIENT_EMAIL);
-    }
-
-    @Test
-    public void build_NullEmailRecipientGiven_ShouldThrowException() {
-        // Set up
-        checkResource(buildResourceFunction, "emailRecipient", null, REQUIRED_CLIENT_EMAIL_RECIPIENT);
-    }
-
-    @Test
-    public void build_InvalidEmailRecipientGiven_ShouldThrowException() {
-        // Set up
-        checkResource(buildResourceFunction, "emailRecipient", RESOURCE_INVALID_EMAIL, INVALID_CLIENT_EMAIL_RECIPIENT);
-    }
-
-    @Test
-    public void build_EmptyEmailRecipientGiven_ShouldThrowException() {
-        // Set up
-        checkResource(buildResourceFunction, "emailRecipient", "", REQUIRED_CLIENT_EMAIL_RECIPIENT);
+        checkResource(buildResourceFunction, "email", "", REQUIRED_CONTACT_EMAIL);
     }
     //
 
@@ -151,13 +108,13 @@ public class ContactResourceTest extends BaseResourceTest {
     @Test
     public void build_SmallMessageGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "message", INVALID_CONTACT_EMAIL, INVALID_CONTACT_MESSAGE_SIZE);
+        checkResource(buildResourceFunction, "message", ContactTestBuilder.getSmallMessage(), INVALID_CONTACT_MESSAGE_SIZE);
     }
 
     @Test
     public void build_LargeMessageGiven_ShouldThrowException() {
         // Set up
-        checkResource(buildResourceFunction, "message", LARGE_TOKEN, INVALID_CONTACT_MESSAGE_SIZE);
+        checkResource(buildResourceFunction, "message", ContactTestBuilder.getLargeMessage(), INVALID_CONTACT_MESSAGE_SIZE);
     }
 
     @Test

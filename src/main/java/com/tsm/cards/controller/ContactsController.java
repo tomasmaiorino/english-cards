@@ -4,10 +4,7 @@ import com.tsm.cards.resources.ContactResource;
 import com.tsm.cards.service.ContactService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
@@ -19,6 +16,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  * Created by tomas on 6/10/18.
  */
 @Slf4j
+@RestController
+@RequestMapping(value = "/api/v1/contacts")
 public class ContactsController extends  BaseController {
 
     @Autowired
@@ -32,11 +31,11 @@ public class ContactsController extends  BaseController {
 
         validate(resource, Default.class);
 
-        contactService.sendContactMessage(resource);
+        boolean messageSent = contactService.sendContactMessage(resource);
 
         log.debug("returning resource [{}].", resource);
 
-        return null;
+        return resource;
     }
 
 }
