@@ -1,6 +1,10 @@
 maxDefinitionSentencesList: 6
 maxDefinitionSynonymsList: 6
 maxDefinitionListSize: 4
+englishCardClientToken: 4242432
+contact:
+  application:
+    url: http://contact-service/contact/{token}
 info:
   app:
     name: @project.name@
