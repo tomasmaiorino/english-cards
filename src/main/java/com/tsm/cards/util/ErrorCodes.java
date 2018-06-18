@@ -142,4 +142,6 @@ public interface ErrorCodes {
 
 	public static final String INVALID_CONTACT_MESSAGE_SIZE = "invalidContactMessage";
 
+	public static final String ERROR_SENDING_MESSAGE = "errorSendingMessage";
+
 }

@@ -1,10 +1,8 @@
 package com.tsm.cards.controller;
 
-import com.tsm.cards.exceptions.BadRequestException;
-import com.tsm.cards.exceptions.ForbiddenRequestException;
-import com.tsm.cards.exceptions.MessageException;
-import com.tsm.cards.exceptions.ResourceNotFoundException;
+import com.tsm.cards.exceptions.*;
 import exception.FieldError;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -40,6 +38,21 @@ public class CustomControllerAdvice {
 	@ExceptionHandler(MessageException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody ResponseEntity<FieldError> handleMessageException(MessageException exception) {
+		String messageError = resolveLocalizedMessage(exception.getErrorCode());
+		return new ResponseEntity<>(new FieldError(messageError, ""), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public @ResponseBody ResponseEntity<FieldError> handleGenericError(Exception exception) {
+		String messageError = resolveLocalizedMessage(StringUtils.isNotBlank(exception.getMessage()) ? exception.getMessage() : "genericError");
+		return new ResponseEntity<>(new FieldError(messageError, ""), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler(ExternalCallException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public @ResponseBody ResponseEntity<FieldError> handleExternalCallException(ExternalCallException exception) {
 		String messageError = resolveLocalizedMessage(exception.getErrorCode());
 		return new ResponseEntity<>(new FieldError(messageError, ""), HttpStatus.INTERNAL_SERVER_ERROR);
 	}

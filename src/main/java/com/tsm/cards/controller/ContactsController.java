@@ -1,5 +1,6 @@
 package com.tsm.cards.controller;
 
+import com.tsm.cards.exceptions.ExternalCallException;
 import com.tsm.cards.resources.ContactResource;
 import com.tsm.cards.service.ContactService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
 
+import static com.tsm.cards.util.ErrorCodes.ERROR_SENDING_MESSAGE;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,6 +34,11 @@ public class ContactsController extends  BaseController {
         validate(resource, Default.class);
 
         boolean messageSent = contactService.sendContactMessage(resource);
+
+        if (!messageSent) {
+            log.info("The message was not sent.");
+            throw new ExternalCallException(ERROR_SENDING_MESSAGE);
+        }
 
         log.debug("returning resource [{}].", resource);
 
