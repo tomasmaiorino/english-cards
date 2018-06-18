@@ -1,10 +1,11 @@
 maxDefinitionSentencesList: 6
 maxDefinitionSynonymsList: 6
 maxDefinitionListSize: 4
+contactServiceTimeout: 3000
 englishCardClientToken: 4242432
 contact:
   application:
-    url: http://contact-service/contact/{token}
+    url: http://send-email-service/api/v1/messages/{token}
 info:
   app:
     name: @project.name@

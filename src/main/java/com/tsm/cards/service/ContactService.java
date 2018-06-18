@@ -1,16 +1,26 @@
 package com.tsm.cards.service;
 
-import com.tsm.cards.resources.ContactResource;
-import io.jsonwebtoken.lang.Assert;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.http.HttpStatus;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.tsm.cards.resources.ContactResource;
+
+import io.jsonwebtoken.lang.Assert;
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Created by tomas on 6/10/18.
@@ -19,34 +29,42 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ContactService {
 
-    @Value("${contact.application.url}")
-    private String contactApplicationUrl;
+	@Value("${contact.application.url}")
+	private String contactApplicationUrl;
 
-    @Value("${englishCardClientToken}")
-    private String englishCardClientToken;
+	@Value("${englishCardClientToken}")
+	private String englishCardClientToken;
 
-    @Autowired
-    private RestTemplate restTemplate;
+	@Value("${contactServiceTimeout}")
+	private int contactServiceTimeout;
 
-    public boolean sendContactMessage(final ContactResource contact) {
-        Assert.notNull(contact, "The contact must not be null!");
-        log.info("Sending contact message [{}].", contact);
-        boolean result = false;
-        HttpEntity<ContactResource> request = new HttpEntity<>(contact);
+	@Autowired
+	private RestTemplate restTemplate;
 
-        ResponseEntity<ContactResource> exchange =
-                this.restTemplate.exchange(
-                        contactApplicationUrl + "/" + englishCardClientToken,
-                        HttpMethod.POST, request, ContactResource.class);
+	public boolean sendContactMessage(final ContactResource contact) {
+		Assert.notNull(contact, "The contact must not be null!");
+		log.info("Sending contact message [{}].");
 
-        log.debug("Message response [{}].", exchange);
+		HttpEntity<ContactResource> request = new HttpEntity<>(contact);
+		restTemplate.setRequestFactory(getClientHttpRequestFactory());
 
-        if (exchange.getStatusCodeValue() == HttpStatus.SC_OK) {
-            log.info("Message sent [{}].", exchange.getStatusCodeValue());
-            return true;
-        }
-        log.info("Message response status: [{}].", exchange.getStatusCodeValue());
+		ResponseEntity<ContactResource> exchange = this.restTemplate.exchange(contactApplicationUrl, HttpMethod.POST,
+				request, new ParameterizedTypeReference<ContactResource>() {
+				}, englishCardClientToken);
 
-        return result;
-    }
+		log.info("Sending contact message response HTTP [{}]. ", exchange.getStatusCodeValue());
+		log.debug("Message response [{}].", exchange);
+		if (exchange.getStatusCodeValue() != HttpStatus.SC_OK) {
+		}
+		return exchange.getStatusCodeValue() == HttpStatus.SC_OK;
+	}
+
+	private ClientHttpRequestFactory getClientHttpRequestFactory() {
+		int timeout = contactServiceTimeout;
+		RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout).setConnectionRequestTimeout(timeout)
+				.setSocketTimeout(timeout).build();
+		CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+		return new HttpComponentsClientHttpRequestFactory(client);
+	}
+
 }

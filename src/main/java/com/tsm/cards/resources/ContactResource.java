@@ -2,6 +2,9 @@ package com.tsm.cards.resources;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -43,4 +46,15 @@ public class ContactResource implements BaseResource {
     @NotNull(message = REQUIRED_CONTACT_SUBJECT)
     @Size(min = CONTACT_MIN_SUBJECT_SIZE, max = CONTACT_MAX_SUBJECT_SIZE, message = INVALID_CONTACT_SUBJECT_SIZE)
     private String subject;
+    
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(getId()).toHashCode();
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this);
+	}
 }
